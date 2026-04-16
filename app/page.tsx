@@ -1,101 +1,203 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Shield, Brain, Users, ArrowRight } from "lucide-react";
+import ProtocolCard from "@/components/ProtocolCard";
+import ContributorCard from "@/components/ContributorCard";
+import { protocols } from "@/data/protocols";
+import { getFeaturedContributor } from "@/data/contributors";
 
-export default function Home() {
+export default function HomePage() {
+  // One card per phase for the featured section
+  const featuredProtocols = [
+    protocols.find((p) => p.phase === "preoperative")!,
+    protocols.find((p) => p.phase === "intraoperative")!,
+    protocols.find((p) => p.phase === "postoperative")!,
+  ];
+
+  const featuredContributor = getFeaturedContributor();
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <>
+      {/* ─── Hero ─── */}
+      <section className="hero-pattern bg-navy text-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-24 md:py-32">
+          <div className="max-w-3xl">
+            <p className="nav-link text-steel-light mb-6 tracking-widest">
+              VETSSI — Veterinary Surgical Site Infection Prevention Hub
+            </p>
+            <h1
+              className="font-serif text-4xl md:text-6xl font-medium leading-tight mb-6"
+              style={{ letterSpacing: "-0.01em" }}
+            >
+              Surgical Site Infection Prevention in Veterinary Surgery
+            </h1>
+            <p className="text-lg md:text-xl text-white/70 font-light leading-relaxed mb-10 max-w-2xl">
+              Evidence-based protocols. Expert techniques. Real-world implementation.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link
+                href="/protocols"
+                className="inline-flex items-center gap-2 bg-steel hover:bg-steel-light text-white px-7 py-3.5 text-sm font-medium nav-link transition-colors"
+              >
+                Explore Protocols
+                <ArrowRight size={14} />
+              </Link>
+              <Link
+                href="/videos"
+                className="inline-flex items-center gap-2 border border-white/40 hover:border-white text-white px-7 py-3.5 text-sm font-medium nav-link transition-colors"
+              >
+                View Surgical Techniques
+              </Link>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </section>
+
+      {/* ─── Mission Strip ─── */}
+      <section className="bg-white border-b border-warm-gray">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-14">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div className="flex flex-col items-start">
+              <div className="w-10 h-10 flex items-center justify-center bg-cream border border-warm-gray mb-5">
+                <Shield size={20} className="text-steel" />
+              </div>
+              <h3 className="font-serif text-xl font-medium text-navy mb-2">Evidence-Based</h3>
+              <p className="text-sm text-text-muted leading-relaxed">
+                Built on peer-reviewed veterinary surgical literature, graded by evidence quality and clinical applicability.
+              </p>
+            </div>
+
+            <div className="flex flex-col items-start">
+              <div className="w-10 h-10 flex items-center justify-center bg-cream border border-warm-gray mb-5">
+                <Brain size={20} className="text-steel" />
+              </div>
+              <h3 className="font-serif text-xl font-medium text-navy mb-2">Systems Thinking</h3>
+              <p className="text-sm text-text-muted leading-relaxed">
+                SSI prevention is multi-factorial, not a single intervention. This platform addresses all domains of the surgical pathway.
+              </p>
+            </div>
+
+            <div className="flex flex-col items-start">
+              <div className="w-10 h-10 flex items-center justify-center bg-cream border border-warm-gray mb-5">
+                <Users size={20} className="text-steel" />
+              </div>
+              <h3 className="font-serif text-xl font-medium text-navy mb-2">Expert-Driven</h3>
+              <p className="text-sm text-text-muted leading-relaxed">
+                Developed and reviewed by leading veterinary surgeons with decades of clinical experience in SSI prevention.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Featured Protocols ─── */}
+      <section className="bg-cream border-b border-warm-gray">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+          <div className="flex items-end justify-between mb-10">
+            <div>
+              <p className="nav-link text-steel mb-2">By Phase of Care</p>
+              <h2 className="font-serif text-3xl md:text-4xl font-medium text-navy">
+                Prevention Protocols
+              </h2>
+            </div>
+            <Link
+              href="/protocols"
+              className="hidden md:inline-flex items-center gap-1.5 text-steel text-sm font-medium hover:text-navy transition-colors"
+            >
+              View All Protocols
+              <ArrowRight size={14} />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {featuredProtocols.map((protocol) => (
+              <ProtocolCard key={protocol.slug} protocol={protocol} />
+            ))}
+          </div>
+
+          <div className="mt-8 md:hidden">
+            <Link
+              href="/protocols"
+              className="inline-flex items-center gap-1.5 text-steel text-sm font-medium hover:text-navy transition-colors"
+            >
+              View All Protocols <ArrowRight size={14} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── The System Teaser ─── */}
+      <section className="bg-navy-mid text-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+          <div className="max-w-3xl">
+            <p className="nav-link text-steel-light mb-4">Systems Approach</p>
+            <h2 className="font-serif text-3xl md:text-4xl font-medium mb-5 leading-tight">
+              SSI Prevention Is Not One Thing
+            </h2>
+            <p className="text-white/70 font-light leading-relaxed mb-8 text-base">
+              Surgical site infections arise from the interaction of patient biology, surgical technique, environmental
+              conditions, and postoperative care. No single intervention reliably prevents SSI in isolation. The evidence
+              consistently shows that bundles — combinations of interventions applied reliably across the entire surgical
+              pathway — produce the best outcomes.
+            </p>
+
+            {/* Domain pills */}
+            <div className="flex flex-wrap gap-3 mb-10">
+              {["Patient Factors", "Surgeon Behavior", "Environment", "Technique", "Post-op Care"].map(
+                (domain) => (
+                  <span
+                    key={domain}
+                    className="px-4 py-2 border border-white/20 text-sm text-white/80 bg-white/5"
+                  >
+                    {domain}
+                  </span>
+                )
+              )}
+            </div>
+
+            <Link
+              href="/the-system"
+              className="inline-flex items-center gap-2 text-steel-light hover:text-white text-sm font-medium nav-link transition-colors"
+            >
+              Explore the Full System
+              <ArrowRight size={14} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Featured Contributor ─── */}
+      {featuredContributor && (
+        <section className="bg-white border-b border-warm-gray">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+            <div className="flex items-end justify-between mb-10">
+              <div>
+                <p className="nav-link text-steel mb-2">Expert Network</p>
+                <h2 className="font-serif text-3xl md:text-4xl font-medium text-navy">
+                  Expert Contributors
+                </h2>
+              </div>
+              <Link
+                href="/contributors"
+                className="hidden md:inline-flex items-center gap-1.5 text-steel text-sm font-medium hover:text-navy transition-colors"
+              >
+                View All Contributors
+                <ArrowRight size={14} />
+              </Link>
+            </div>
+
+            <ContributorCard contributor={featuredContributor} featured />
+
+            <div className="mt-8 md:hidden">
+              <Link
+                href="/contributors"
+                className="inline-flex items-center gap-1.5 text-steel text-sm font-medium hover:text-navy transition-colors"
+              >
+                View All Contributors <ArrowRight size={14} />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+    </>
   );
 }
