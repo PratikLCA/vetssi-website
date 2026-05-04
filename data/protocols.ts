@@ -1,9 +1,15 @@
+export type ProtocolStep = string | { title: string; details: string[] };
+
 export type Protocol = {
   slug: string;
   title: string;
   phase: "preoperative" | "intraoperative" | "postoperative";
+  pathways: string[];
+  roles: string[];
   clinicalObjective: string;
-  steps: string[];
+  whyThisMatters?: string;
+  criticalControlPoints: string[];
+  steps: ProtocolStep[];
   pitfalls: string[];
   expertInsight: string;
   evidence: { citation: string; doi?: string }[];
@@ -14,11 +20,21 @@ export type Protocol = {
 export const protocols: Protocol[] = [
   // ─── PREOPERATIVE ────────────────────────────────────────────────────────────
   {
-    slug: "patient-selection-risk-stratification",
-    title: "Patient Selection & Risk Stratification",
+    slug: "patient-risk-stratification",
+    title: "Patient Risk Stratification",
     phase: "preoperative",
+    pathways: ["patient"],
+    roles: ["surgeon"],
     clinicalObjective:
       "Identify patients at elevated risk for surgical site infection prior to scheduling or proceeding with elective procedures. Risk stratification enables targeted prophylactic measures and informed client communication. A structured pre-surgical assessment reduces preventable SSIs by allowing protocol modifications before the patient reaches the operating room.",
+    whyThisMatters:
+      "The most preventable SSIs are those that occur in patients who should not have been operated on electively in their presenting condition. A structured risk review changes the care pathway before a single incision is made.",
+    criticalControlPoints: [
+      "Active skin disease at or near the surgical site is identified and addressed before scheduling",
+      "Immunosuppressive therapy is documented and accounted for in the prophylaxis plan",
+      "ASA classification is recorded and shared with the entire surgical team",
+      "Elevated-risk patients trigger enhanced perioperative protocols",
+    ],
     steps: [
       "Review complete medical history, including prior infections, immunosuppressive therapy, and concurrent disease.",
       "Assess body condition score (BCS); obesity (BCS ≥ 8/9) is an independent SSI risk factor.",
@@ -53,15 +69,24 @@ export const protocols: Protocol[] = [
         doi: "10.1111/vsu.12375",
       },
     ],
-    relatedProtocols: ["preoperative-skin-preparation", "perioperative-antibiotic-prophylaxis"],
-    relatedVideos: ["preoperative-patient-assessment"],
+    relatedProtocols: ["preoperative-skin-preparation", "antimicrobial-prophylaxis"],
+    relatedVideos: [],
   },
   {
     slug: "preoperative-skin-preparation",
     title: "Preoperative Skin Preparation",
     phase: "preoperative",
+    pathways: ["patient"],
+    roles: ["prep-technician"],
     clinicalObjective:
       "Reduce the microbial burden on the patient's skin at and around the intended surgical site to the lowest achievable level before incision. Effective skin preparation addresses both resident and transient flora and is among the most impactful single interventions in SSI prevention.",
+    whyThisMatters:
+      "Skin antisepsis is the most validated single intervention in SSI prevention. Discipline around contact time and technique determines whether the agent works as evidence predicts.",
+    criticalControlPoints: [
+      "Clipping is performed in a dedicated prep area, never in the OR",
+      "Antiseptic contact time is timed, not estimated",
+      "Final paint coat is fully dry before drapes are applied",
+    ],
     steps: [
       "Clip the surgical site in a designated preparation area — never in the operating room.",
       "Perform an initial gross cleaning of the site with a mild surgical scrub solution.",
@@ -98,8 +123,17 @@ export const protocols: Protocol[] = [
     slug: "clipping-timing-technique",
     title: "Clipping Timing & Technique",
     phase: "preoperative",
+    pathways: ["patient"],
+    roles: ["prep-technician"],
     clinicalObjective:
       "Establish evidence-based standards for the timing, extent, and method of hair removal from the surgical site. Clipping-related microabrasions are a primary contributor to SSI risk; technique and timing both significantly affect outcomes.",
+    whyThisMatters:
+      "Skin microabrasions colonize with bacteria within hours. Clipping timing is one of the most consistently underestimated SSI variables in day-to-day practice.",
+    criticalControlPoints: [
+      "Clipping occurs as close to incision time as feasible (ideally within 1 hour)",
+      "Sharp blades and a generous margin",
+      "Clipped hair is fully removed from the patient and prep area",
+    ],
     steps: [
       "Schedule clipping as close to surgery time as possible — ideally within 1 hour of incision.",
       "Use a dedicated clipper blade (size 40 for fine work; 10 for gross removal) maintained in good repair.",
@@ -136,8 +170,17 @@ export const protocols: Protocol[] = [
     slug: "surgical-site-antisepsis",
     title: "Surgical Site Antisepsis",
     phase: "preoperative",
+    pathways: ["patient", "surgical-field-isolation"],
+    roles: ["prep-technician", "surgeon"],
     clinicalObjective:
       "Select and correctly apply antiseptic agents to achieve maximal reduction in viable organisms at the surgical site immediately prior to draping and incision. Agent selection and application method must be matched to the site anatomy and patient characteristics.",
+    whyThisMatters:
+      "Antiseptic technique matters more than antiseptic selection. The 'paint and drape' reflex is one of the most common preventable technique errors in veterinary surgery.",
+    criticalControlPoints: [
+      "Agent matched to anatomic site (mucous membranes require diluted preparations)",
+      "Application strokes move from incision center outward",
+      "Full dry time before drape application",
+    ],
     steps: [
       "Select the appropriate antiseptic agent based on site location, patient skin integrity, and institutional protocol.",
       "For most body surface sites: use 2% chlorhexidine gluconate in 70% isopropyl alcohol.",
@@ -171,11 +214,20 @@ export const protocols: Protocol[] = [
     relatedVideos: ["antiseptic-application"],
   },
   {
-    slug: "perioperative-antibiotic-prophylaxis",
-    title: "Perioperative Antibiotic Prophylaxis",
+    slug: "antimicrobial-prophylaxis",
+    title: "Antimicrobial Prophylaxis",
     phase: "preoperative",
+    pathways: ["intraoperative-adjuncts"],
+    roles: ["surgeon", "anesthetist"],
     clinicalObjective:
       "Administer systemic antibiotic prophylaxis at the correct time, dose, and duration to reduce SSI risk in appropriate surgical cases, while avoiding unnecessary antibiotic use that contributes to antimicrobial resistance. Prophylaxis is not a substitute for good surgical technique.",
+    whyThisMatters:
+      "The antibiotic is one layer of a bundle. It only works if the rest of the bundle is intact, and only when timing places peak tissue concentration at the moment of incision.",
+    criticalControlPoints: [
+      "Dose administered 30–60 minutes before incision — verified verbally before the case begins",
+      "Redosing scheduled for procedures over 90 minutes",
+      "Prophylaxis discontinued within 24 hours of surgery",
+    ],
     steps: [
       "Assess the wound classification (clean, clean-contaminated, contaminated, dirty) to determine whether prophylaxis is indicated.",
       "For clean procedures under 60 minutes in low-risk patients, prophylaxis may not be indicated — review evidence-based guidelines.",
@@ -201,7 +253,7 @@ export const protocols: Protocol[] = [
       },
       {
         citation:
-          "Weese JS, et al. Antimicrobial use guidelines for treatment of urinary tract disease in dogs and cats: Antimicrobial Guidelines Working Group of the International Society for Companion Animal Infectious Diseases. Veterinary Medicine International. 2011;2011:263768.",
+          "Weese JS, et al. Antimicrobial use guidelines for treatment of urinary tract disease in dogs and cats. Veterinary Medicine International. 2011;2011:263768.",
         doi: "10.4061/2011/263768",
       },
       {
@@ -210,17 +262,431 @@ export const protocols: Protocol[] = [
         doi: "10.1016/j.cvsm.2011.05.010",
       },
     ],
-    relatedProtocols: ["patient-selection-risk-stratification", "antibiotic-stewardship-decisions"],
-    relatedVideos: ["antibiotic-timing-overview"],
+    relatedProtocols: ["patient-risk-stratification", "postoperative-antibiotic-decisions"],
+    relatedVideos: [],
+  },
+  {
+    slug: "surgical-team-preparation",
+    title: "Surgical Team Preparation",
+    phase: "preoperative",
+    pathways: ["surgical-team"],
+    roles: ["surgeon", "scrub-technician"],
+    clinicalObjective:
+      "Establish a coordinated pre-incision sequence in which the surgical team confirms preparation status, sterile setup, prophylaxis timing, and contamination-event protocol before any patient enters the operating room.",
+    whyThisMatters:
+      "A briefed team operates with shared expectations. When pre-incision standards are confirmed verbally, common failure points — late antibiotics, missing implants, undefined contamination response — surface before they become intraoperative problems.",
+    criticalControlPoints: [
+      "Surgical safety pause completed before incision",
+      "Prophylactic antibiotic timing confirmed verbally",
+      "Implant inventory verified",
+      "Contamination-response plan acknowledged by all team members",
+    ],
+    steps: [
+      "Conduct a structured pre-case briefing with surgeon, scrub technician, anesthetist, and circulating nurse present.",
+      "Confirm patient identity, procedure, and surgical site against the chart.",
+      "Verify prophylactic antibiotic administration time aloud — no incision until confirmation.",
+      "Confirm sterile setup is complete and instrument counts are correct.",
+      "State expected duration and any anticipated contamination-sensitive phases.",
+      "Acknowledge contamination-event protocol: the team member who sees a breach announces it immediately.",
+    ],
+    pitfalls: [
+      "Skipping the briefing 'because everyone knows the case' — undocumented assumptions cause errors.",
+      "Beginning before antibiotic timing is verbally confirmed.",
+      "Briefing without the full team present — anyone added late operates without context.",
+    ],
+    expertInsight:
+      "The team that briefs together catches the error that any one person would have missed.",
+    evidence: [
+      {
+        citation:
+          "Haynes AB, et al. A surgical safety checklist to reduce morbidity and mortality in a global population. New England Journal of Medicine. 2009;360(5):491–499.",
+        doi: "10.1056/NEJMsa0810119",
+      },
+    ],
+    relatedProtocols: [
+      "hand-hygiene",
+      "or-attire-standards",
+      "antimicrobial-prophylaxis",
+      "sterile-field-maintenance",
+    ],
+    relatedVideos: ["sterile-gowning-gloving"],
+  },
+  {
+    slug: "hand-hygiene",
+    title: "Hand Hygiene",
+    phase: "preoperative",
+    pathways: ["surgical-team"],
+    roles: ["surgeon", "anesthetist", "prep-technician", "scrub-technician", "recovery-team"],
+    clinicalObjective:
+      "Reduce transient and resident microbial flora on the hands and forearms of all surgical personnel before donning sterile attire and at every transition that exposes hands to potential contamination.",
+    whyThisMatters:
+      "Hands are the most frequent vector of contamination in any surgical environment. Surgical hand antisepsis is the single most validated infection-control intervention performed by every team member.",
+    criticalControlPoints: [
+      "Surgical hand antisepsis performed before initial gowning",
+      "Hand hygiene re-performed at any contamination event",
+      "Alcohol-based surgical hand rub applied to fully dry hands",
+    ],
+    steps: [
+      "Remove all jewelry from hands and wrists; ensure nails are short and free of polish or artificial extensions.",
+      "Perform a pre-scrub wash with soap and water to remove gross contamination.",
+      "Apply surgical hand rub or perform a timed surgical scrub per the institutional protocol.",
+      "Use a brushless technique with chlorhexidine 4% or an alcohol-based formulation containing chlorhexidine for 2–5 minutes.",
+      "Keep hands above elbows during and after antisepsis until donning the sterile gown.",
+      "Re-perform hand hygiene if hands contact any non-sterile surface before gloving.",
+    ],
+    pitfalls: [
+      "Performing alcohol-based hand antisepsis on wet hands — alcohol products require dry skin to work properly.",
+      "Skipping pre-wash when hands are visibly soiled — alcohol products do not penetrate organic matter.",
+      "Reusing the same gown sleeve to dry; always use a sterile towel.",
+      "Not re-scrubbing after touching anything outside the sterile field.",
+    ],
+    expertInsight:
+      "If you cannot remember when you last performed hand hygiene during the case, do it now.",
+    evidence: [
+      {
+        citation:
+          "World Health Organization. WHO Guidelines on Hand Hygiene in Health Care. Geneva: WHO; 2009.",
+      },
+    ],
+    relatedProtocols: ["surgical-team-preparation", "glove-change-protocol", "or-attire-standards"],
+    relatedVideos: ["sterile-gowning-gloving"],
+  },
+  {
+    slug: "or-attire-standards",
+    title: "OR Attire Standards",
+    phase: "preoperative",
+    pathways: ["surgical-team", "or-environment"],
+    roles: ["surgeon", "anesthetist", "prep-technician", "scrub-technician"],
+    clinicalObjective:
+      "Standardize operating room attire to minimize particulate and microbial shedding from skin, hair, and personal clothing into the surgical field and air.",
+    whyThisMatters:
+      "Personnel are a continuous source of skin squamous cells and bacteria. OR-specific attire creates a barrier that limits how much of that load reaches the field.",
+    criticalControlPoints: [
+      "Hair fully covered before entering the OR",
+      "Mask covers nose and mouth completely",
+      "OR scrubs are clean and dedicated to the OR area",
+      "No personal clothing visible at neck, sleeves, or waistband",
+    ],
+    steps: [
+      "Don clean OR scrubs upon entering the surgical suite — change between cases when soiled.",
+      "Cover all hair, including beards, with a fitted cap or hood.",
+      "Apply a fluid-resistant surgical mask over nose and mouth before entering the sterile zone.",
+      "Remove jewelry, including watches and rings, before scrub.",
+      "Avoid bringing personal items, lanyards, or pens into the OR sterile zone.",
+      "Replace mask and head cover between cases.",
+    ],
+    pitfalls: [
+      "Wearing OR scrubs outside the surgical suite, then returning — outside contamination is reintroduced.",
+      "Loose-fitting masks that gap at the bridge of the nose.",
+      "Neck chains, dangling hair, or visible undershirts not covered by scrubs.",
+    ],
+    expertInsight:
+      "What you wear is what you bring into the field — visibly and invisibly.",
+    evidence: [
+      {
+        citation:
+          "AORN Guidelines for Perioperative Practice. Surgical Attire. Denver: AORN, Inc.; 2023.",
+      },
+    ],
+    relatedProtocols: ["surgical-team-preparation", "hand-hygiene", "or-behavior-rules"],
+    relatedVideos: [],
+  },
+  {
+    slug: "anesthesia-vascular-access-control",
+    title: "Anesthesia & Vascular Access Control",
+    phase: "preoperative",
+    pathways: ["intraoperative-adjuncts"],
+    roles: ["anesthetist"],
+    clinicalObjective:
+      "Maintain aseptic discipline at every point of vascular access, infusion line manipulation, and medication delivery during anesthesia, recognizing that each access is a direct route to the bloodstream.",
+    whyThisMatters:
+      "Bloodstream contamination bypasses every other infection-control barrier. Anesthesia-side asepsis is one of the most frequent and underestimated SSI risk factors.",
+    criticalControlPoints: [
+      "Hand hygiene before every line manipulation",
+      "Injection ports cleaned with alcohol before access",
+      "No reuse of single-patient fluids or syringes between patients",
+    ],
+    steps: [
+      "Perform hand hygiene before every interaction with vascular access devices.",
+      "Disinfect injection ports with 70% isopropyl alcohol for 15 seconds before access.",
+      "Use single-use syringes; do not reuse syringes between drugs or between patients.",
+      "Maintain a clean anesthesia workspace — do not place medications on dirty surfaces.",
+      "Inspect the IV catheter site at induction and post-induction; document any concerns.",
+      "Keep infusion lines off the floor and away from non-sterile contact.",
+    ],
+    pitfalls: [
+      "Touching access ports without prior disinfection.",
+      "Reusing a 'clean-looking' syringe between drug administrations.",
+      "Allowing fluid bags or lines to drape onto non-sterile surfaces.",
+      "Unrecognized contamination of the workspace from prior cases.",
+    ],
+    expertInsight: "The anesthesia line is part of the patient. Treat it as such.",
+    evidence: [
+      {
+        citation:
+          "O'Grady NP, et al. Guidelines for the prevention of intravascular catheter-related infections. Clinical Infectious Diseases. 2011;52(9):e162–e193.",
+      },
+    ],
+    relatedProtocols: ["iv-catheter-placement", "medication-handling", "antimicrobial-prophylaxis"],
+    relatedVideos: [],
+  },
+  {
+    slug: "iv-catheter-placement",
+    title: "IV Catheter Placement",
+    phase: "preoperative",
+    pathways: ["intraoperative-adjuncts"],
+    roles: ["anesthetist"],
+    clinicalObjective:
+      "Place and maintain peripheral or central intravenous catheters using aseptic technique that minimizes the risk of bloodstream infection over the duration of the catheter.",
+    whyThisMatters:
+      "Catheter-related bloodstream infection is a recognized cause of postoperative morbidity. Aseptic placement is the single most modifiable risk factor.",
+    criticalControlPoints: [
+      "Skin preparation with chlorhexidine-alcohol before insertion",
+      "Aseptic technique during placement",
+      "Sterile transparent dressing applied at insertion",
+    ],
+    steps: [
+      "Select an appropriate vein and clip the site if hair is dense.",
+      "Perform aseptic skin preparation with 2% chlorhexidine in 70% alcohol; allow to dry.",
+      "Don clean or sterile gloves per the institutional protocol; handle the catheter aseptically.",
+      "Place the catheter with a single, controlled stick where possible — multiple punctures elevate risk.",
+      "Apply a sterile transparent dressing immediately, with the catheter hub visible for monitoring.",
+      "Document placement date and time; replace per protocol or sooner if any concern arises.",
+    ],
+    pitfalls: [
+      "Skipping skin antisepsis 'because the patient is already prepped'.",
+      "Using the same hand to handle both the unprepped skin and the catheter tip.",
+      "Securing the catheter with tape over the insertion site, obscuring inspection.",
+      "Leaving catheters in beyond standard duration without indication.",
+    ],
+    expertInsight:
+      "Every minute saved by skipping aseptic catheter placement is repaid in days of treatment if infection occurs.",
+    evidence: [
+      {
+        citation: "Mathews KA. Veterinary Emergency and Critical Care Manual, 2nd ed. Lifelearn; 2017.",
+      },
+    ],
+    relatedProtocols: ["anesthesia-vascular-access-control", "medication-handling"],
+    relatedVideos: [],
+  },
+  {
+    slug: "medication-handling",
+    title: "Medication Handling",
+    phase: "preoperative",
+    pathways: ["intraoperative-adjuncts"],
+    roles: ["anesthetist"],
+    clinicalObjective:
+      "Prepare, label, store, and administer medications using practices that prevent contamination of single-patient and multi-use containers, syringes, and infusion systems.",
+    whyThisMatters:
+      "A contaminated medication vial is a single-source contamination event that can affect every patient who receives a dose. Medication discipline protects every case downstream.",
+    criticalControlPoints: [
+      "Single-patient vials never accessed for a second patient",
+      "Multi-dose vials accessed only with a new sterile needle and syringe",
+      "All prepared syringes labeled with drug, dose, and time",
+    ],
+    steps: [
+      "Disinfect the rubber stopper with alcohol before accessing any vial.",
+      "Use a new sterile needle and syringe for every withdrawal from a multi-dose vial.",
+      "Label every prepared syringe with drug, concentration, and time of preparation.",
+      "Discard single-patient vials immediately after the case — never carry over.",
+      "Store opened multi-dose vials per manufacturer guidance and expiry; date upon first access.",
+      "Inspect for particulates, discoloration, or cloudiness before drawing any drug.",
+    ],
+    pitfalls: [
+      "Re-entering a vial with a previously used needle.",
+      "Drawing 'a quick dose' from a single-patient vial for the next animal.",
+      "Unlabeled syringes — ambiguity at the workspace causes drug errors and contamination.",
+      "Storing vials on or near contaminated surfaces.",
+    ],
+    expertInsight: "An unlabeled syringe is a contaminated syringe.",
+    evidence: [
+      {
+        citation:
+          "Centers for Disease Control and Prevention. Injection Safety: Healthcare-associated Infection Prevention. CDC; 2021.",
+      },
+    ],
+    relatedProtocols: ["anesthesia-vascular-access-control", "iv-catheter-placement"],
+    relatedVideos: [],
+  },
+  {
+    slug: "or-environment-setup",
+    title: "OR Environment & Room Setup",
+    phase: "preoperative",
+    pathways: ["or-environment"],
+    roles: ["prep-technician"],
+    clinicalObjective:
+      "Prepare the operating room environment so that air handling, surface cleanliness, equipment placement, and personnel limits all support a controlled sterile field before the patient enters.",
+    whyThisMatters:
+      "Environmental contamination is invisible, and its effects compound over the case. The room must be ready before sterile setup begins, not adjusted around it.",
+    criticalControlPoints: [
+      "Positive-pressure ventilation confirmed functional before sterile setup",
+      "Surfaces cleaned and disinfected between cases with approved agents",
+      "Temperature 18–24°C and relative humidity 40–60%",
+      "Equipment placed before sterile setup so movement during the case is minimized",
+    ],
+    steps: [
+      "Confirm positive-pressure ventilation is operating before any sterile setup begins.",
+      "Wipe down all surfaces with an approved disinfectant; allow contact time per the product label.",
+      "Verify temperature and humidity targets are within range.",
+      "Position large equipment (anesthesia machine, monitors, lights, suction) before sterile setup.",
+      "Stage instrument tables and supplies so the scrub technician can set up without leaning across non-sterile surfaces.",
+      "Confirm doors close fully and seal — repair any failure before the case proceeds.",
+    ],
+    pitfalls: [
+      "Cleaning surfaces with insufficient contact time — the disinfectant did not work.",
+      "Adjusting equipment position after sterile setup, requiring movement near the field.",
+      "Beginning the case with a malfunctioning HVAC or door seal.",
+      "Cursory cleaning between back-to-back cases.",
+    ],
+    expertInsight:
+      "A clean OR is not just a cleaned room. It is a controlled environment with controlled behavior.",
+    evidence: [
+      {
+        citation:
+          "AORN Guidelines for Perioperative Practice. Environmental Cleaning. Denver: AORN, Inc.; 2023.",
+      },
+    ],
+    relatedProtocols: ["or-traffic-control", "or-attire-standards", "sterile-field-maintenance"],
+    relatedVideos: ["or-setup-walkthrough"],
   },
 
   // ─── INTRAOPERATIVE ──────────────────────────────────────────────────────────
   {
-    slug: "aseptic-technique-sterile-field",
-    title: "Aseptic Technique & Sterile Field Maintenance",
+    slug: "or-behavior-rules",
+    title: "OR Behavior Rules",
     phase: "intraoperative",
+    pathways: ["surgical-team", "or-environment"],
+    roles: ["surgeon", "scrub-technician", "prep-technician"],
+    clinicalObjective:
+      "Define the movement, speech, and interaction rules for personnel in the operating room during a case to minimize air turbulence, particulate generation, and field contamination.",
+    whyThisMatters:
+      "Movement and speech increase particulate counts in the air. The most carefully prepared sterile field can be compromised by undisciplined room behavior during the case.",
+    criticalControlPoints: [
+      "No unnecessary movement during contamination-sensitive phases",
+      "Speech limited to clinically necessary communication",
+      "Sterile boundaries respected by every team member",
+    ],
+    steps: [
+      "Brief all personnel on movement and speech expectations before the case begins.",
+      "During implant placement and other sensitive phases, all non-essential movement pauses.",
+      "Personnel approach the sterile field only with explicit purpose and verbal acknowledgment.",
+      "Avoid leaning over sterile surfaces; pass items around or below the field, never across.",
+      "Keep voices low and conversation clinical — minimize aerosol generation.",
+      "If movement is required, do so deliberately — no abrupt actions near the field.",
+    ],
+    pitfalls: [
+      "Casual conversation during the case — every word produces aerosol.",
+      "Leaning across the field to read a monitor — establishes a contamination corridor.",
+      "Personnel pacing in and out of the OR for unrelated tasks.",
+    ],
+    expertInsight: "Stillness is a sterile technique.",
+    evidence: [
+      {
+        citation:
+          "Stocks GW, et al. Predicting bacterial populations based on airborne particulates: a study performed in nonlaminar flow operating rooms during joint arthroplasty surgery. American Journal of Infection Control. 2010;38(3):199–204.",
+      },
+    ],
+    relatedProtocols: ["or-traffic-control", "or-attire-standards", "sterile-field-maintenance"],
+    relatedVideos: ["or-setup-walkthrough"],
+  },
+  {
+    slug: "or-traffic-control",
+    title: "OR Traffic Control",
+    phase: "intraoperative",
+    pathways: ["or-environment"],
+    roles: ["prep-technician"],
+    clinicalObjective:
+      "Minimize airborne and contact contamination within the operating room by controlling personnel movement and door activity during surgery. OR traffic is a modifiable SSI risk factor that is frequently underestimated.",
+    whyThisMatters:
+      "Each door opening during a procedure displaces clean air and introduces particulates. Studies in human surgery have documented measurable increases in particulate count near the sterile field with each entry.",
+    criticalControlPoints: [
+      "OR doors closed throughout the procedure",
+      "Single circulating nurse responsible for managing access",
+      "Re-entry restrictions enforced for the duration of the case",
+    ],
+    steps: [
+      "Limit OR occupancy to the minimum required for the procedure — count personnel before starting.",
+      "Designate a circulating nurse responsible for managing access during the case.",
+      "Keep OR doors closed throughout the procedure; each door opening displaces clean air and introduces particulates.",
+      "Brief all team members before the procedure: no unnecessary movement, no exit-reentry without necessity.",
+      "Track door openings during the case as a quality metric — review at debrief.",
+      "Restrict observers and non-essential personnel.",
+    ],
+    pitfalls: [
+      "Propping OR doors open between cases or during procedures — this fundamentally compromises positive pressure.",
+      "Allowing non-essential students, observers, or staff to be present, particularly in small ORs.",
+      "Failing to enforce re-entry restrictions: personnel who leave mid-case and return carry contamination back in.",
+      "Performing OR cleaning cursorily between back-to-back cases.",
+    ],
+    expertInsight:
+      "Fewer people, fewer doors, fewer infections.",
+    evidence: [
+      {
+        citation:
+          "Pryor F, et al. The effect of traffic patterns in the OR on surgical site infections. AORN Journal. 2010;91(6):762–794.",
+        doi: "10.1016/j.aorn.2010.02.014",
+      },
+    ],
+    relatedProtocols: ["or-environment-setup", "or-behavior-rules", "sterile-field-maintenance"],
+    relatedVideos: ["or-setup-walkthrough"],
+  },
+  {
+    slug: "draping-technique",
+    title: "Draping Technique",
+    phase: "intraoperative",
+    pathways: ["surgical-field-isolation"],
+    roles: ["surgeon", "scrub-technician"],
+    clinicalObjective:
+      "Correctly apply sterile surgical drapes to isolate the prepared surgical site from the patient's surrounding (non-sterile) body surfaces, equipment, and the environment. Proper draping is the final physical barrier between the prepared field and contamination.",
+    whyThisMatters:
+      "A single draping error can be traced directly to an SSI. Once placed, drapes are not moved — the rule is absolute.",
+    criticalControlPoints: [
+      "Prepared skin fully dry before any drape is applied",
+      "Drapes are not repositioned once placed",
+      "All non-sterile surfaces are covered, including anesthetic lines",
+    ],
+    steps: [
+      "Confirm that the prepared skin surface is completely dry before applying drapes.",
+      "Open drape packs using aseptic technique; hand sterile drapes to the scrubbed surgeon without contaminating the package interior.",
+      "Apply fenestrated or towel drapes beginning at the prepared site and working outward.",
+      "Secure drapes to patient with towel clamps at four cardinal points before applying the field drape.",
+      "Ensure the drape fenestration (opening) is correctly aligned with the incision site and of adequate size.",
+      "Do not reposition drapes once placed — repositioning disrupts the sterile barrier.",
+      "Cover all non-sterile surfaces, including the anesthetic circuit lines and monitoring equipment attachments.",
+    ],
+    pitfalls: [
+      "Repositioning drapes after placement to 'correct' the alignment — this drags contaminated surface under the sterile field.",
+      "Using drapes with holes, tears, or moisture strike-through, which provide a pathway for microorganism migration.",
+      "Insufficient drape extension — leaving non-sterile patient surfaces exposed near the field.",
+      "Allowing drapes to contact the floor, which immediately compromises their sterile status.",
+    ],
+    expertInsight:
+      "I have seen SSIs traced directly to a single draping error — a repositioned clamp that dragged non-prepped skin edge under the field. The rule that drapes, once placed, are not moved is absolute. If the alignment is wrong, the correct action is to add a supplementary drape, not to shift the original. Plan the placement before you commit; once the drape is on the patient, it stays.",
+    evidence: [
+      {
+        citation:
+          "Tanner J, et al. Surgical drapes for preventing surgical site infections. Cochrane Database of Systematic Reviews. 2015;7:CD006353.",
+        doi: "10.1002/14651858.CD006353.pub4",
+      },
+    ],
+    relatedProtocols: ["sterile-field-maintenance", "surgical-site-antisepsis", "contamination-event-response"],
+    relatedVideos: ["draping-technique-demo"],
+  },
+  {
+    slug: "sterile-field-maintenance",
+    title: "Sterile Field Maintenance",
+    phase: "intraoperative",
+    pathways: ["surgical-field-isolation", "surgical-team"],
+    roles: ["scrub-technician", "surgeon"],
     clinicalObjective:
       "Maintain an uncompromised sterile field throughout the procedure by establishing clear boundaries, enforcing behavioral discipline, and responding immediately to any breach. Sterile field failures are a primary cause of preventable intraoperative contamination.",
+    whyThisMatters:
+      "Sterile technique is fundamentally a culture issue, not a knowledge issue. Failures happen when small shortcuts become normalized.",
+    criticalControlPoints: [
+      "Sterile boundaries clearly defined before the case begins",
+      "Visual control of all sterile instruments at all times",
+      "Immediate verbal announcement of any contamination event",
+    ],
     steps: [
       "Establish the sterile field only when the surgical team is present and prepared to proceed.",
       "Clearly define sterile boundaries: front of gown (chest to waist), gloved hands above waist.",
@@ -250,86 +716,64 @@ export const protocols: Protocol[] = [
         doi: "10.1001/jamasurg.2017.0904",
       },
     ],
-    relatedProtocols: ["surgical-draping-methods", "or-traffic-environmental"],
-    relatedVideos: ["sterile-gowning-gloving", "sterile-field-setup"],
+    relatedProtocols: ["draping-technique", "glove-change-protocol", "contamination-event-response"],
+    relatedVideos: ["sterile-gowning-gloving"],
   },
   {
-    slug: "surgical-draping-methods",
-    title: "Surgical Draping Methods",
+    slug: "glove-change-protocol",
+    title: "Glove Change Protocol",
     phase: "intraoperative",
+    pathways: ["surgical-team", "instruments-implants"],
+    roles: ["surgeon", "scrub-technician"],
     clinicalObjective:
-      "Correctly apply sterile surgical drapes to isolate the prepared surgical site from the patient's surrounding (non-sterile) body surfaces, equipment, and the environment. Proper draping is the final physical barrier between the prepared field and contamination.",
+      "Define the moments at which surgical gloves must be changed during a procedure to maintain sterility, particularly before high-stakes events such as implant handling or following any contamination.",
+    whyThisMatters:
+      "Gloves accumulate microscopic contamination during a procedure even without visible breach. Strategic glove changes preserve sterility at the highest-risk moments.",
+    criticalControlPoints: [
+      "Outer glove change immediately before implant handling",
+      "Glove change after any suspected contamination",
+      "Glove change after extended manipulation or visible perforation",
+    ],
     steps: [
-      "Confirm that the prepared skin surface is completely dry before applying drapes.",
-      "Open drape packs using aseptic technique; hand sterile drapes to the scrubbed surgeon without contaminating the package interior.",
-      "Apply fenestrated or towel drapes beginning at the prepared site and working outward.",
-      "Secure drapes to patient with towel clamps at four cardinal points before applying the field drape.",
-      "Ensure the drape fenestration (opening) is correctly aligned with the incision site and of adequate size.",
-      "Do not reposition drapes once placed — repositioning disrupts the sterile barrier.",
-      "Cover all non-sterile surfaces, including the anesthetic circuit lines and monitoring equipment attachments.",
+      "Don two pairs of gloves at initial gowning for procedures involving implants.",
+      "Change the outer glove immediately before handling any orthopedic implant.",
+      "Change gloves after touching any non-sterile surface — no exceptions.",
+      "Inspect gloves for visible perforations during the case; change if any defect is suspected.",
+      "Use the closed or assisted glove-change technique to maintain sterile gown integrity.",
+      "Announce glove changes to the team for awareness.",
     ],
     pitfalls: [
-      "Repositioning drapes after placement to 'correct' the alignment — this drags contaminated surface under the sterile field.",
-      "Using drapes with holes, tears, or moisture strike-through, which provide a pathway for microorganism migration.",
-      "Insufficient drape extension — leaving non-sterile patient surfaces exposed near the field.",
-      "Allowing drapes to contact the floor, which immediately compromises their sterile status.",
+      "Skipping the pre-implant glove change to save time.",
+      "Changing only one glove when both have been compromised.",
+      "Using a contaminated technique (open gloving) mid-case without supervision.",
+      "Failing to inspect for tears after a long instrument-handling phase.",
     ],
     expertInsight:
-      "I have seen SSIs traced directly to a single draping error — a repositioned clamp that dragged non-prepped skin edge under the field. The rule that drapes, once placed, are not moved is absolute. If the alignment is wrong, the correct action is to add a supplementary drape, not to shift the original. Plan the placement before you commit; once the drape is on the patient, it stays.",
+      "The glove change before the implant is non-negotiable. It is a 30-second intervention against a months-long infection.",
     evidence: [
       {
         citation:
-          "Tanner J, et al. Surgical drapes for preventing surgical site infections. Cochrane Database of Systematic Reviews. 2015;7:CD006353.",
-        doi: "10.1002/14651858.CD006353.pub4",
+          "Tanner J, Parkinson H. Double gloving to reduce surgical cross-infection. Cochrane Database of Systematic Reviews. 2006;3:CD003087.",
       },
     ],
-    relatedProtocols: ["aseptic-technique-sterile-field", "or-traffic-environmental"],
-    relatedVideos: ["draping-technique-demo"],
+    relatedProtocols: ["implant-handling", "sterile-field-maintenance", "hand-hygiene", "contamination-event-response"],
+    relatedVideos: ["sterile-gowning-gloving"],
   },
   {
-    slug: "or-traffic-environmental",
-    title: "OR Traffic Control & Environmental Management",
+    slug: "instrument-sterility",
+    title: "Instrument Sterility",
     phase: "intraoperative",
+    pathways: ["instruments-implants"],
+    roles: ["scrub-technician"],
     clinicalObjective:
-      "Minimize airborne and contact contamination within the operating room by controlling personnel movement, door activity, and environmental conditions during surgery. OR environment is a modifiable SSI risk factor that is frequently underestimated.",
-    steps: [
-      "Limit OR occupancy to the minimum required for the procedure — count personnel before starting.",
-      "Designate a circulating nurse responsible for managing access during the case.",
-      "Keep OR doors closed throughout the procedure; each door opening displaces clean air and introduces particulates.",
-      "Brief all team members before the procedure: no unnecessary movement, no exit-reentry without necessity.",
-      "Maintain OR temperature between 18–24°C and relative humidity 40–60% per HVAC standards.",
-      "Ensure proper positive-pressure ventilation is functioning before beginning the procedure.",
-      "Conduct post-case cleaning with approved disinfectants before the next patient enters.",
+      "Ensure all instruments used in surgery are properly decontaminated, packaged, sterilized, and maintained in sterile condition until the moment of use. Instrument-related contamination is one of the few SSI causes that is entirely preventable.",
+    whyThisMatters:
+      "Sterilization failure is underreported because it is rarely identified. The instrument looks sterile; the pack looks intact. Establishing rigorous, documented validation is foundational.",
+    criticalControlPoints: [
+      "Validated sterilization cycles with documented chemical and biological indicator results",
+      "Pack integrity and expiry verified immediately before opening",
+      "Instruments cleaned of all biological material before sterilization",
     ],
-    pitfalls: [
-      "Propping OR doors open between cases or during procedures — this fundamentally compromises positive pressure.",
-      "Allowing non-essential students, observers, or staff to be present, particularly in small ORs.",
-      "Failing to enforce re-entry restrictions: personnel who leave mid-case and return carry contamination back in.",
-      "Performing OR cleaning cursorily between back-to-back cases.",
-    ],
-    expertInsight:
-      "In high-volume teaching hospitals, OR door openings are one of the most consistent and modifiable SSI risk variables. Studies in human surgery have documented that each door opening during a procedure delivers a measurable increase in particulate count within the sterile field vicinity. The data in veterinary surgery is limited but the physics are identical. Fewer people, fewer doors, fewer infections.",
-    evidence: [
-      {
-        citation:
-          "Pryor F, et al. The effect of traffic patterns in the OR on surgical site infections. AORN Journal. 2010;91(6):762–794.",
-        doi: "10.1016/j.aorn.2010.02.014",
-      },
-      {
-        citation:
-          "Stockert EW, et al. Quantifying and reducing central venous catheter complications. Annals of Surgery. 2014;259(6):1166–1173.",
-        doi: "10.1097/SLA.0000000000000274",
-      },
-    ],
-    relatedProtocols: ["aseptic-technique-sterile-field", "surgical-draping-methods"],
-    relatedVideos: ["or-setup-walkthrough"],
-  },
-  {
-    slug: "instrument-sterilization",
-    title: "Instrument Handling & Sterilization",
-    phase: "intraoperative",
-    clinicalObjective:
-      "Ensure all instruments and implants used in surgery are properly decontaminated, packaged, sterilized, and maintained in sterile condition until the moment of use. Instrument-related contamination is one of the few SSI causes that is entirely preventable.",
     steps: [
       "Decontaminate all soiled instruments immediately after use: manual scrubbing or ultrasonic cleaning.",
       "Inspect instruments for defects (bent tips, broken ratchets, compromised insulation) before packaging.",
@@ -358,34 +802,215 @@ export const protocols: Protocol[] = [
         doi: "10.1128/CMR.12.1.147",
       },
     ],
-    relatedProtocols: ["aseptic-technique-sterile-field", "or-traffic-environmental"],
-    relatedVideos: ["instrument-prep-packing"],
+    relatedProtocols: ["implant-handling", "sterile-field-maintenance", "or-environment-setup"],
+    relatedVideos: [],
+  },
+  {
+    slug: "implant-handling",
+    title: "Implant Handling Protocol",
+    phase: "intraoperative",
+    pathways: ["instruments-implants", "surgical-team"],
+    roles: ["scrub-technician", "surgeon"],
+    clinicalObjective:
+      "To maintain sterility of orthopedic implants from packaging to implantation, minimizing the risk of introducing microorganisms that may lead to biofilm formation and surgical site infection.",
+    whyThisMatters:
+      "Implants provide an ideal surface for bacterial adhesion and biofilm formation. Even minimal contamination at the time of implantation may lead to persistent infection that is difficult to eradicate.",
+    criticalControlPoints: [
+      "Implants must remain sterile until the moment of use",
+      "Outer gloves must be changed immediately before implant handling",
+      "Implant contact with non-sterile surfaces must be avoided",
+      "Exposure time to air must be minimized",
+    ],
+    steps: [
+      {
+        title: "Verify implant sterility",
+        details: ["Confirm packaging integrity", "Check sterilization indicators"],
+      },
+      {
+        title: "Maintain packaging until required",
+        details: ["Do not open implants in advance", "Open only when ready for immediate use"],
+      },
+      {
+        title: "Prepare for handling",
+        details: [
+          "Change outer gloves immediately before touching implant",
+          "Ensure sterile field is intact",
+        ],
+      },
+      {
+        title: "Open implant using sterile technique",
+        details: ["Minimize air disturbance", "Avoid contact with non-sterile surfaces"],
+      },
+      {
+        title: "Handle implant",
+        details: [
+          "Use sterile instruments or forceps when possible",
+          "Avoid unnecessary manipulation",
+          "Do not allow contact with skin or drapes",
+        ],
+      },
+      {
+        title: "Implant immediately",
+        details: ["Minimize time between opening and placement"],
+      },
+      {
+        title: "Respond to contamination",
+        details: [
+          "If implant contacts non-sterile surface, discard",
+          "Notify surgeon immediately",
+          "Replace with new sterile implant",
+        ],
+      },
+    ],
+    pitfalls: [
+      "Opening implants too early",
+      "Failing to change gloves before handling",
+      "Allowing implant to contact drapes or skin",
+      "Prolonged exposure of implant to air",
+      "Proceeding after suspected contamination",
+    ],
+    expertInsight:
+      "Implant contamination is often silent and unrecognized. The safest implant is the one opened last, touched least, and placed immediately.",
+    evidence: [
+      { citation: "Implant contamination during surgery is well documented" },
+      { citation: "Biofilm formation occurs rapidly on implant surfaces" },
+      {
+        citation:
+          "Even low bacterial loads may lead to infection in orthopedic procedures",
+      },
+    ],
+    relatedProtocols: [
+      "instrument-sterility",
+      "sterile-field-maintenance",
+      "glove-change-protocol",
+      "or-environment-setup",
+    ],
+    relatedVideos: [],
+  },
+  {
+    slug: "contamination-event-response",
+    title: "Contamination Event Response",
+    phase: "intraoperative",
+    pathways: ["surgical-team", "surgical-field-isolation", "instruments-implants"],
+    roles: ["surgeon", "scrub-technician"],
+    clinicalObjective:
+      "Establish a clear, no-blame protocol for recognizing, announcing, and responding to any contamination event during surgery, ensuring that the response is immediate and complete.",
+    whyThisMatters:
+      "An unannounced contamination event is the most common preventable cause of intraoperative SSI exposure. The cultural norm of immediate, blameless announcement is the only mechanism that catches these events in time.",
+    criticalControlPoints: [
+      "Any team member can call 'contamination' without hierarchy",
+      "Response is immediate and proportional to the breach",
+      "All events documented in the surgical record",
+    ],
+    steps: [
+      "Establish at the pre-case briefing that any team member may call a contamination event.",
+      "If contamination is observed or suspected, announce it immediately and clearly.",
+      "Pause the case at a safe point; assess the extent of the breach.",
+      "Determine the appropriate response: glove change, instrument exchange, drape addition, or re-prep depending on scope.",
+      "Resume the case only after the contamination has been fully addressed.",
+      "Document the event, response, and any follow-up monitoring plan.",
+    ],
+    pitfalls: [
+      "Delaying announcement to 'not interrupt' the case — the consequence is far greater than the interruption.",
+      "Partial response (changing one glove when both contacted contamination).",
+      "Allowing hierarchy to suppress junior team members from speaking.",
+      "Failing to document the event and response.",
+    ],
+    expertInsight:
+      "If your team cannot say 'contamination' aloud without tension, that is the real problem to solve.",
+    evidence: [
+      {
+        citation:
+          "Haynes AB, et al. A surgical safety checklist to reduce morbidity and mortality in a global population. New England Journal of Medicine. 2009;360(5):491–499.",
+      },
+    ],
+    relatedProtocols: [
+      "sterile-field-maintenance",
+      "glove-change-protocol",
+      "implant-handling",
+      "draping-technique",
+    ],
+    relatedVideos: [],
+  },
+  {
+    slug: "closure-technique",
+    title: "Closure Technique",
+    phase: "intraoperative",
+    pathways: ["surgical-technique"],
+    roles: ["surgeon"],
+    clinicalObjective:
+      "Close surgical wounds in a manner that eliminates dead space, restores tissue planes, supports mechanical stability, and minimizes the conditions in which contamination can establish infection.",
+    whyThisMatters:
+      "Surgical technique determines whether contamination becomes infection. Hematoma, seroma, dead space, and ischemic tissue are permissive environments for bacterial growth — even with perfect asepsis upstream.",
+    criticalControlPoints: [
+      "Tissue planes restored without tension",
+      "Dead space eliminated or appropriately drained",
+      "Hemostasis verified before each layer is closed",
+      "Suture material and pattern matched to tissue type",
+    ],
+    steps: [
+      "Verify hemostasis at every layer before advancing to the next.",
+      "Eliminate dead space with appropriate suturing or drain placement.",
+      "Choose suture material and gauge based on tissue type, holding strength, and absorption profile.",
+      "Close in anatomic layers; avoid mass closure that compromises tissue perfusion.",
+      "Use atraumatic technique — minimize tissue handling and avoid crushing forceps on tissues meant to heal.",
+      "Inspect the closure for inversion, gaping, or tension before applying the final layer.",
+    ],
+    pitfalls: [
+      "Closing under tension to 'make it fit' — ischemia and dehiscence follow.",
+      "Leaving dead space in deep tissues without a drain.",
+      "Excessive electrocautery, devitalizing tissue at the wound margin.",
+      "Burying suture knots in poorly perfused tissue.",
+    ],
+    expertInsight:
+      "Asepsis prevents contamination. Technique determines whether contamination can establish infection.",
+    evidence: [
+      {
+        citation:
+          "Boothe HW. Suture materials, tissue adhesives, staplers, and ligating clips. In: Tobias KM, Johnston SA, eds. Veterinary Surgery: Small Animal. Elsevier; 2018.",
+      },
+    ],
+    relatedProtocols: ["wound-management", "incision-monitoring"],
+    relatedVideos: [],
   },
 
   // ─── POSTOPERATIVE ───────────────────────────────────────────────────────────
   {
-    slug: "wound-management-dressing",
+    slug: "wound-management",
     title: "Wound Management & Dressing",
     phase: "postoperative",
+    pathways: ["postoperative-care"],
+    roles: ["recovery-team"],
     clinicalObjective:
-      "Apply appropriate wound closure and primary dressing to protect the surgical site during the initial healing phase, minimize contamination from the environment, and facilitate early detection of complications. Wound care decisions in the immediate postoperative period significantly influence SSI rates.",
+      "Apply appropriate wound closure, dressing, and bandage management to protect the surgical site during the early healing phase, minimize environmental contamination, support patient comfort, and enable regular reassessment.",
+    whyThisMatters:
+      "The first 24–48 hours are when the wound is most vulnerable. The dressing and bandage are the physical bridge between surgical closure and epithelial healing — they cannot be skipped or treated as optional.",
+    criticalControlPoints: [
+      "Sterile primary dressing applied before patient leaves the table",
+      "Dressing changes scheduled and documented",
+      "Bandage tension verified by the 2-finger rule",
+      "Bony prominences padded before circumferential wraps",
+    ],
     steps: [
-      "Close the surgical wound in layers, eliminating dead space that provides a nidus for infection.",
+      "Close the wound in layers, eliminating dead space that provides a nidus for infection.",
       "Irrigate the wound with sterile saline before closure in contaminated or clean-contaminated cases.",
-      "Apply a sterile primary dressing to all wounds at the conclusion of surgery, prior to the patient leaving the table.",
-      "Select dressing type based on wound classification: non-adherent primary layer for most clean wounds.",
-      "Secure the dressing with appropriate secondary layer to prevent patient interference.",
-      "Label the dressing with the application date and time.",
-      "Provide owner with written wound care instructions before discharge.",
+      "Apply a sterile non-adherent primary dressing before the patient leaves the table.",
+      "For wounds requiring bandaging: apply a secondary padded layer (cast padding, cotton roll) for cushioning and exudate absorption.",
+      "Apply a tertiary conforming and cohesive layer with uniform pressure — verify with the 2-finger rule.",
+      "Pad bony prominences (lateral malleolus, olecranon, calcaneus) before any circumferential wrap.",
+      "Label the dressing with application date and time.",
+      "Schedule bandage changes: 24–48h initially, then every 2–3 days for clean wounds; immediately if wet.",
+      "Provide written wound care instructions to the owner before discharge.",
     ],
     pitfalls: [
-      "Failing to close dead space, particularly in large dissections — seromas are a common precursor to SSI.",
-      "Applying adhesive dressings directly to freshly sutured wounds without a non-adherent interface.",
-      "Leaving wounds undressed in the immediate postoperative period on the assumption they are 'sealed' by sutures.",
-      "Using occlusive moisture-retaining dressings on wounds at risk for anaerobic infection.",
+      "Failing to close dead space — seromas are a common precursor to SSI.",
+      "Applying adhesive dressings directly to fresh sutures without a non-adherent interface.",
+      "Bandaging too tightly — pressure necrosis is a common iatrogenic injury, particularly over bony prominences.",
+      "Failing to pad bony prominences before conforming wrap.",
+      "Allowing the bandage to become wet and not changing it immediately.",
     ],
     expertInsight:
-      "The first 24–48 hours are when the wound is most vulnerable. An intact epithelial seal typically forms by 48 hours, but this requires an undisturbed wound environment. Any patient activity, licking, abrasion, or moisture ingress in this window meaningfully elevates infection risk. The dressing is not optional — it is the physical barrier that bridges the gap between surgical closure and epithelial healing.",
+      "The bandage is part of the surgery. The most common bandage failure mode is tightness applied with good intention — a tight bandage feels more secure to the applicator but is the primary cause of bandage-related iatrogenic injury. Teach every technician the 2-finger rule until it is automatic.",
     evidence: [
       {
         citation:
@@ -394,54 +1019,31 @@ export const protocols: Protocol[] = [
       },
       {
         citation:
-          "Stashak TS, Theoret C. Equine Wound Management, 2nd ed. Wiley-Blackwell; 2008. [Referenced for small animal extrapolation]",
-      },
-    ],
-    relatedProtocols: ["bandaging-protocols", "post-op-monitoring-early-detection"],
-    relatedVideos: ["wound-dressing-technique"],
-  },
-  {
-    slug: "bandaging-protocols",
-    title: "Bandaging Protocols",
-    phase: "postoperative",
-    clinicalObjective:
-      "Apply and manage bandages for postoperative wounds in a manner that protects the site, supports healing, prevents self-trauma, and allows regular assessment. Incorrectly applied bandages are themselves a cause of wound complications.",
-    steps: [
-      "Assess the wound and surgical site to determine whether bandaging is indicated and what type is appropriate.",
-      "Prepare the skin: ensure the perilesional skin is clean and dry before application.",
-      "Apply primary contact layer (non-adherent, moisture-wicking) directly against the wound.",
-      "Apply secondary padded layer (cast padding, cotton roll) to provide cushioning and absorb exudate.",
-      "Apply tertiary conforming and cohesive layer with uniform pressure — avoid circumferential tightness.",
-      "Check bandage pressure: the '2-finger rule' — two fingers should slide under the proximal bandage edge.",
-      "Schedule bandage changes at appropriate intervals (typically 24–48h initially, then every 2–3 days for clean wounds).",
-    ],
-    pitfalls: [
-      "Applying bandages too tightly, causing pressure necrosis, particularly over bony prominences.",
-      "Failing to pad bony prominences (lateral malleolus, olecranon, calcaneus) before conforming wrap.",
-      "Infrequent bandage changes, which allow maceration of the wound and undetected infection.",
-      "Wetting of the bandage — once wet, a bandage must be changed immediately regardless of schedule.",
-    ],
-    expertInsight:
-      "The most common bandage failure mode I see is tightness applied with good intention — a tight bandage feels more secure to the applicator but is the primary cause of bandage-related iatrogenic injury. Teach every technician the 2-finger rule until it is automatic. Equally important: if a patient is distressed, chewing at, or otherwise interfering with a bandage, that is a clinical sign — not a behavior problem.",
-    evidence: [
-      {
-        citation:
-          "Swaim SF, Henderson RA. Small Animal Wound Management, 2nd ed. Williams & Wilkins; 1997.",
-      },
-      {
-        citation:
           "Campbell BG. Bandages and drains. In: Tobias KM, Johnston SA, eds. Veterinary Surgery: Small Animal. Elsevier Saunders; 2012:221–230.",
       },
     ],
-    relatedProtocols: ["wound-management-dressing", "post-op-monitoring-early-detection"],
-    relatedVideos: ["bandaging-technique-demo"],
+    relatedProtocols: [
+      "incision-monitoring",
+      "patient-self-trauma-prevention",
+      "owner-discharge-instructions",
+    ],
+    relatedVideos: [],
   },
   {
-    slug: "post-op-monitoring-early-detection",
-    title: "Post-op Monitoring & Early Detection",
+    slug: "incision-monitoring",
+    title: "Incision Monitoring",
     phase: "postoperative",
+    pathways: ["postoperative-care"],
+    roles: ["recovery-team", "owner"],
     clinicalObjective:
       "Establish a structured postoperative monitoring protocol that enables early identification of signs consistent with surgical site infection, allowing timely intervention before superficial infection progresses to deep or organ-space disease.",
+    whyThisMatters:
+      "Early detection is the single most important determinant of outcomes in SSI management. A superficial SSI identified at day 3 is a minor setback; the same infection at day 10 may be deep-space or implant-associated.",
+    criticalControlPoints: [
+      "Wound assessed at every dressing change and recheck",
+      "Five cardinal signs documented, not just observed",
+      "Owner educated to recognize abnormal signs and contact the clinic",
+    ],
     steps: [
       "Perform wound assessment at each bandage change and at every recheck appointment.",
       "Assess the five cardinal signs of local infection: erythema, edema, warmth, pain/tenderness, discharge.",
@@ -471,15 +1073,118 @@ export const protocols: Protocol[] = [
         doi: "10.1086/646354",
       },
     ],
-    relatedProtocols: ["wound-management-dressing", "antibiotic-stewardship-decisions"],
-    relatedVideos: ["wound-assessment-technique"],
+    relatedProtocols: [
+      "wound-management",
+      "patient-self-trauma-prevention",
+      "owner-discharge-instructions",
+      "postoperative-antibiotic-decisions",
+    ],
+    relatedVideos: [],
   },
   {
-    slug: "antibiotic-stewardship-decisions",
-    title: "Antibiotic Stewardship Decisions",
+    slug: "patient-self-trauma-prevention",
+    title: "Patient Self-Trauma Prevention",
     phase: "postoperative",
+    pathways: ["postoperative-care"],
+    roles: ["recovery-team", "owner"],
+    clinicalObjective:
+      "Prevent the patient from licking, chewing, scratching, or otherwise contacting the surgical incision during the early postoperative period when the wound is most vulnerable.",
+    whyThisMatters:
+      "Patient-induced trauma to the incision is one of the most common postoperative SSI causes. The intervention is mechanical and entirely preventable.",
+    criticalControlPoints: [
+      "E-collar fitted before recovery and verified before discharge",
+      "Owner instructed on continuous use until suture removal or epithelialization",
+      "Alternative restraint considered if the E-collar is poorly tolerated",
+    ],
+    steps: [
+      "Fit an Elizabethan collar (or equivalent recovery suit / inflatable collar) before the patient awakens fully from anesthesia.",
+      "Verify that the E-collar extends well beyond the patient's nose so the incision cannot be reached.",
+      "Demonstrate fit and use to the owner before discharge; have the owner replicate the demonstration.",
+      "Provide written instructions: continuous wear day and night, including during meals and rest.",
+      "Schedule a phone or photo check at 48–72 hours to confirm compliance.",
+      "Address poor tolerance with alternative options (recovery suit, inflatable collar) rather than removing protection.",
+    ],
+    pitfalls: [
+      "Removing the E-collar 'just for meals' — most contamination occurs in unwitnessed moments.",
+      "Choosing an undersized collar that the patient can reach around or under.",
+      "Discharging without verifying owner understanding of continuous use.",
+      "Stopping E-collar use before sutures are removed and the wound is epithelialized.",
+    ],
+    expertInsight:
+      "The collar is not optional. The incision does not heal on a schedule — it heals when it is undisturbed.",
+    evidence: [
+      {
+        citation:
+          "Nicholson M, et al. Risk factors for surgical site infection in veterinary patients. Veterinary Surgery. 2002;31(3):228–233.",
+        doi: "10.1053/jvet.2002.31617",
+      },
+    ],
+    relatedProtocols: ["wound-management", "incision-monitoring", "owner-discharge-instructions"],
+    relatedVideos: [],
+  },
+  {
+    slug: "owner-discharge-instructions",
+    title: "Owner Discharge Instructions",
+    phase: "postoperative",
+    pathways: ["postoperative-care"],
+    roles: ["surgeon", "recovery-team", "owner"],
+    clinicalObjective:
+      "Provide owners with clear, written, and verbal instructions that enable them to protect the surgical site, comply with medications, recognize early signs of infection, and contact the clinic appropriately.",
+    whyThisMatters:
+      "After discharge, the owner is the primary observer and the final control point. Discharge instruction quality directly correlates with postoperative outcome.",
+    criticalControlPoints: [
+      "Written instructions provided in addition to verbal",
+      "Activity restriction explicitly defined with concrete examples",
+      "Specific signs that require contact listed",
+      "Direct after-hours contact information included",
+    ],
+    steps: [
+      "Prepare a written discharge sheet specific to the procedure performed.",
+      "Cover incision protection (E-collar use, no licking, no bathing).",
+      "Define activity restriction with concrete examples (no jumping, no off-leash, no rough play) and the duration.",
+      "List specific medications, doses, schedule, and expected duration.",
+      "Identify signs that require contact: redness, swelling, discharge, lethargy, refusal to eat, fever, or any concern.",
+      "Provide a callback or photo-share option at 48–72 hours and at suture removal.",
+    ],
+    pitfalls: [
+      "Verbal-only instructions — owners do not retain detailed discharge information under stress.",
+      "Vague language ('limit activity', 'watch the incision') without concrete examples.",
+      "Not providing a path to contact the clinic when concerned.",
+      "Failing to establish a follow-up checkpoint.",
+    ],
+    expertInsight:
+      "If the owner does not know what 'too much activity' means, you have not given the instruction yet.",
+    evidence: [
+      {
+        citation:
+          "Berríos-Torres SI, et al. CDC Guideline for the Prevention of Surgical Site Infection 2017. JAMA Surgery. 2017;152(8):784–791.",
+        doi: "10.1001/jamasurg.2017.0904",
+      },
+    ],
+    relatedProtocols: [
+      "incision-monitoring",
+      "patient-self-trauma-prevention",
+      "wound-management",
+      "postoperative-antibiotic-decisions",
+    ],
+    relatedVideos: [],
+  },
+  {
+    slug: "postoperative-antibiotic-decisions",
+    title: "Postoperative Antibiotic Decisions",
+    phase: "postoperative",
+    pathways: ["postoperative-care", "intraoperative-adjuncts"],
+    roles: ["surgeon"],
     clinicalObjective:
       "Apply evidence-based criteria to antibiotic prescribing decisions in the postoperative period, ensuring that antimicrobials are used when genuinely indicated, at the correct dose and duration, and that antimicrobial resistance implications are considered for every prescription.",
+    whyThisMatters:
+      "Antimicrobial stewardship in veterinary surgical aftercare is one of the most important and least practiced disciplines in the field. Reflexive antibiotics for normal post-surgical inflammation are training resistant bacteria and failing patients simultaneously.",
+    criticalControlPoints: [
+      "Indication for antibiotics confirmed before prescribing",
+      "Culture and sensitivity obtained before initiating therapy where feasible",
+      "Treatment duration defined at the time of prescription",
+      "Reassessment at 48–72 hours to de-escalate or discontinue",
+    ],
     steps: [
       "Confirm the clinical indication for antibiotics: documented infection (culture and sensitivity), high-risk contaminated wound, or evidence-based prophylaxis criteria.",
       "Obtain wound culture and sensitivity before initiating antimicrobial therapy whenever possible.",
@@ -514,8 +1219,8 @@ export const protocols: Protocol[] = [
         doi: "10.1111/vde.12118",
       },
     ],
-    relatedProtocols: ["post-op-monitoring-early-detection", "perioperative-antibiotic-prophylaxis"],
-    relatedVideos: ["antibiotic-timing-overview"],
+    relatedProtocols: ["incision-monitoring", "antimicrobial-prophylaxis"],
+    relatedVideos: [],
   },
 ];
 
@@ -525,4 +1230,16 @@ export function getProtocolBySlug(slug: string): Protocol | undefined {
 
 export function getProtocolsByPhase(phase: Protocol["phase"]): Protocol[] {
   return protocols.filter((p) => p.phase === phase);
+}
+
+export function getProtocolsByPathway(pathwaySlug: string): Protocol[] {
+  return protocols.filter((p) => p.pathways.includes(pathwaySlug));
+}
+
+export function getProtocolsByRole(roleSlug: string): Protocol[] {
+  return protocols.filter((p) => p.roles.includes(roleSlug));
+}
+
+export function getAllProtocols(): Protocol[] {
+  return protocols;
 }

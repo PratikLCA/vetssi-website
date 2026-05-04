@@ -6,9 +6,10 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
+  { href: "/contamination-pathways", label: "Pathways", longLabel: "Contamination Pathways" },
   { href: "/protocols", label: "Protocols" },
+  { href: "/roles", label: "Roles", longLabel: "Roles & Responsibilities" },
   { href: "/videos", label: "Videos" },
-  { href: "/the-system", label: "The System" },
   { href: "/contributors", label: "Contributors" },
   { href: "/resources", label: "Resources" },
   { href: "/about", label: "About" },
@@ -32,9 +33,10 @@ export default function NavBar() {
           </Link>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-7">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href || pathname.startsWith(link.href + "/");
+              const isActive =
+                pathname === link.href || pathname.startsWith(link.href + "/");
               return (
                 <Link
                   key={link.href}
@@ -51,9 +53,9 @@ export default function NavBar() {
             })}
           </div>
 
-          {/* Mobile hamburger */}
+          {/* Mobile / tablet hamburger */}
           <button
-            className="md:hidden p-2 text-navy"
+            className="lg:hidden p-2 text-navy"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle navigation"
           >
@@ -62,12 +64,13 @@ export default function NavBar() {
         </div>
       </div>
 
-      {/* Mobile drawer */}
+      {/* Mobile / tablet drawer */}
       {mobileOpen && (
-        <div className="md:hidden bg-white border-t border-warm-gray">
+        <div className="lg:hidden bg-white border-t border-warm-gray">
           <div className="px-6 py-4 flex flex-col gap-5">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href || pathname.startsWith(link.href + "/");
+              const isActive =
+                pathname === link.href || pathname.startsWith(link.href + "/");
               return (
                 <Link
                   key={link.href}
@@ -77,7 +80,7 @@ export default function NavBar() {
                     isActive ? "text-steel" : "text-text-muted"
                   }`}
                 >
-                  {link.label}
+                  {link.longLabel ?? link.label}
                 </Link>
               );
             })}

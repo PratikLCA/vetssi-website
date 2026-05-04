@@ -1,12 +1,16 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { protocols, getProtocolBySlug } from "@/data/protocols";
+import { ArrowLeft, Mail, BookOpen, Video, Building2, Users } from "lucide-react";
+import type { Metadata } from "next";
+import { protocols, getProtocolBySlug, type ProtocolStep } from "@/data/protocols";
 import { videos } from "@/data/videos";
+import { getPathwayBySlug } from "@/data/pathways";
+import { getRoleBySlug } from "@/data/roles";
 import CalloutBox from "@/components/CalloutBox";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import DownloadButton from "@/components/DownloadButton";
-import { ArrowLeft, Mail, BookOpen, Video } from "lucide-react";
-import type { Metadata } from "next";
+import LinkedProtocolList from "@/components/LinkedProtocolList";
+import Tag from "@/components/Tag";
 
 interface Props {
   params: { slug: string };
@@ -19,14 +23,45 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const protocol = getProtocolBySlug(params.slug);
   if (!protocol) return {};
-  return { title: protocol.title };
+  return { title: `${protocol.title} | VETSSI` };
 }
 
 const phaseConfig = {
-  preoperative:   { label: "Preoperative",   className: "badge-preoperative" },
+  preoperative: { label: "Preoperative", className: "badge-preoperative" },
   intraoperative: { label: "Intraoperative", className: "badge-intraoperative" },
-  postoperative:  { label: "Postoperative",  className: "badge-postoperative" },
+  postoperative: { label: "Postoperative", className: "badge-postoperative" },
 };
+
+function StepItem({ step, index }: { step: ProtocolStep; index: number }) {
+  if (typeof step === "string") {
+    return (
+      <li className="flex gap-4">
+        <span className="flex-shrink-0 w-7 h-7 bg-navy text-white text-xs font-medium flex items-center justify-center">
+          {index + 1}
+        </span>
+        <p className="text-sm leading-relaxed text-text-primary pt-1">{step}</p>
+      </li>
+    );
+  }
+  return (
+    <li className="flex gap-4">
+      <span className="flex-shrink-0 w-7 h-7 bg-navy text-white text-xs font-medium flex items-center justify-center">
+        {index + 1}
+      </span>
+      <div className="pt-0.5">
+        <p className="font-serif text-base font-medium text-navy mb-2">{step.title}</p>
+        <ul className="space-y-1.5 ml-1">
+          {step.details.map((d, j) => (
+            <li key={j} className="text-sm leading-relaxed text-text-primary flex gap-2">
+              <span className="text-steel mt-1">·</span>
+              <span>{d}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </li>
+  );
+}
 
 export default function ProtocolPage({ params }: Props) {
   const protocol = getProtocolBySlug(params.slug);
@@ -34,18 +69,24 @@ export default function ProtocolPage({ params }: Props) {
 
   const config = phaseConfig[protocol.phase];
 
-  const relatedProtocols = protocol.relatedProtocols
-    .map((slug) => protocols.find((p) => p.slug === slug))
-    .filter(Boolean);
+  const pathwayObjs = protocol.pathways
+    .map((slug) => getPathwayBySlug(slug))
+    .filter((p): p is NonNullable<typeof p> => Boolean(p));
+
+  const roleObjs = protocol.roles
+    .map((slug) => getRoleBySlug(slug))
+    .filter((r): r is NonNullable<typeof r> => Boolean(r));
 
   const relatedVideos = protocol.relatedVideos
     .map((slug) => videos.find((v) => v.slug === slug))
-    .filter(Boolean);
+    .filter((v): v is NonNullable<typeof v> => Boolean(v));
+
+  const editSubject = encodeURIComponent(`Suggest edit: ${protocol.title}`);
 
   return (
     <div className="bg-cream min-h-screen">
       {/* Breadcrumb */}
-      <div className="border-b border-warm-gray bg-white">
+      <div className="border-b border-warm-gray bg-white no-print">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-3">
           <nav className="flex items-center gap-2 text-xs text-text-muted">
             <Link href="/" className="hover:text-navy transition-colors">
@@ -63,54 +104,108 @@ export default function ProtocolPage({ params }: Props) {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-10">
         <div className="flex flex-col lg:flex-row gap-10">
-          {/* ─── Main Content (70%) ─── */}
+          {/* ─── Main Content ─── */}
           <div className="flex-1 min-w-0 protocol-content">
-            {/* Back link */}
             <Link
               href="/protocols"
-              className="inline-flex items-center gap-1.5 text-xs text-text-muted hover:text-navy transition-colors mb-6"
+              className="inline-flex items-center gap-1.5 text-xs text-text-muted hover:text-navy transition-colors mb-6 no-print"
             >
               <ArrowLeft size={12} />
               Back to Protocol Library
             </Link>
 
-            {/* Phase badge + Title */}
+            {/* Phase badge */}
             <div className="mb-2">
-              <span className={`inline-block text-xs font-medium px-2.5 py-1 ${config.className}`}>
+              <span
+                className={`inline-block text-xs font-medium px-2.5 py-1 ${config.className}`}
+              >
                 {config.label}
               </span>
             </div>
-            <h1 className="font-serif text-3xl md:text-4xl font-medium text-navy mb-6 leading-tight">
+
+            {/* Title */}
+            <h1 className="font-serif text-3xl md:text-4xl font-medium text-navy mb-5 leading-tight">
               {protocol.title}
             </h1>
 
-            {/* Clinical Objective */}
-            <div className="mb-8">
-              <h2 className="font-serif text-lg font-medium text-navy mb-3">Clinical Objective</h2>
-              <p className="text-sm leading-relaxed text-text-primary">{protocol.clinicalObjective}</p>
+            {/* Pathway + role tags */}
+            <div className="flex flex-wrap gap-2 mb-8">
+              {pathwayObjs.map((p) => (
+                <Tag
+                  key={p.slug}
+                  label={p.name}
+                  variant="pathway"
+                  size="md"
+                  href={`/contamination-pathways#${p.slug}`}
+                />
+              ))}
+              {roleObjs.map((r) => (
+                <Tag
+                  key={r.slug}
+                  label={r.title.split(" / ")[0]}
+                  variant="role"
+                  size="md"
+                  href={`/roles#${r.slug}`}
+                />
+              ))}
             </div>
 
-            {/* Divider */}
+            {/* Clinical Objective */}
+            <section className="mb-8">
+              <h2 className="font-serif text-lg font-medium text-navy mb-3">
+                Clinical Objective
+              </h2>
+              <p className="text-sm leading-relaxed text-text-primary">
+                {protocol.clinicalObjective}
+              </p>
+            </section>
+
+            {/* Why This Matters */}
+            {protocol.whyThisMatters && (
+              <section className="mb-8">
+                <h2 className="font-serif text-lg font-medium text-navy mb-3">
+                  Why This Matters
+                </h2>
+                <p className="text-sm leading-relaxed text-text-primary">
+                  {protocol.whyThisMatters}
+                </p>
+              </section>
+            )}
+
             <hr className="border-warm-gray mb-8" />
 
-            {/* Step-by-step */}
-            <div className="mb-8">
-              <h2 className="font-serif text-lg font-medium text-navy mb-5">Protocol Steps</h2>
+            {/* Critical Control Points */}
+            {protocol.criticalControlPoints.length > 0 && (
+              <section className="mb-8">
+                <h2 className="font-serif text-lg font-medium text-navy mb-4">
+                  Critical Control Points
+                </h2>
+                <ul className="space-y-2.5">
+                  {protocol.criticalControlPoints.map((c, i) => (
+                    <li key={i} className="flex gap-3">
+                      <span className="flex-shrink-0 w-1.5 h-1.5 bg-steel rounded-full mt-2" />
+                      <p className="text-sm leading-relaxed text-text-primary">{c}</p>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* Step-by-step Protocol */}
+            <section className="mb-8">
+              <h2 className="font-serif text-lg font-medium text-navy mb-5">
+                Step-by-Step Protocol
+              </h2>
               <ol className="space-y-4">
                 {protocol.steps.map((step, i) => (
-                  <li key={i} className="flex gap-4">
-                    <span className="flex-shrink-0 w-7 h-7 bg-navy text-white text-xs font-medium flex items-center justify-center">
-                      {i + 1}
-                    </span>
-                    <p className="text-sm leading-relaxed text-text-primary pt-1">{step}</p>
-                  </li>
+                  <StepItem key={i} step={step} index={i} />
                 ))}
               </ol>
-            </div>
+            </section>
 
             {/* Key Pitfalls */}
-            <div className="mb-8">
-              <h2 className="font-serif text-lg font-medium text-navy mb-4">Key Pitfalls to Avoid</h2>
+            <section className="mb-8">
+              <h2 className="font-serif text-lg font-medium text-navy mb-4">Key Pitfalls</h2>
               <ul className="space-y-3">
                 {protocol.pitfalls.map((pitfall, i) => (
                   <li key={i} className="flex gap-3">
@@ -119,20 +214,25 @@ export default function ProtocolPage({ params }: Props) {
                   </li>
                 ))}
               </ul>
-            </div>
+            </section>
 
-            {/* Expert Insight Callout */}
-            <CalloutBox>
+            {/* Expert Insight */}
+            <CalloutBox title="What Actually Matters">
               <p>{protocol.expertInsight}</p>
             </CalloutBox>
 
-            {/* Supporting Evidence (collapsible) */}
+            {/* Supporting Evidence */}
             <div className="mt-8">
               <CollapsibleSection title="Supporting Evidence">
                 <div className="space-y-4 pt-2">
                   {protocol.evidence.map((item, i) => (
-                    <div key={i} className="border-b border-warm-gray pb-4 last:border-b-0 last:pb-0">
-                      <p className="text-sm text-text-primary leading-relaxed mb-1">{item.citation}</p>
+                    <div
+                      key={i}
+                      className="border-b border-warm-gray pb-4 last:border-b-0 last:pb-0"
+                    >
+                      <p className="text-sm text-text-primary leading-relaxed mb-1">
+                        {item.citation}
+                      </p>
                       {item.doi && (
                         <p className="text-xs text-text-muted">
                           DOI:{" "}
@@ -153,33 +253,65 @@ export default function ProtocolPage({ params }: Props) {
             </div>
           </div>
 
-          {/* ─── Sidebar (30%) ─── */}
-          <aside className="lg:w-72 flex-shrink-0 no-print">
+          {/* ─── Sidebar ─── */}
+          <aside className="lg:w-80 flex-shrink-0 no-print">
             <div className="lg:sticky lg:top-24 space-y-6">
-              {/* Download button */}
               <DownloadButton />
 
+              {/* Controlled Pathways */}
+              {pathwayObjs.length > 0 && (
+                <div className="card bg-white border border-warm-gray p-5">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Building2 size={14} className="text-steel" />
+                    <h3 className="text-xs font-medium text-navy nav-link">
+                      Controlled Pathways
+                    </h3>
+                  </div>
+                  <div className="space-y-2">
+                    {pathwayObjs.map((p) => (
+                      <Link
+                        key={p.slug}
+                        href={`/contamination-pathways#${p.slug}`}
+                        className="block text-sm text-steel hover:text-navy transition-colors leading-snug"
+                      >
+                        {p.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Owned By */}
+              {roleObjs.length > 0 && (
+                <div className="card bg-white border border-warm-gray p-5">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Users size={14} className="text-steel" />
+                    <h3 className="text-xs font-medium text-navy nav-link">Owned By</h3>
+                  </div>
+                  <div className="space-y-2">
+                    {roleObjs.map((r) => (
+                      <Link
+                        key={r.slug}
+                        href={`/roles#${r.slug}`}
+                        className="block text-sm text-steel hover:text-navy transition-colors leading-snug"
+                      >
+                        {r.title}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Related Protocols */}
-              {relatedProtocols.length > 0 && (
+              {protocol.relatedProtocols.length > 0 && (
                 <div className="card bg-white border border-warm-gray p-5">
                   <div className="flex items-center gap-2 mb-4">
                     <BookOpen size={14} className="text-steel" />
-                    <h3 className="text-xs font-medium text-navy nav-link">Related Protocols</h3>
+                    <h3 className="text-xs font-medium text-navy nav-link">
+                      Related Protocols
+                    </h3>
                   </div>
-                  <div className="space-y-3">
-                    {relatedProtocols.map(
-                      (rp) =>
-                        rp && (
-                          <Link
-                            key={rp.slug}
-                            href={`/protocols/${rp.slug}`}
-                            className="block text-sm text-steel hover:text-navy transition-colors leading-snug"
-                          >
-                            {rp.title}
-                          </Link>
-                        )
-                    )}
-                  </div>
+                  <LinkedProtocolList protocolSlugs={protocol.relatedProtocols} />
                 </div>
               )}
 
@@ -191,34 +323,31 @@ export default function ProtocolPage({ params }: Props) {
                     <h3 className="text-xs font-medium text-navy nav-link">Related Videos</h3>
                   </div>
                   <div className="space-y-3">
-                    {relatedVideos.map(
-                      (rv) =>
-                        rv && (
-                          <div key={rv.slug} className="flex gap-3 items-start">
-                            <div className="w-14 h-10 bg-navy-mid flex-shrink-0 flex items-center justify-center">
-                              <span className="text-white/60 text-xs">▶</span>
-                            </div>
-                            <Link
-                              href="/videos"
-                              className="text-sm text-steel hover:text-navy transition-colors leading-snug"
-                            >
-                              {rv.title}
-                            </Link>
-                          </div>
-                        )
-                    )}
+                    {relatedVideos.map((rv) => (
+                      <div key={rv.slug} className="flex gap-3 items-start">
+                        <div className="w-14 h-10 bg-navy-mid flex-shrink-0 flex items-center justify-center">
+                          <span className="text-white/60 text-xs">▶</span>
+                        </div>
+                        <Link
+                          href="/videos"
+                          className="text-sm text-steel hover:text-navy transition-colors leading-snug"
+                        >
+                          {rv.title}
+                        </Link>
+                      </div>
+                    ))}
                   </div>
                 </div>
               )}
 
-              {/* Contribute link */}
+              {/* Suggest edit */}
               <div className="card bg-white border border-warm-gray p-5">
                 <a
-                  href="mailto:contribute@vetssi.com?subject=Protocol Suggestion"
+                  href={`mailto:info@vetssi.com?subject=${editSubject}`}
                   className="flex items-center gap-2 text-sm text-text-muted hover:text-navy transition-colors"
                 >
                   <Mail size={14} className="text-steel" />
-                  Suggest an edit or contribute
+                  Suggest an edit
                 </a>
               </div>
             </div>

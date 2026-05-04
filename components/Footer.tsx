@@ -1,9 +1,10 @@
 import Link from "next/link";
 
 const footerLinks = [
+  { href: "/contamination-pathways", label: "Contamination Pathways" },
   { href: "/protocols", label: "Protocols" },
+  { href: "/roles", label: "Roles & Responsibilities" },
   { href: "/videos", label: "Videos" },
-  { href: "/the-system", label: "The System" },
   { href: "/contributors", label: "Contributors" },
   { href: "/resources", label: "Resources" },
   { href: "/about", label: "About" },
@@ -16,11 +17,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
           {/* Brand */}
           <div>
-            <div className="font-serif text-3xl font-semibold tracking-widest mb-3" style={{ letterSpacing: "0.2em" }}>
+            <div
+              className="font-serif text-3xl font-semibold tracking-widest mb-3"
+              style={{ letterSpacing: "0.2em" }}
+            >
               VETSSI
             </div>
             <p className="text-sm text-white/60 leading-relaxed max-w-xs">
-              A global resource for veterinary surgical site infection prevention.
+              A clinical operating system for surgical site infection prevention in veterinary surgery.
             </p>
           </div>
 
@@ -44,7 +48,10 @@ export default function Footer() {
           <div>
             <p className="nav-link text-white/40 mb-4">Contact</p>
             <p className="text-sm text-white/70">
-              <a href="mailto:info@vetssi.com" className="hover:text-white transition-colors">
+              <a
+                href="mailto:info@vetssi.com"
+                className="hover:text-white transition-colors"
+              >
                 info@vetssi.com
               </a>
             </p>

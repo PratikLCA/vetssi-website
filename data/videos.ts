@@ -54,7 +54,7 @@ export const videos: Video[] = [
       "Once placed, drapes are never repositioned — add a supplementary drape if coverage is inadequate.",
       "Check that all non-sterile surfaces (anesthetic lines, monitoring leads) are covered.",
     ],
-    linkedProtocols: ["surgical-draping-methods", "aseptic-technique-sterile-field"],
+    linkedProtocols: ["draping-technique", "sterile-field-maintenance"],
   },
   {
     slug: "sterile-gowning-gloving",
@@ -69,7 +69,7 @@ export const videos: Video[] = [
       "If a glove is contaminated, verbally announce immediately and change before proceeding.",
       "The gown is only sterile front-center from chest to waist — the back and axilla are not sterile.",
     ],
-    linkedProtocols: ["aseptic-technique-sterile-field"],
+    linkedProtocols: ["sterile-field-maintenance"],
   },
   {
     slug: "or-setup-walkthrough",
@@ -84,7 +84,7 @@ export const videos: Video[] = [
       "Positive pressure ventilation must be confirmed functional before the first patient enters.",
       "Brief the full team before the case begins: movement restrictions, sterile boundaries, contamination protocol.",
     ],
-    linkedProtocols: ["or-traffic-environmental", "aseptic-technique-sterile-field"],
+    linkedProtocols: ["or-traffic-control", "sterile-field-maintenance"],
   },
   {
     slug: "antiseptic-application",

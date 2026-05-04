@@ -3,6 +3,7 @@ import { Shield, Brain, Users, ArrowRight } from "lucide-react";
 import ProtocolCard from "@/components/ProtocolCard";
 import ContributorCard from "@/components/ContributorCard";
 import { protocols } from "@/data/protocols";
+import { pathways } from "@/data/pathways";
 import { getFeaturedContributor } from "@/data/contributors";
 
 export default function HomePage() {
@@ -125,40 +126,39 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── The System Teaser ─── */}
+      {/* ─── Contamination Pathways Teaser ─── */}
       <section className="bg-navy-mid text-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
           <div className="max-w-3xl">
-            <p className="nav-link text-steel-light mb-4">Systems Approach</p>
+            <p className="nav-link text-steel-light mb-4">Contamination Pathways</p>
             <h2 className="font-serif text-3xl md:text-4xl font-medium mb-5 leading-tight">
               SSI Prevention Is Not One Thing
             </h2>
             <p className="text-white/70 font-light leading-relaxed mb-8 text-base">
-              Surgical site infections arise from the interaction of patient biology, surgical technique, environmental
-              conditions, and postoperative care. No single intervention reliably prevents SSI in isolation. The evidence
-              consistently shows that bundles — combinations of interventions applied reliably across the entire surgical
-              pathway — produce the best outcomes.
+              Surgical site infections arise from eight distinct pathways — from the surgical team and patient,
+              through the operating room environment, the sterile field, instruments and implants, surgical
+              technique, intraoperative adjuncts, and postoperative care. No single intervention prevents SSI in
+              isolation. Each pathway has its own protocols and its own owners.
             </p>
 
-            {/* Domain pills */}
+            {/* Pathway pills */}
             <div className="flex flex-wrap gap-3 mb-10">
-              {["Patient Factors", "Surgeon Behavior", "Environment", "Technique", "Post-op Care"].map(
-                (domain) => (
-                  <span
-                    key={domain}
-                    className="px-4 py-2 border border-white/20 text-sm text-white/80 bg-white/5"
-                  >
-                    {domain}
-                  </span>
-                )
-              )}
+              {pathways.map((p) => (
+                <Link
+                  key={p.slug}
+                  href={`/contamination-pathways#${p.slug}`}
+                  className="px-4 py-2 border border-white/20 text-sm text-white/80 bg-white/5 hover:bg-white/10 hover:border-white/40 transition-colors"
+                >
+                  {p.name}
+                </Link>
+              ))}
             </div>
 
             <Link
-              href="/the-system"
+              href="/contamination-pathways"
               className="inline-flex items-center gap-2 text-steel-light hover:text-white text-sm font-medium nav-link transition-colors"
             >
-              Explore the Full System
+              Explore Contamination Pathways
               <ArrowRight size={14} />
             </Link>
           </div>
