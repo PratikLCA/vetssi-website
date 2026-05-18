@@ -39,6 +39,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "VETSSI" }],
   creator: "VETSSI",
+  verification: {
+    google: "k0FA6zqwmkpSKdmfQ1e-gFIFgdFptCcSVJ5NTaVmWvI",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",

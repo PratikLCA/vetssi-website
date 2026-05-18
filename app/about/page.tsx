@@ -4,7 +4,7 @@ import { Mail } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About VETSSI",
+  title: "About",
   description:
     "VETSSI is a free, evidence-based resource for veterinary SSI prevention — protocols, expert insights, and practical implementation guidance for the entire perioperative team.",
   alternates: { canonical: "https://vetssi.com/about" },
