@@ -6,6 +6,7 @@ import { protocols, getProtocolBySlug, type ProtocolStep } from "@/data/protocol
 import { videos } from "@/data/videos";
 import { getPathwayBySlug } from "@/data/pathways";
 import { getRoleBySlug } from "@/data/roles";
+import MiddleBlock from "@/components/MiddleBlock";
 import CalloutBox from "@/components/CalloutBox";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import DownloadButton from "@/components/DownloadButton";
@@ -190,6 +191,9 @@ export default function ProtocolPage({ params }: Props) {
                 </ul>
               </section>
             )}
+
+            {/* Middle Block (interactive checklist/table/go-no-go) */}
+            {protocol.middleBlock && <MiddleBlock block={protocol.middleBlock} />}
 
             {/* Step-by-step Protocol */}
             <section className="mb-8">
