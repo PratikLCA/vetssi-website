@@ -7,6 +7,7 @@ import { videos } from "@/data/videos";
 import { getPathwayBySlug } from "@/data/pathways";
 import { getRoleBySlug } from "@/data/roles";
 import MiddleBlock from "@/components/MiddleBlock";
+import AudienceStepsTabs from "@/components/AudienceStepsTabs";
 import CalloutBox from "@/components/CalloutBox";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import DownloadButton from "@/components/DownloadButton";
@@ -28,6 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const phaseConfig = {
+  "pre-case-planning": { label: "Pre-Case Planning", className: "badge-pre-case-planning" },
   preoperative: { label: "Preoperative", className: "badge-preoperative" },
   intraoperative: { label: "Intraoperative", className: "badge-intraoperative" },
   postoperative: { label: "Postoperative", className: "badge-postoperative" },
@@ -196,29 +198,38 @@ export default function ProtocolPage({ params }: Props) {
             {protocol.middleBlock && <MiddleBlock block={protocol.middleBlock} />}
 
             {/* Step-by-step Protocol */}
-            <section className="mb-8">
-              <h2 className="font-serif text-lg font-medium text-navy mb-5">
-                Step-by-Step Protocol
-              </h2>
-              <ol className="space-y-4">
-                {protocol.steps.map((step, i) => (
-                  <StepItem key={i} step={step} index={i} />
-                ))}
-              </ol>
-            </section>
+            {protocol.audienceVersions ? (
+              <AudienceStepsTabs
+                versions={protocol.audienceVersions}
+                defaultSteps={protocol.steps}
+                defaultPitfalls={protocol.pitfalls}
+              />
+            ) : (
+              <>
+                <section className="mb-8">
+                  <h2 className="font-serif text-lg font-medium text-navy mb-5">
+                    Step-by-Step Protocol
+                  </h2>
+                  <ol className="space-y-4">
+                    {protocol.steps.map((step, i) => (
+                      <StepItem key={i} step={step} index={i} />
+                    ))}
+                  </ol>
+                </section>
 
-            {/* Key Pitfalls */}
-            <section className="mb-8">
-              <h2 className="font-serif text-lg font-medium text-navy mb-4">Key Pitfalls</h2>
-              <ul className="space-y-3">
-                {protocol.pitfalls.map((pitfall, i) => (
-                  <li key={i} className="flex gap-3">
-                    <span className="flex-shrink-0 w-1.5 h-1.5 bg-steel rounded-full mt-2" />
-                    <p className="text-sm leading-relaxed text-text-primary">{pitfall}</p>
-                  </li>
-                ))}
-              </ul>
-            </section>
+                <section className="mb-8">
+                  <h2 className="font-serif text-lg font-medium text-navy mb-4">Key Pitfalls</h2>
+                  <ul className="space-y-3">
+                    {protocol.pitfalls.map((pitfall, i) => (
+                      <li key={i} className="flex gap-3">
+                        <span className="flex-shrink-0 w-1.5 h-1.5 bg-steel rounded-full mt-2" />
+                        <p className="text-sm leading-relaxed text-text-primary">{pitfall}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              </>
+            )}
 
             {/* Expert Insight */}
             <CalloutBox title="What Actually Matters">

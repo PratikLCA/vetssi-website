@@ -54,6 +54,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Phase badge colors */
+.badge-pre-case-planning {
+  background-color: #EEE8F5;
+  color: #5B3A8A;
+  border: 1px solid #C4AADE;
+}
 .badge-preoperative {
   background-color: #E6F4F1;
   color: #0D6E5B;

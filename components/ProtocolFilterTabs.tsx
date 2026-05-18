@@ -13,6 +13,7 @@ const modeLabels: Record<FilterMode, string> = {
 };
 
 const phaseValues = [
+  { value: "pre-case-planning", label: "Pre-Case Planning" },
   { value: "preoperative", label: "Preoperative" },
   { value: "intraoperative", label: "Intraoperative" },
   { value: "postoperative", label: "Postoperative" },
