@@ -3,7 +3,13 @@ import { publications, guidelines, downloadableTools, getFeaturedPublication } f
 import { ExternalLink, Download, BookOpen, FileText } from "lucide-react";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = { title: "Resource Hub" };
+export const metadata: Metadata = {
+  title: "Resource Hub",
+  description:
+    "Key publications, clinical guidelines, and downloadable tools for veterinary surgical site infection prevention.",
+  alternates: { canonical: "https://vetssi.com/resources" },
+  openGraph: { title: "Resource Hub | VETSSI", url: "https://vetssi.com/resources" },
+};
 
 export default function ResourcesPage() {
   const featuredPub = getFeaturedPublication();

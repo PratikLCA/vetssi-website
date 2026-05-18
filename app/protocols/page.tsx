@@ -3,9 +3,11 @@ import PageHeader from "@/components/PageHeader";
 import ProtocolsClient from "./ProtocolsClient";
 
 export const metadata = {
-  title: "Protocols | VETSSI",
+  title: "Protocols",
   description:
-    "Evidence-based prevention protocols, filterable by phase of care, contamination pathway, or role.",
+    "Evidence-based SSI prevention protocols for veterinary surgery, filterable by phase of care, contamination pathway, or clinical role.",
+  alternates: { canonical: "https://vetssi.com/protocols" },
+  openGraph: { title: "Protocol Library | VETSSI", url: "https://vetssi.com/protocols" },
 };
 
 export default function ProtocolsPage() {

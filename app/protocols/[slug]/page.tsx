@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Script from "next/script";
 import { ArrowLeft, Mail, BookOpen, Video, Building2, Users } from "lucide-react";
 import type { Metadata } from "next";
 import { protocols, getProtocolBySlug, type ProtocolStep } from "@/data/protocols";
@@ -25,7 +26,24 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const protocol = getProtocolBySlug(params.slug);
   if (!protocol) return {};
-  return { title: `${protocol.title} | VETSSI` };
+  const url = `https://vetssi.com/protocols/${protocol.slug}`;
+  const description = protocol.clinicalObjective.split(".")[0] + ".";
+  return {
+    title: protocol.title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title: `${protocol.title} | VETSSI`,
+      description,
+      url,
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${protocol.title} | VETSSI`,
+      description,
+    },
+  };
 }
 
 const phaseConfig = {
@@ -86,8 +104,29 @@ export default function ProtocolPage({ params }: Props) {
 
   const editSubject = encodeURIComponent(`Suggest edit: ${protocol.title}`);
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://vetssi.com" },
+      { "@type": "ListItem", position: 2, name: "Protocols", item: "https://vetssi.com/protocols" },
+      { "@type": "ListItem", position: 3, name: protocol.title, item: `https://vetssi.com/protocols/${protocol.slug}` },
+    ],
+  };
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: protocol.title,
+    description: protocol.clinicalObjective.split(".")[0] + ".",
+    url: `https://vetssi.com/protocols/${protocol.slug}`,
+    publisher: { "@type": "Organization", name: "VETSSI", url: "https://vetssi.com" },
+  };
+
   return (
     <div className="bg-cream min-h-screen">
+      <Script id={`schema-breadcrumb-${protocol.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <Script id={`schema-article-${protocol.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       {/* Breadcrumb */}
       <div className="border-b border-warm-gray bg-white no-print">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-3">
