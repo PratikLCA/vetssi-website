@@ -1,5 +1,77 @@
 export type ProtocolStep = string | { title: string; details: string[] };
 
+// ─── Middle Block Types ───────────────────────────────────────────────────────
+
+export type ChecklistItemData = {
+  label: string;
+  note?: string;
+};
+
+export type RiskTier = {
+  level: "standard" | "elevated" | "high";
+  criteria: string;
+  action: string;
+};
+
+export type ScreeningRow = {
+  finding: string;
+  action: "proceed" | "modify" | "defer";
+  actionLabel?: string;
+};
+
+export type ScreeningDomain = {
+  domain: string;
+  rows: ScreeningRow[];
+};
+
+export type GoNoGoItem = {
+  label: string;
+  note: string;
+};
+
+export type MiddleBlock =
+  | {
+      type: "risk-tier";
+      sectionTitle: string;
+      intro?: string;
+      patientFactors: ChecklistItemData[];
+      proceduralFactors: ChecklistItemData[];
+      tiers: RiskTier[];
+    }
+  | {
+      type: "screening-table";
+      sectionTitle: string;
+      intro?: string;
+      domains: ScreeningDomain[];
+      dayOfTitle: string;
+      dayOfItems: ChecklistItemData[];
+    }
+  | {
+      type: "planning-checklist";
+      sectionTitle: string;
+      intro?: string;
+      groups: { header: string; items: ChecklistItemData[] }[];
+      parametersTitle: string;
+      parametersIntro?: string;
+      parameters: { label: string; placeholder: string }[];
+    }
+  | {
+      type: "prophylaxis-plan";
+      sectionTitle: string;
+      intro?: string;
+      planTitle: string;
+      parameters: { label: string; placeholder: string }[];
+      confirmationTitle: string;
+      confirmationItems: ChecklistItemData[];
+    }
+  | {
+      type: "gonogo";
+      sectionTitle: string;
+      intro?: string;
+      groups: { header: string; items: GoNoGoItem[] }[];
+      warning?: { label: string; text: string };
+    };
+
 export type Protocol = {
   slug: string;
   title: string;
@@ -15,6 +87,7 @@ export type Protocol = {
   evidence: { citation: string; doi?: string }[];
   relatedProtocols: string[];
   relatedVideos: string[];
+  middleBlock?: MiddleBlock;
 };
 
 export const protocols: Protocol[] = [
@@ -1221,6 +1294,553 @@ export const protocols: Protocol[] = [
     ],
     relatedProtocols: ["incision-monitoring", "antimicrobial-prophylaxis"],
     relatedVideos: [],
+  },
+
+  // ─── SECTION 3 — PRE-CASE PLANNING ──────────────────────────────────────────
+  {
+    slug: "case-risk-stratification",
+    title: "Case Risk Stratification",
+    phase: "preoperative",
+    pathways: ["patient", "surgical-team"],
+    roles: ["surgeon"],
+    clinicalObjective:
+      "Classify each case into a standardised infection risk tier before the patient enters the OR. The tier determines the level of intraoperative and perioperative infection prevention applied — from standard precautions through to full enhanced protocol with mandatory lavage and post-operative monitoring.",
+    whyThisMatters:
+      "Patient and procedural risk factors for surgical site infection are identifiable before incision. Early stratification enables proportional planning — including antimicrobial prophylaxis, intraoperative lavage, postoperative monitoring, and client communication. Cases that go unclassified default to standard precautions, which may be insufficient for the actual risk present.",
+    criticalControlPoints: [
+      "Tier assigned at case planning stage — not the morning of surgery",
+      "Assigned tier documented in the surgical record",
+      "Tier confirmed aloud at the pre-case briefing",
+      "Tier reviewed and updated if new clinical information emerges at prep or clip",
+    ],
+    steps: [
+      "Review patient history and planned procedure during case scheduling or day-prior review.",
+      "Complete the risk factor checklist — every case, every time. Stratification must be routine, not reserved for suspected high-risk cases.",
+      "Count the factors present and apply the tier assignment criteria.",
+      "Record the assigned tier in the surgical plan.",
+      "Communicate the tier to the full surgical team at pre-case briefing so that each team member understands the level of infection prevention required.",
+      "If new clinical findings emerge at clip or prep, reassess and reassign the tier before proceeding.",
+    ],
+    pitfalls: [
+      "Applying a risk tier only when infection risk is already suspected — stratification must be routine for every case, not a reactive step.",
+      "Not reassigning the tier when new findings emerge at patient prep.",
+      "Failing to communicate the assigned tier to the entire team before the case begins.",
+    ],
+    expertInsight:
+      "The checklist is not the goal. The goal is a surgical team that walks into the OR knowing this case requires more — and has already prepared for it.",
+    evidence: [
+      {
+        citation:
+          "Nicholson M, et al. Risk factors for surgical site infection in veterinary patients. Veterinary Surgery. 2002;31(3):228–233.",
+        doi: "10.1053/jvet.2002.31617",
+      },
+      {
+        citation:
+          "Turk R, et al. Identification of risk factors for surgical site infection in small animal surgery. Veterinary Surgery. 2015;44(8):915–921.",
+        doi: "10.1111/vsu.12375",
+      },
+    ],
+    relatedProtocols: [
+      "preoperative-patient-screening",
+      "procedure-specific-planning",
+      "antimicrobial-prophylaxis-plan",
+      "sterility-readiness-check",
+      "patient-risk-stratification",
+      "antimicrobial-prophylaxis",
+    ],
+    relatedVideos: [],
+    middleBlock: {
+      type: "risk-tier",
+      sectionTitle: "Risk Factor Checklist",
+      intro: "Complete during case planning. Each factor present increases infection risk and contributes to the tier assignment.",
+      patientFactors: [
+        { label: "Obese patient (BCS ≥ 8/9)" },
+        { label: "Endocrinopathy (HAC, DM, hypothyroidism)" },
+        { label: "Active immunosuppression" },
+        { label: "Active skin disease or dermatitis" },
+        { label: "Wound or lick dermatitis near surgical region" },
+        { label: "Prior MRSP or resistant organism infection" },
+        { label: "Prior infection at this surgical site" },
+        { label: "Prolonged hospitalisation (>48h pre-op)" },
+      ],
+      proceduralFactors: [
+        { label: "Revision surgery" },
+        { label: "Implant-heavy procedure" },
+        { label: "Expected operative duration > 90 minutes" },
+        { label: "Emergency or semi-urgent case" },
+      ],
+      tiers: [
+        {
+          level: "standard",
+          criteria: "0 factors present",
+          action: "Standard infection prevention protocol",
+        },
+        {
+          level: "elevated",
+          criteria: "1–2 factors present",
+          action:
+            "Heightened prophylaxis timing, sterile field discipline, wound lavage. Enhanced post-op monitoring.",
+        },
+        {
+          level: "high",
+          criteria:
+            "3+ factors, OR any single high-weight factor (revision surgery, prior infection, active immunosuppression, resistant organism history)",
+          action:
+            "Full infection prevention protocol. Antiseptic lavage indicated. Post-op monitoring plan required. Consider pre-op client communication.",
+        },
+      ],
+    },
+  },
+  {
+    slug: "preoperative-patient-screening",
+    title: "Preoperative Patient Screening",
+    phase: "preoperative",
+    pathways: ["patient", "surgical-team"],
+    roles: ["surgeon"],
+    clinicalObjective:
+      "Confirm that each patient is an appropriate candidate for elective surgery on the day of the procedure, and identify any patient-level factors that require a modified infection prevention approach before the case proceeds.",
+    whyThisMatters:
+      "Proceeding with elective surgery in a patient with active infection elsewhere, compromised skin integrity near the surgical site, or an unrecognised history of resistant organisms significantly elevates SSI risk. These are identifiable factors — but only if they are systematically looked for. A patient who passed screening at scheduling may present differently on the day of surgery. This protocol is the last checkpoint before incision becomes the point of no return.",
+    criticalControlPoints: [
+      "Screening completed on the day of surgery — not only at scheduling",
+      "Any finding that prompts deferral is documented and communicated to the client",
+      "Risk tier from Case Risk Stratification is updated if new findings emerge",
+      "Suitability decision made by the surgeon — not delegated",
+    ],
+    steps: [
+      "Review the patient's history and any new clinical notes on the day of surgery.",
+      "Complete physical inspection: skin, coat, and the planned surgical region. Note any lesions, wounds, or dermatitis.",
+      "Confirm there is no active infection at any site — ears, mouth, urinary tract, chronic wound sites.",
+      "Review prior microbiology records for MRSP or resistant organism history. Adjust prophylaxis plan if applicable.",
+      "Apply action thresholds from the screening table: proceed, modify plan, or defer.",
+      "Surgeon confirms suitability. If proceeding, update risk tier if any new findings have emerged.",
+      "Document all screening findings and the final suitability decision in the surgical record.",
+    ],
+    pitfalls: [
+      "Relying solely on the scheduling assessment — patients can develop new findings between booking and surgery day.",
+      "Delegating the suitability decision to nursing or technician staff.",
+      "Proceeding with elective surgery when active infection is present elsewhere in the body.",
+      "Failing to update the risk tier when new screening findings emerge on the day of surgery.",
+    ],
+    expertInsight:
+      "A patient who should not have surgery today is not a scheduling problem — it is a patient safety decision. The surgeon who proceeds despite a screening finding owns what follows. The surgeon who defers protects the patient and the outcome.",
+    evidence: [
+      {
+        citation:
+          "Nicholson M, et al. Risk factors for surgical site infection in veterinary patients. Veterinary Surgery. 2002;31(3):228–233.",
+        doi: "10.1053/jvet.2002.31617",
+      },
+      {
+        citation:
+          "Eugster S, et al. A prospective study of postoperative infections in dogs and cats. Veterinary Surgery. 2004;33(5):542–550.",
+        doi: "10.1111/j.1532-950X.2004.04076.x",
+      },
+    ],
+    relatedProtocols: [
+      "case-risk-stratification",
+      "procedure-specific-planning",
+      "antimicrobial-prophylaxis-plan",
+      "sterility-readiness-check",
+      "patient-risk-stratification",
+    ],
+    relatedVideos: [],
+    middleBlock: {
+      type: "screening-table",
+      sectionTitle: "Screening Assessment",
+      intro:
+        "Each domain below carries a specific action threshold. Assess all five before proceeding.",
+      domains: [
+        {
+          domain: "Dermatologic",
+          rows: [
+            { finding: "Skin intact, no active lesions near surgical region", action: "proceed" },
+            {
+              finding: "Mild dermatitis distant from surgical site",
+              action: "modify",
+              actionLabel: "Modify plan — elevate risk tier",
+            },
+            {
+              finding: "Active skin infection or lesion near surgical region",
+              action: "defer",
+            },
+          ],
+        },
+        {
+          domain: "Active infection elsewhere",
+          rows: [
+            { finding: "No signs of active infection at any site", action: "proceed" },
+            {
+              finding: "Active infection confirmed at any site",
+              action: "defer",
+              actionLabel: "Defer — treat and reassess",
+            },
+          ],
+        },
+        {
+          domain: "Wounds / lick dermatitis",
+          rows: [
+            { finding: "No wounds or lick lesions near surgical region", action: "proceed" },
+            {
+              finding: "Lick dermatitis or wound near surgical region",
+              action: "modify",
+              actionLabel: "Modify plan — elevate risk tier",
+            },
+          ],
+        },
+        {
+          domain: "Resistant organism history",
+          rows: [
+            { finding: "No prior MRSP or resistant infection", action: "proceed" },
+            {
+              finding: "Prior MRSP or resistant infection confirmed",
+              action: "modify",
+              actionLabel: "Modify plan — assign High risk tier, adjust prophylaxis",
+            },
+          ],
+        },
+        {
+          domain: "Suitability for elective surgery today",
+          rows: [
+            { finding: "All domains clear, patient stable", action: "proceed" },
+            {
+              finding: "One or more findings requiring action",
+              action: "defer",
+              actionLabel: "Defer or modify — surgeon decision required",
+            },
+          ],
+        },
+      ],
+      dayOfTitle: "Day-of-Surgery Screening Checklist",
+      dayOfItems: [
+        {
+          label: "Dermatologic assessment completed",
+          note: "Skin inspected at and around the planned surgical region. No active lesions or infection present.",
+        },
+        {
+          label: "No active infection identified elsewhere",
+          note: "Ears, mouth, urinary tract, and any known chronic sites reviewed. No active infection confirmed.",
+        },
+        {
+          label: "No wounds or lick dermatitis near surgical region",
+          note: "Physical inspection completed. If present, risk tier updated and plan modified.",
+        },
+        {
+          label: "Resistant organism history reviewed",
+          note: "Prior MRSP or resistant infection history confirmed or ruled out. Prophylaxis plan adjusted if applicable.",
+        },
+        {
+          label: "Surgeon confirms patient suitable for elective surgery today",
+          note: "Final go/no-go decision made by surgeon based on all screening findings.",
+        },
+      ],
+    },
+  },
+  {
+    slug: "procedure-specific-planning",
+    title: "Procedure-Specific Planning",
+    phase: "preoperative",
+    pathways: ["instruments-implants", "surgical-team", "intraoperative-adjuncts"],
+    roles: ["surgeon", "scrub-technician"],
+    clinicalObjective:
+      "Confirm that all case-specific materials, resources, and logistical decisions are in place before the patient enters the OR — so that nothing required intraoperatively is sourced under pressure or improvised in conditions that compromise sterile technique.",
+    whyThisMatters:
+      "Improvisation during surgery is a contamination risk. Rushing to locate a missing implant size, sourcing a last-minute wound dressing, or discovering lavage materials are not stocked forces decisions under time pressure and increases the likelihood of breaks in sterile technique. Procedure-specific planning eliminates these scenarios before they occur. Each element of this checklist exists because its absence has, in practice, forced a compromise during a case.",
+    criticalControlPoints: [
+      "Planning completed the day prior — not on the morning of surgery",
+      "Surgeon and scrub technician both confirm readiness before the case begins",
+      "Any missing item identified here triggers a supply resolution — not an intraoperative workaround",
+      "Lavage materials confirmed as part of routine planning — not reserved for high-risk cases only",
+    ],
+    steps: [
+      "Review the procedure plan the day prior. Confirm implant set selection based on patient size, anatomy, and surgical approach.",
+      "Identify a backup implant plan. Document the alternative construct or size range.",
+      "Estimate expected operative duration. Flag cases projected beyond 90 minutes for elevated risk tier review and redosing planning.",
+      "Confirm imaging availability. Preload preoperative radiographs; confirm fluoroscopy if indicated.",
+      "Confirm lavage materials are stocked for this case. Do not assume availability — verify.",
+      "Select wound dressing appropriate to procedure type, location, and patient risk tier.",
+      "Confirm postoperative protection strategy. Ensure client communication is planned before discharge.",
+      "Surgeon and scrub technician jointly confirm readiness at the pre-case briefing.",
+    ],
+    pitfalls: [
+      "No backup implant plan — a single missing size becomes an intraoperative crisis that forces a sterility compromise.",
+      "Lavage materials treated as optional or sourced on the day of surgery rather than planned in advance.",
+      "Wound dressing selected intraoperatively rather than planned based on the procedure type and risk tier.",
+      "Postoperative protection not communicated to the client until discharge — too late for effective preparation.",
+    ],
+    expertInsight:
+      "Every intraoperative problem that forces a workaround was, at some earlier point, a planning omission. The checklist does not add time to surgical preparation — it eliminates the scramble that costs far more time, and far more risk, when it happens inside the OR.",
+    evidence: [
+      {
+        citation:
+          "Nelson LL. Surgical site infections in small animal surgery. Veterinary Clinics of North America: Small Animal Practice. 2011;41(5):1041–1056.",
+        doi: "10.1016/j.cvsm.2011.05.010",
+      },
+      {
+        citation:
+          "Mangram AJ, et al. Guideline for prevention of surgical site infection. Infection Control and Hospital Epidemiology. 1999;20(4):250–278.",
+        doi: "10.1086/501620",
+      },
+    ],
+    relatedProtocols: [
+      "case-risk-stratification",
+      "preoperative-patient-screening",
+      "antimicrobial-prophylaxis-plan",
+      "sterility-readiness-check",
+      "implant-handling",
+      "antimicrobial-prophylaxis",
+    ],
+    relatedVideos: [],
+    middleBlock: {
+      type: "planning-checklist",
+      sectionTitle: "Planning Checklist",
+      intro: "Complete for every case the day prior. Flag any unresolved items before proceeding.",
+      groups: [
+        {
+          header: "Implants & Equipment",
+          items: [
+            {
+              label: "Implant set selected and confirmed",
+              note: "Correct system, size range, and configuration verified for this patient and procedure.",
+            },
+            {
+              label: "Backup implant plan established",
+              note: "Alternative size or construct identified in the event of intraoperative adjustment.",
+            },
+            {
+              label: "Imaging available in OR",
+              note: "Preoperative images loaded and accessible. Fluoroscopy availability confirmed if required.",
+            },
+          ],
+        },
+        {
+          header: "Infection Prevention Materials",
+          items: [
+            {
+              label: "Lavage materials stocked and ready",
+              note: "Antiseptic lavage confirmed available for this case — not to be sourced intraoperatively.",
+            },
+            {
+              label: "Wound dressing plan confirmed",
+              note: "Dressing type and materials selected based on wound type, location, and patient risk tier.",
+            },
+            {
+              label: "Postoperative protection plan in place",
+              note: "Bandaging, buster collar, or physical restriction strategy confirmed. Client communication planned.",
+            },
+          ],
+        },
+      ],
+      parametersTitle: "Case Parameters",
+      parametersIntro:
+        "Record the following before the case begins. These inform intraoperative decisions including prophylaxis redosing.",
+      parameters: [
+        { label: "Expected operative duration", placeholder: "e.g. 90–120 minutes" },
+        { label: "Implant system", placeholder: "e.g. TPLO plate, LCP system" },
+        { label: "Backup implant / construct", placeholder: "e.g. Alternative plate size or system" },
+        { label: "Wound dressing selected", placeholder: "e.g. Non-adherent primary + padded secondary" },
+        {
+          label: "Postoperative protection plan",
+          placeholder: "e.g. Buster collar + exercise restriction 8 weeks",
+        },
+      ],
+    },
+  },
+  {
+    slug: "antimicrobial-prophylaxis-plan",
+    title: "Antimicrobial Prophylaxis Plan",
+    phase: "preoperative",
+    pathways: ["intraoperative-adjuncts", "surgical-team"],
+    roles: ["surgeon", "anesthetist"],
+    clinicalObjective:
+      "Establish and document the complete antimicrobial prophylaxis plan for each case before surgery begins — including drug selection, dose, timing, redosing interval, and the individual responsible for confirming administration.",
+    whyThisMatters:
+      "The protective effect of perioperative antimicrobial prophylaxis is highly dependent on timing. Tissue drug concentrations must be adequate at the moment of incision. Administration that is delayed, underdosed, or not redosed in long procedures provides substantially reduced protection. A plan that is undocumented is a plan that can be forgotten, assumed, or duplicated. This protocol ensures that prophylaxis decisions are made once, clearly, and confirmed by a named individual — not improvised at induction.",
+    criticalControlPoints: [
+      "Drug, dose, and timing decided during preoperative planning — not at induction",
+      "Administration timed to achieve adequate tissue concentration at incision",
+      "Redosing interval planned prospectively for all cases expected to exceed drug half-life",
+      "A named individual is responsible for confirming administration before incision",
+    ],
+    steps: [
+      "Select drug based on expected flora for the procedure type, site, and patient history. Adjust for known resistant organism history.",
+      "Calculate dose based on current patient weight. Document in the surgical plan.",
+      "Set timing target: administration 30–60 minutes before incision. Communicate to the anaesthesiologist.",
+      "Determine redosing interval based on the drug's half-life and estimated operative duration. Plan prospectively — do not wait until the case runs long.",
+      "Name the individual responsible for confirming administration. This must be explicit — shared responsibility defaults to no responsibility.",
+      "At the pre-incision briefing, confirm administration time aloud. Confirm redose trigger time is known.",
+      "Document all parameters and the confirmed administration time in the anaesthetic and surgical record.",
+    ],
+    pitfalls: [
+      "Administration timed to induction rather than incision — these may be separated by 30+ minutes in complex case setups.",
+      "No one explicitly named to confirm administration — assumed to have been done without verification.",
+      "Redosing interval not planned for long procedures — first dose protection lapses intraoperatively.",
+      "Drug or dose adjusted without surgeon notification.",
+    ],
+    expertInsight:
+      "Antimicrobial prophylaxis is not effective when it is given — it is effective when it is given at the right time, in the right amount, by someone who knows their role. A plan written down and confirmed aloud is the only version of this protocol that works.",
+    evidence: [
+      {
+        citation:
+          "Nelson LL. Surgical site infections in small animal surgery. Veterinary Clinics of North America: Small Animal Practice. 2011;41(5):1041–1056.",
+        doi: "10.1016/j.cvsm.2011.05.010",
+      },
+      {
+        citation:
+          "Weese JS, et al. Antimicrobial use guidelines for treatment of urinary tract disease in dogs and cats. Veterinary Medicine International. 2011;2011:263768.",
+        doi: "10.4061/2011/263768",
+      },
+    ],
+    relatedProtocols: [
+      "case-risk-stratification",
+      "preoperative-patient-screening",
+      "procedure-specific-planning",
+      "sterility-readiness-check",
+      "antimicrobial-prophylaxis",
+      "anesthesia-vascular-access-control",
+    ],
+    relatedVideos: [],
+    middleBlock: {
+      type: "prophylaxis-plan",
+      sectionTitle: "Prophylaxis Parameters",
+      intro:
+        "Complete for every case. All five parameters must be documented before the case proceeds.",
+      planTitle: "Case Prophylaxis Plan",
+      parameters: [
+        { label: "Drug selected", placeholder: "e.g. Cefazolin" },
+        { label: "Dose", placeholder: "e.g. 22 mg/kg IV" },
+        { label: "Timing target", placeholder: "e.g. 30–60 min before incision" },
+        {
+          label: "Redosing interval",
+          placeholder: "e.g. Every 90 min if procedure exceeds 2 hrs",
+        },
+        {
+          label: "Confirms administration",
+          placeholder: "e.g. Anaesthesiologist — confirms before incision call",
+        },
+      ],
+      confirmationTitle: "Pre-Incision Confirmation Checklist",
+      confirmationItems: [
+        {
+          label: "Drug and dose confirmed as planned",
+          note: "No substitution or dose adjustment made without surgeon awareness.",
+        },
+        {
+          label: "Administration time recorded",
+          note: "Time noted to allow accurate calculation of redosing interval.",
+        },
+        {
+          label: "Timing window confirmed — within 30–60 min of incision",
+          note: "If administration is outside the window, surgeon is notified before proceeding.",
+        },
+        {
+          label: "Redosing plan confirmed if operative duration exceeds drug half-life",
+          note: "Anaesthesiologist or circulating nurse aware of trigger time for redose.",
+        },
+        {
+          label: "Responsible individual named and confirmed",
+          note: "One person explicitly accountable for tracking administration and redosing.",
+        },
+      ],
+    },
+  },
+  {
+    slug: "sterility-readiness-check",
+    title: "Sterility Readiness Check",
+    phase: "preoperative",
+    pathways: ["instruments-implants", "surgical-team"],
+    roles: ["scrub-technician", "surgeon"],
+    clinicalObjective:
+      "Verify that all instruments, implants, and sterilisation indicators are confirmed ready before the patient enters the OR — eliminating the conditions that lead to convenience-based immediate-use steam sterilisation (IUSS) and unverified sterility.",
+    whyThisMatters:
+      "Sterilisation failure is a silent contamination pathway. Unlike a dropped instrument or a glove breach, compromised sterility is not visible at the time it occurs. If instruments are assumed sterile without verified indicators, or if implant pack integrity is not confirmed before opening, the contamination event happens before the case begins. IUSS used as a routine workaround for inadequate inventory is a documented risk factor for surgical site infection — it bypasses the verification steps that exist to catch sterilisation failures.",
+    criticalControlPoints: [
+      "All sterilisation indicators verified before the case is cleared to proceed",
+      "IUSS used only for genuine emergencies — never as a workaround for inventory gaps",
+      "Implant pack integrity confirmed visually before opening",
+      "Any failed indicator or damaged pack treated as non-sterile — no exceptions",
+    ],
+    steps: [
+      "Scrub technician confirms all instrument trays are present and assigned to this case.",
+      "Inspect all sterilisation indicators — chemical and biological. Any failed indicator means the tray is non-sterile. Do not proceed with that tray.",
+      "Confirm no IUSS is planned for routine inventory gaps. If IUSS is required, verify it is a genuine emergency and document the reason.",
+      "Confirm all implant packs for this case are present and unopened.",
+      "Inspect each implant pack visually: seals intact, no tears, no moisture exposure, expiry date valid.",
+      "Verify sterilisation indicators on implant packaging.",
+      "Surgeon and scrub technician confirm readiness aloud at the pre-case briefing. Any unresolved Fail is addressed before the patient enters the OR.",
+    ],
+    pitfalls: [
+      "Assuming indicators have been checked because the tray was prepared — check them yourself, at the time of use.",
+      "Opening a pack with a compromised seal and proceeding under time pressure.",
+      "Using IUSS habitually to compensate for understocked instrument sets — this normalises a known infection risk.",
+      "Not confirming implant pack integrity until the scrub technician opens them at the field — too late for safe substitution.",
+    ],
+    expertInsight:
+      "Sterilisation verification is not bureaucracy. It is the last line of defence against introducing a contaminated instrument or implant into a sterile field. A failed indicator that is caught before the case is a near miss. A failed indicator that is ignored — or never checked — is an exposure event.",
+    evidence: [
+      {
+        citation:
+          "AORN Guidelines for Perioperative Practice. Instrument Cleaning and Sterilization. Denver: AORN, Inc.; 2023.",
+      },
+      {
+        citation:
+          "McDonnell G, et al. Antiseptics and disinfectants: activity, action, and resistance. Clinical Microbiology Reviews. 1999;12(1):147–179.",
+        doi: "10.1128/CMR.12.1.147",
+      },
+    ],
+    relatedProtocols: [
+      "case-risk-stratification",
+      "preoperative-patient-screening",
+      "procedure-specific-planning",
+      "antimicrobial-prophylaxis-plan",
+      "instrument-sterility",
+      "implant-handling",
+    ],
+    relatedVideos: [],
+    middleBlock: {
+      type: "gonogo",
+      sectionTitle: "Readiness Status",
+      intro: "Mark each item Pass or Fail. Any Fail blocks the case until resolved.",
+      groups: [
+        {
+          header: "Instruments",
+          items: [
+            {
+              label: "All required instruments are available",
+              note: "Full set confirmed. No instruments borrowed from another tray or sourced ad hoc.",
+            },
+            {
+              label: "Sterilisation indicators confirmed — all passed",
+              note: "Chemical and biological indicators reviewed. Any failed indicator = tray is non-sterile.",
+            },
+            {
+              label: "No convenience IUSS required or planned",
+              note: "If IUSS is needed, confirm genuine emergency — not an inventory gap. Document reason.",
+            },
+          ],
+        },
+        {
+          header: "Implants",
+          items: [
+            {
+              label: "All implant packs present and accounted for",
+              note: "Correct system, sizes, and configuration confirmed against the procedure plan.",
+            },
+            {
+              label: "Pack integrity visually confirmed — seals intact, no damage",
+              note: "Any torn, wet, or compromised pack is treated as non-sterile and replaced before opening.",
+            },
+            {
+              label: "Implant sterilisation indicators verified",
+              note: "Indicators on implant packaging checked and confirmed passed.",
+            },
+          ],
+        },
+      ],
+      warning: {
+        label: "IUSS Policy",
+        text: "Immediate-use steam sterilisation must not substitute for adequate instrument inventory. When IUSS is used, the reason must be documented as a genuine emergency. Repeated IUSS events indicate an inventory or scheduling problem that must be resolved — not normalised.",
+      },
+    },
   },
 ];
 
