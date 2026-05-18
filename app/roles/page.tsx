@@ -4,9 +4,11 @@ import RoleSection from "@/components/RoleSection";
 import { roles } from "@/data/roles";
 
 export const metadata = {
-  title: "Roles & Responsibilities | VETSSI",
+  title: "Roles & Responsibilities",
   description:
-    "SSI prevention fails when nobody owns the step. This section defines who is responsible for each critical control point.",
+    "SSI prevention fails when nobody owns the step. Defines who is responsible for each critical control point — surgeon, scrub technician, anaesthesiologist, and prep staff.",
+  alternates: { canonical: "https://vetssi.com/roles" },
+  openGraph: { title: "Roles & Responsibilities | VETSSI", url: "https://vetssi.com/roles" },
 };
 
 export default function RolesPage() {

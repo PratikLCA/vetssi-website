@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Shield, Brain, Users, ArrowRight } from "lucide-react";
 import ProtocolCard from "@/components/ProtocolCard";
@@ -5,6 +6,19 @@ import ContributorCard from "@/components/ContributorCard";
 import { protocols } from "@/data/protocols";
 import { pathways } from "@/data/pathways";
 import { getFeaturedContributor } from "@/data/contributors";
+
+export const metadata: Metadata = {
+  title: "VETSSI — Veterinary Surgical Site Infection Prevention",
+  description:
+    "The complete perioperative SSI prevention resource for veterinary teams. Evidence-based protocols covering pre-case planning, patient preparation, surgical team standards, and postoperative care.",
+  alternates: { canonical: "https://vetssi.com" },
+  openGraph: {
+    title: "VETSSI — Veterinary Surgical Site Infection Prevention",
+    description:
+      "Evidence-based protocols for the entire veterinary perioperative team — from pre-case planning to postoperative surveillance.",
+    url: "https://vetssi.com",
+  },
+};
 
 export default function HomePage() {
   // One card per phase for the featured section

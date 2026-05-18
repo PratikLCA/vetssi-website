@@ -29,9 +29,11 @@ const iconMap: Record<string, LucideIcon> = {
 };
 
 export const metadata = {
-  title: "Contamination Pathways | VETSSI",
+  title: "Contamination Pathways",
   description:
-    "Where surgical site infections come from — and how each pathway can be controlled.",
+    "Where surgical site infections come from — and how each pathway can be controlled. Covers patient, surgical team, instruments, implants, and OR environment.",
+  alternates: { canonical: "https://vetssi.com/contamination-pathways" },
+  openGraph: { title: "Contamination Pathways | VETSSI", url: "https://vetssi.com/contamination-pathways" },
 };
 
 export default function ContaminationPathwaysPage() {

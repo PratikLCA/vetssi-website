@@ -4,7 +4,13 @@ import { getFeaturedContributor, getSupportingContributors } from "@/data/contri
 import { Mail } from "lucide-react";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = { title: "Expert Contributors" };
+export const metadata: Metadata = {
+  title: "Expert Contributors",
+  description:
+    "The veterinary surgeons and specialists who contribute to VETSSI's evidence-based SSI prevention protocols.",
+  alternates: { canonical: "https://vetssi.com/contributors" },
+  openGraph: { title: "Expert Contributors | VETSSI", url: "https://vetssi.com/contributors" },
+};
 
 export default function ContributorsPage() {
   const featured = getFeaturedContributor();

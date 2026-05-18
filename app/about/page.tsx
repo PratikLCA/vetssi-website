@@ -3,7 +3,13 @@ import { getFeaturedContributor } from "@/data/contributors";
 import { Mail } from "lucide-react";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = { title: "About VETSSI" };
+export const metadata: Metadata = {
+  title: "About VETSSI",
+  description:
+    "VETSSI is a free, evidence-based resource for veterinary SSI prevention — protocols, expert insights, and practical implementation guidance for the entire perioperative team.",
+  alternates: { canonical: "https://vetssi.com/about" },
+  openGraph: { title: "About VETSSI", url: "https://vetssi.com/about" },
+};
 
 export default function AboutPage() {
   const vezzoni = getFeaturedContributor();
