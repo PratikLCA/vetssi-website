@@ -75,7 +75,7 @@ export type MiddleBlock =
 export type Protocol = {
   slug: string;
   title: string;
-  phase: "preoperative" | "intraoperative" | "postoperative";
+  phase: "pre-case-planning" | "preoperative" | "intraoperative" | "postoperative";
   pathways: string[];
   roles: string[];
   clinicalObjective: string;
@@ -88,6 +88,10 @@ export type Protocol = {
   relatedProtocols: string[];
   relatedVideos: string[];
   middleBlock?: MiddleBlock;
+  audienceVersions?: {
+    staff: { steps: ProtocolStep[]; pitfalls?: string[] };
+    surgeon: { steps: ProtocolStep[]; pitfalls?: string[] };
+  };
 };
 
 export const protocols: Protocol[] = [
@@ -423,6 +427,40 @@ export const protocols: Protocol[] = [
     ],
     relatedProtocols: ["surgical-team-preparation", "glove-change-protocol", "or-attire-standards"],
     relatedVideos: ["sterile-gowning-gloving"],
+    audienceVersions: {
+      surgeon: {
+        steps: [
+          "Remove all jewelry from hands and wrists; ensure nails are short and free of polish or artificial extensions.",
+          "Perform a pre-scrub wash with soap and water to remove gross contamination.",
+          "Apply surgical hand rub or perform a timed surgical scrub per the institutional protocol.",
+          "Use a brushless technique with chlorhexidine 4% or an alcohol-based formulation containing chlorhexidine for 2–5 minutes.",
+          "Keep hands above elbows during and after antisepsis until donning the sterile gown.",
+          "Re-perform hand hygiene if hands contact any non-sterile surface before gloving.",
+        ],
+        pitfalls: [
+          "Performing alcohol-based hand antisepsis on wet hands — alcohol products require dry skin to work properly.",
+          "Skipping pre-wash when hands are visibly soiled — alcohol products do not penetrate organic matter.",
+          "Reusing the same gown sleeve to dry; always use a sterile towel.",
+          "Not re-scrubbing after touching anything outside the sterile field.",
+        ],
+      },
+      staff: {
+        steps: [
+          "Before any patient contact: apply alcohol-based hand rub using the WHO 6-step technique for 20–30 seconds.",
+          "Before handling IV catheters, infusion lines, or injectable medications: perform hand rub or soap-and-water wash.",
+          "Before administering sedation or any induction agent: perform hand rub.",
+          "After removing gloves: perform hand rub immediately — gloves do not replace hand hygiene.",
+          "After patient contact, environmental surface contact, or handling contaminated material: hand rub.",
+          "Before leaving and on re-entry to the OR: perform hand rub at the door.",
+        ],
+        pitfalls: [
+          "Skipping hand hygiene because gloves are being worn — gloves are a barrier, not a substitute for clean hands.",
+          "Using alcohol rub on visibly soiled hands — wash with soap and water first.",
+          "Not performing hand hygiene after removing contaminated gloves from clipping or patient prep.",
+          "Skipping re-hygiene when moving between tasks (e.g., from anesthesia setup to catheter handling).",
+        ],
+      },
+    },
   },
   {
     slug: "or-attire-standards",
@@ -1300,7 +1338,7 @@ export const protocols: Protocol[] = [
   {
     slug: "case-risk-stratification",
     title: "Case Risk Stratification",
-    phase: "preoperative",
+    phase: "pre-case-planning",
     pathways: ["patient", "surgical-team"],
     roles: ["surgeon"],
     clinicalObjective:
@@ -1394,7 +1432,7 @@ export const protocols: Protocol[] = [
   {
     slug: "preoperative-patient-screening",
     title: "Preoperative Patient Screening",
-    phase: "preoperative",
+    phase: "pre-case-planning",
     pathways: ["patient", "surgical-team"],
     roles: ["surgeon"],
     clinicalObjective:
@@ -1538,7 +1576,7 @@ export const protocols: Protocol[] = [
   {
     slug: "procedure-specific-planning",
     title: "Procedure-Specific Planning",
-    phase: "preoperative",
+    phase: "pre-case-planning",
     pathways: ["instruments-implants", "surgical-team", "intraoperative-adjuncts"],
     roles: ["surgeon", "scrub-technician"],
     clinicalObjective:
@@ -1648,7 +1686,7 @@ export const protocols: Protocol[] = [
   {
     slug: "antimicrobial-prophylaxis-plan",
     title: "Antimicrobial Prophylaxis Plan",
-    phase: "preoperative",
+    phase: "pre-case-planning",
     pathways: ["intraoperative-adjuncts", "surgical-team"],
     roles: ["surgeon", "anesthetist"],
     clinicalObjective:
@@ -1746,7 +1784,7 @@ export const protocols: Protocol[] = [
   {
     slug: "sterility-readiness-check",
     title: "Sterility Readiness Check",
-    phase: "preoperative",
+    phase: "pre-case-planning",
     pathways: ["instruments-implants", "surgical-team"],
     roles: ["scrub-technician", "surgeon"],
     clinicalObjective:

@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { getProtocolBySlug } from "@/data/protocols";
 
 const phaseConfig = {
+  "pre-case-planning": { label: "Pre-Case Planning", className: "badge-pre-case-planning" },
   preoperative: { label: "Preoperative", className: "badge-preoperative" },
   intraoperative: { label: "Intraoperative", className: "badge-intraoperative" },
   postoperative: { label: "Postoperative", className: "badge-postoperative" },

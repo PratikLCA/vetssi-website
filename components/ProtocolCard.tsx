@@ -6,6 +6,7 @@ import { getRoleBySlug } from "@/data/roles";
 import Tag from "./Tag";
 
 const phaseConfig = {
+  "pre-case-planning": { label: "Pre-Case Planning", className: "badge-pre-case-planning" },
   preoperative: { label: "Preoperative", className: "badge-preoperative" },
   intraoperative: { label: "Intraoperative", className: "badge-intraoperative" },
   postoperative: { label: "Postoperative", className: "badge-postoperative" },
