@@ -1880,6 +1880,1736 @@ export const protocols: Protocol[] = [
       },
     },
   },
+
+  // ─── SECTIONS 4–9 & 13–16 — PREOPERATIVE & POSTOPERATIVE ─────────────────
+  {
+    slug: "patient-admission-hygiene",
+    title: "Patient Admission & Holding Area Hygiene",
+    phase: "preoperative",
+    pathways: ["patient", "or-environment"],
+    roles: ["prep-technician", "anesthetist"],
+    clinicalObjective:
+      "Maintain the cleanliness of the patient and the holding environment from admission through transfer to the operating room, preventing acquisition of nosocomial organisms before surgery begins. Designated clean surfaces and limited handling after skin preparation reduce the risk of recontamination. Consistent holding-area hygiene is a foundational element of a comprehensive SSI prevention program.",
+    whyThisMatters:
+      "Patients can acquire resistant organisms from contaminated cage surfaces, shared equipment, or excessive staff handling within the hospital environment. A contaminated holding area transfers that burden directly to the surgical site. Protecting this window between admission and incision preserves the benefit of every subsequent prep step.",
+    criticalControlPoints: [
+      "Clean and disinfect cage or holding surface before patient placement",
+      "Limit physical contact with surgical site after clipping and antisepsis have begun",
+      "Use designated clean surfaces and transport equipment for pre-op patients",
+      "Ensure patient does not contact floors or unclean horizontal surfaces",
+      "Document holding-area cleaning completion before patient arrival",
+    ],
+    steps: [
+      {
+        title: "Prepare the holding area",
+        details: [
+          "Clean and disinfect the cage, run, or gurney surface with an approved hospital disinfectant",
+          "Allow adequate contact time per product label before placing the patient",
+          "Line with fresh, clean bedding or impermeable surface cover",
+        ],
+      },
+      {
+        title: "Admit the patient with minimal contamination risk",
+        details: [
+          "Record admission body condition and any visible skin lesions or wounds",
+          "Place IV catheter using aseptic technique immediately upon admission",
+          "Avoid unnecessary handling of the planned surgical site",
+        ],
+      },
+      {
+        title: "Perform pre-clipping hygiene if indicated",
+        details: [
+          "Bathe the patient the evening before or morning of surgery if heavily soiled",
+          "Do not clip in the holding area — use a designated prep or clipping room",
+          "Vacuum or remove loose hair from the holding area after any grooming",
+        ],
+      },
+      {
+        title: "Restrict access and handling after prep begins",
+        details: [
+          "Once clipping and antisepsis have started, limit who touches the patient",
+          "Do not allow the prepped patient to contact unclean cages, floors, or hands",
+          "Assign one team member responsibility for clean transport to OR",
+        ],
+      },
+      {
+        title: "Verify holding-area readiness before each surgical patient",
+        details: [
+          "Confirm prior patient materials (hair, fluid, bedding) have been removed",
+          "Re-disinfect if the surface has been used since last cleaning",
+          "Document on the surgical preparation checklist",
+        ],
+      },
+    ],
+    pitfalls: [
+      "Placing a prepared patient back into a soiled cage or onto an uncleaned surface negates prep efforts",
+      "Allowing excessive staff interaction with the surgical site during IV placement or monitoring",
+      "Skipping holding-area disinfection when the schedule is rushed",
+      "Using the same blanket or bedding for multiple patients without laundering",
+      "Failing to remove loose hair after clipping, which can settle on the prepped site",
+    ],
+    expertInsight:
+      "The holding area is often treated as a passive waiting space, but it is an active contamination risk — a clean prep can be undone in minutes by contact with an unwashed surface or unnecessary handling before the patient ever reaches the OR.",
+    evidence: [
+      {
+        citation:
+          "Mangram AJ, et al. Guideline for Prevention of Surgical Site Infection, 1999. Infect Control Hosp Epidemiol. 1999;20(4):250-278.",
+        doi: "10.1086/501620",
+      },
+      {
+        citation:
+          "AORN Guidelines for Perioperative Practice: Patient Skin Antisepsis. Denver: AORN; 2023.",
+      },
+      {
+        citation:
+          "Weese JS. A review of post-operative infections in veterinary orthopaedic surgery. Vet Comp Orthop Traumatol. 2008;21(2):99-105.",
+        doi: "10.3415/VCOT-07-02-0017",
+      },
+    ],
+    relatedProtocols: [
+      "preoperative-skin-preparation",
+      "clipping-timing-technique",
+      "transfer-after-clipping",
+      "patient-risk-stratification",
+      "preoperative-patient-screening",
+    ],
+    relatedVideos: [],
+    middleBlock: {
+      type: "planning-checklist",
+      sectionTitle: "Holding Area Hygiene Checklist",
+      intro:
+        "Complete all items before the surgical patient is placed in the holding area and again after clipping/prep begins.",
+      groups: [
+        {
+          header: "Cage & Surface Preparation",
+          items: [
+            { label: "Cage/gurney disinfected with approved product", note: "Verify correct contact time" },
+            { label: "Fresh bedding or impermeable cover placed" },
+            { label: "Prior patient materials removed (hair, fluid, soiled bedding)" },
+            { label: "Area visually clean and dry before patient placement" },
+          ],
+        },
+        {
+          header: "Patient Admission Steps",
+          items: [
+            { label: "IV catheter placed using aseptic technique on admission" },
+            { label: "Surgical site not unnecessarily touched during admission procedures" },
+            { label: "Patient does not contact floor between transport and cage" },
+          ],
+        },
+        {
+          header: "Post-Prep Protection",
+          items: [
+            { label: "Handling of clipped/antiseptic-applied site minimized", note: "One designated handler preferred" },
+            { label: "Patient not returned to soiled surface after prep" },
+            { label: "Transport team notified and route to OR confirmed clean" },
+          ],
+        },
+      ],
+      parametersTitle: "Holding Area Log",
+      parametersIntro: "Record cleaning and patient details for each surgical case.",
+      parameters: [
+        { label: "Patient ID / Case", placeholder: "e.g., Canine #2024-0412" },
+        { label: "Date & Time of Area Cleaning", placeholder: "e.g., 2024-04-12 07:15" },
+        { label: "Disinfectant Used", placeholder: "e.g., Accelerated hydrogen peroxide" },
+        { label: "Staff Member Who Cleaned", placeholder: "Initials" },
+        { label: "Time Patient Placed in Area", placeholder: "e.g., 07:45" },
+      ],
+    },
+  },
+
+  {
+    slug: "transfer-after-clipping",
+    title: "Transfer After Clipping",
+    phase: "preoperative",
+    pathways: ["patient", "or-environment"],
+    roles: ["prep-technician", "anesthetist"],
+    clinicalObjective:
+      "Ensure that the clipped and prepared patient is transported to the operating room without recontamination of the surgical site. Clean transport surfaces, a designated clean pathway, and avoidance of floor contact preserve the antiseptic integrity achieved during skin preparation. This brief transit phase represents a high-risk moment when contamination can silently occur before surgery begins.",
+    whyThisMatters:
+      "Recontamination during transfer is common and underappreciated. Organisms acquired from a gurney surface, floor contact, or ungloved handling during transport can subsequently be dragged across the surgical field during final prep. Treating transfer as a formal aseptic step — not just patient movement — is essential.",
+    criticalControlPoints: [
+      "Use only a clean, disinfected transport surface after clipping is complete",
+      "Prevent the patient or surgical limb from contacting the floor at any point",
+      "Use a direct, clean route from prep area to OR",
+      "Minimize number of staff handling the patient during transfer",
+      "Confirm OR is ready before initiating transfer to avoid holding the patient in a corridor",
+    ],
+    steps: [
+      "Confirm OR readiness before beginning transfer — do not hold a prepped patient in a hallway",
+      "Place the patient on a clean, freshly disinfected gurney or transfer surface",
+      "Wrap or cover the prepped surgical site loosely with a sterile towel if transit is more than 60 seconds",
+      "Carry or lift distal limbs — do not allow them to dangle and contact surfaces or floors",
+      "Use a designated clean corridor or route; avoid shared high-traffic areas when possible",
+      "Minimize personnel involved in transfer; one handler guides limb protection throughout",
+      "On arrival to OR, confirm patient positioning before removing any protective covering",
+    ],
+    pitfalls: [
+      "Allowing the surgical limb to contact the gurney side, wheel, or floor during transfer",
+      "Transferring the patient before the OR is fully set up, requiring waiting in the corridor",
+      "Using the same gurney for both dirty and clean patients without disinfection",
+      "Excessive personnel clustered around the patient during transfer creating turbulence near the prepared site",
+      "Removing the protective covering prematurely before the patient is positioned on the table",
+    ],
+    expertInsight:
+      "Transfer is one of the most neglected steps in surgical prep — teams focus on what happens in the OR and forget that a 30-second gurney ride on an unwashed surface can undo meticulous antisepsis.",
+    evidence: [
+      {
+        citation:
+          "Aiello SE, ed. The Merck Veterinary Manual. 12th ed. Kenilworth, NJ: Merck; 2022. Chapter: Surgical Site Infections.",
+      },
+      {
+        citation:
+          "AORN Guidelines for Perioperative Practice: Patient Skin Antisepsis. Denver: AORN; 2023.",
+      },
+      {
+        citation:
+          "Eugster S, et al. A prospective study of postoperative surgical site infections in dogs and cats. Vet Surg. 2004;33(5):542-550.",
+        doi: "10.1111/j.1532-950X.2004.04076.x",
+      },
+    ],
+    relatedProtocols: [
+      "clipping-timing-technique",
+      "preoperative-skin-preparation",
+      "patient-admission-hygiene",
+      "patient-positioning-isolation",
+      "sterility-readiness-check",
+    ],
+    relatedVideos: [],
+    middleBlock: {
+      type: "gonogo",
+      sectionTitle: "Transfer Readiness: Go / No-Go",
+      intro:
+        "Verify all conditions before moving the prepped patient. Any 'No-Go' condition must be resolved before transfer begins.",
+      groups: [
+        {
+          header: "Go Conditions",
+          items: [
+            { label: "OR table is clean and set up", note: "Confirm with circulating staff before leaving prep area" },
+            { label: "Transport gurney has been disinfected", note: "Verify since last patient use" },
+            { label: "Clean route to OR is clear", note: "Avoid active procedure corridors" },
+            { label: "Designated handler assigned for limb protection", note: "One person responsible throughout transfer" },
+            { label: "Protective covering available if transit > 60 seconds", note: "Sterile towel or wrap" },
+          ],
+        },
+        {
+          header: "No-Go Conditions — Resolve Before Transfer",
+          items: [
+            { label: "OR not ready or still being cleaned", note: "Wait — do not hold patient in corridor" },
+            { label: "Transport surface not cleaned since last patient", note: "Disinfect and allow contact time" },
+            { label: "No handler available to protect surgical limb", note: "Assign before moving" },
+            { label: "Patient is agitated and at risk of self-contamination", note: "Ensure adequate sedation or restraint" },
+          ],
+        },
+      ],
+      warning: {
+        label: "Corridor Hold Prohibited",
+        text: "Never hold a prepped patient in a shared corridor while waiting for the OR. Return to the prep area if OR is not ready.",
+      },
+    },
+  },
+
+  {
+    slug: "gloves-outside-sterile-field",
+    title: "Gloves Outside the Sterile Field",
+    phase: "preoperative",
+    pathways: ["surgical-team", "patient"],
+    roles: ["prep-technician", "anesthetist", "surgeon"],
+    clinicalObjective:
+      "Ensure that non-sterile gloves are worn consistently during all patient contact outside the sterile field — including clipping, catheter handling, antiseptic application, and patient positioning — reducing the risk of cross-contamination between staff hands and the surgical site. Glove changes between patients and when contamination is suspected prevent organism transfer. This standard complements but does not replace hand hygiene.",
+    whyThisMatters:
+      "Hands are a primary vector for SSI pathogens in the perioperative setting. Non-sterile gloves reduce direct transfer from staff skin flora and environmental organisms to the surgical site during the many contact-intensive steps that precede sterile gowning. Compliance with glove use outside the sterile field is often lower than within it, creating a hidden contamination risk.",
+    criticalControlPoints: [
+      "Wear non-sterile gloves during all clipping and hair removal steps",
+      "Wear gloves during IV catheter placement, adjustment, and injection port handling",
+      "Change gloves between patients without exception",
+      "Change gloves when contamination is suspected or confirmed, even within the same patient encounter",
+      "Perform hand hygiene before donning and after removing gloves",
+    ],
+    steps: [
+      "Perform hand hygiene before applying gloves for any patient contact task",
+      "Don non-sterile exam gloves before beginning clipping or hair removal",
+      "Maintain gloves throughout catheter placement, fluid line connection, and injection port access",
+      "Change gloves after handling any soiled material before touching the prepped site",
+      "Change gloves between every patient — never reuse or 'flip' gloves",
+      "Remove gloves using the inside-out technique to avoid hand contamination",
+      "Perform hand hygiene after glove removal before proceeding to the next task",
+    ],
+    pitfalls: [
+      "Skipping gloves during 'quick' catheter adjustments or injection port access",
+      "Reusing gloves between patients when the schedule is rushed",
+      "Failing to change gloves after handling soiled material before touching the clipped/prepped site",
+      "Wearing gloves as a substitute for hand hygiene rather than in addition to it",
+      "Donning sterile gloves directly over hands that have not been antiseptically prepared",
+    ],
+    expertInsight:
+      "Gloves create a false sense of security if hand hygiene is neglected — worn gloves accumulate organisms rapidly, and any break in technique transfers that burden directly to the patient.",
+    evidence: [
+      {
+        citation:
+          "WHO Guidelines on Hand Hygiene in Health Care. Geneva: World Health Organization; 2009.",
+      },
+      {
+        citation:
+          "AORN Guidelines for Perioperative Practice: Sterile Technique. Denver: AORN; 2023.",
+      },
+      {
+        citation:
+          "Pittet D, et al. Effectiveness of a hospital-wide programme to improve compliance with hand hygiene. Lancet. 2000;356(9238):1307-1312.",
+        doi: "10.1016/S0140-6736(00)02814-2",
+      },
+    ],
+    relatedProtocols: [
+      "hand-hygiene",
+      "glove-change-protocol",
+      "surgical-team-preparation",
+      "iv-catheter-placement",
+      "preoperative-skin-preparation",
+    ],
+    relatedVideos: [],
+    audienceVersions: {
+      staff: {
+        steps: [
+          "Put on non-sterile exam gloves before touching the patient for clipping or hair removal",
+          "Keep gloves on during IV catheter placement and any adjustment of IV lines or ports",
+          "Change gloves if you touch a soiled surface, body fluid, or any unclean object during prep",
+          "Change gloves between every patient — do not reuse",
+          "Remove gloves by turning them inside out to keep your hands clean",
+          "Wash or sanitize hands after removing gloves before touching anything else",
+        ],
+        pitfalls: [
+          "Touching the clipped site without gloves during catheter work or monitoring",
+          "Forgetting to change gloves between patients during a busy schedule",
+          "Using gloves as a reason to skip hand hygiene",
+        ],
+      },
+      surgeon: {
+        steps: [
+          "Don non-sterile gloves before assisting with patient positioning or any contact with the unprepped site",
+          "Maintain gloves when handling un-sterile components of monitoring equipment near the surgical site",
+          "Change gloves when moving from a contaminated area to the planned surgical field during pre-scrub evaluation",
+          "Remove all non-sterile gloves completely before beginning surgical hand antisepsis",
+          "Do not contact the sterile field, instrument tables, or implants while wearing non-sterile gloves",
+          "Verify your team has changed gloves between positioning and final antiseptic application",
+        ],
+        pitfalls: [
+          "Adjusting patient positioning after hand antisepsis without recognizing this requires re-scrubbing",
+          "Assuming non-sterile gloves provide sterile-field-equivalent protection — they do not",
+          "Contacting the final antiseptic-prepared site with non-sterile gloves just before draping",
+        ],
+      },
+    },
+  },
+
+  {
+    slug: "infusion-line-preparation",
+    title: "Infusion Line Preparation",
+    phase: "preoperative",
+    pathways: ["patient", "surgical-team"],
+    roles: ["anesthetist", "prep-technician"],
+    clinicalObjective:
+      "Establish intravenous infusion systems using strict aseptic technique, with fluid preparation timed appropriately relative to surgical use, to prevent intravascular introduction of organisms during the perioperative period. Shared, pre-spiked, or reused fluid systems carry significant contamination risk. Each patient must have a dedicated, freshly prepared infusion system with all access points protected.",
+    whyThisMatters:
+      "IV-related infections — though less common than incisional SSIs — can be catastrophic, particularly in immunocompromised or critically ill surgical patients. The same pathogens responsible for SSIs can enter via improperly prepared fluid lines, syringes, or multi-use ports. Standardizing line preparation is a high-yield, low-cost intervention.",
+    criticalControlPoints: [
+      "Prepare infusion lines immediately before use — not hours in advance",
+      "Never share a spiked or open fluid bag between patients",
+      "Never reuse a syringe, even between draws from the same bag",
+      "Disinfect all injection ports before access using friction and an alcohol-based swab",
+      "Label all prepared syringes with drug, concentration, date, and time",
+    ],
+    steps: [
+      {
+        title: "Prepare fluids at the time of use",
+        details: [
+          "Spike fluid bags immediately before priming the line — do not pre-spike",
+          "Inspect bag for clarity, expiration, and absence of particulate matter",
+          "Prime the line and remove all air before connecting to the patient",
+        ],
+      },
+      {
+        title: "Use patient-dedicated fluid systems",
+        details: [
+          "Each patient receives a dedicated fluid bag and line — never carry over between patients",
+          "Do not leave spiked bags open for use in a subsequent case even if unused",
+        ],
+      },
+      {
+        title: "Maintain injection port asepsis",
+        details: [
+          "Swab each injection port with 70% isopropyl alcohol and allow to dry before access",
+          "Use a new sterile syringe for every drug draw or injection",
+          "Do not recap and reuse syringes",
+        ],
+      },
+      {
+        title: "Label all prepared medications and infusions",
+        details: [
+          "Label syringes with drug name, concentration, patient ID, preparer initials, date, and time",
+          "Discard any unlabeled or expired preparation",
+          "Never administer a preparation drawn from a syringe that has been set down out of view",
+        ],
+      },
+      {
+        title: "Protect line integrity during case",
+        details: [
+          "Keep stopcocks capped when not in use",
+          "Replace injection caps if contamination is suspected",
+          "Minimize the number of T-ports, stopcocks, and extension sets — each connection is a risk point",
+        ],
+      },
+    ],
+    pitfalls: [
+      "Pre-spiking multiple bags in advance to save time — a common but dangerous shortcut",
+      "Reusing syringes between drug draws, even from the same vial",
+      "Leaving stopcocks open and uncapped between uses",
+      "Failing to label prepared syringes, leading to drug administration errors and traceability gaps",
+      "Carrying a partially used fluid bag to the next surgical patient",
+    ],
+    expertInsight:
+      "Infusion line contamination is invisible — there is no way to know a line is compromised without culturing it, which is why strict prospective technique is non-negotiable rather than reactive.",
+    evidence: [
+      {
+        citation:
+          "O'Grady NP, et al. Guidelines for the Prevention of Intravascular Catheter-Related Infections. Clin Infect Dis. 2011;52(9):e162-e193.",
+        doi: "10.1093/cid/cir257",
+      },
+      {
+        citation:
+          "AORN Guidelines for Perioperative Practice: Medication Safety. Denver: AORN; 2023.",
+      },
+      {
+        citation:
+          "Strom BL, et al. Medication errors related to syringe reuse. Ann Intern Med. 2011;155(3):184-192.",
+      },
+    ],
+    relatedProtocols: [
+      "iv-catheter-placement",
+      "medication-handling",
+      "anesthesia-vascular-access-control",
+      "antimicrobial-prophylaxis",
+      "patient-admission-hygiene",
+    ],
+    relatedVideos: [],
+    middleBlock: {
+      type: "planning-checklist",
+      sectionTitle: "Infusion Line Preparation Checklist",
+      intro:
+        "Complete all items for each patient before connecting any IV infusion. Document deviations and notify the anesthetist.",
+      groups: [
+        {
+          header: "Fluid Bag Preparation",
+          items: [
+            { label: "Fluid bag inspected for clarity, expiration, and integrity" },
+            { label: "Bag spiked immediately before use — not pre-spiked", note: "Never pre-spike for later use" },
+            { label: "Line primed and air-free before patient connection" },
+            { label: "Bag labeled with patient ID and start time" },
+          ],
+        },
+        {
+          header: "Syringe & Medication Handling",
+          items: [
+            { label: "New sterile syringe used for each drug draw" },
+            { label: "All prepared syringes labeled with drug, concentration, patient ID, date, time, and preparer initials" },
+            { label: "No unlabeled or pre-drawn syringes present on the anesthesia workspace" },
+            { label: "Multi-dose vials dated on first opening and discarded per protocol" },
+          ],
+        },
+        {
+          header: "Access Port & Line Integrity",
+          items: [
+            { label: "All injection ports swabbed with 70% isopropyl alcohol and dried before access" },
+            { label: "Stopcocks capped when not in active use" },
+            { label: "Minimum number of connectors and T-ports used" },
+            { label: "Line and connectors replaced if contamination suspected" },
+          ],
+        },
+      ],
+      parametersTitle: "Case Fluid Record",
+      parameters: [
+        { label: "Patient ID / Case Number", placeholder: "e.g., Feline #2024-0315" },
+        { label: "Fluid Type & Volume", placeholder: "e.g., LRS 500 mL" },
+        { label: "Line Preparation Time", placeholder: "e.g., 08:20" },
+        { label: "Prepared By (Initials)", placeholder: "e.g., JK" },
+        { label: "Drugs Added to Bag (if any)", placeholder: "e.g., KCl 20 mEq" },
+      ],
+    },
+  },
+
+  {
+    slug: "or-ventilation-environment",
+    title: "OR Ventilation & Environmental Control",
+    phase: "preoperative",
+    pathways: ["or-environment"],
+    roles: ["scrub-technician", "anesthetist", "surgeon"],
+    clinicalObjective:
+      "Maintain an operating room environment that minimizes airborne and surface-level contamination through ventilation standards, door discipline, and traffic control during the surgical period. Positive-pressure ventilation with high air exchange rates and HEPA filtration reduces the burden of airborne organisms settling onto the sterile field. Environmental control is particularly critical during implant procedures and prolonged cases.",
+    whyThisMatters:
+      "Airborne particles are a documented source of SSI organisms, particularly in orthopaedic and implant surgery. Each door opening disrupts positive pressure and introduces a burst of unfiltered corridor air. Traffic generates turbulence that suspends settled particles. These environmental factors are modifiable and require deliberate management during every case.",
+    criticalControlPoints: [
+      "Confirm OR is under positive pressure relative to adjacent corridors before case start",
+      "Limit OR door openings to essential entries and exits only",
+      "Achieve and maintain minimum air exchange standards (15+ air changes per hour recommended for veterinary ORs)",
+      "Restrict unnecessary personnel from entering during implant opening and wound closure",
+      "Allow a settling period after room cleaning before beginning sterile setup",
+    ],
+    steps: [
+      "Verify OR ventilation system is operational and positive pressure is confirmed before sterile setup begins",
+      "Close OR doors during all sterile setup, implant opening, and wound closure phases",
+      "Brief all team members on door discipline before the case — each opening is a contamination event",
+      "Plan all anticipated equipment and supply needs before surgery begins to minimize door openings",
+      "Limit occupancy to essential personnel; additional observers should remain outside or in a viewing area",
+      "After OR cleaning, allow a minimum air settling time (typically 20-30 minutes) before laying out sterile packs",
+      "Monitor and document any significant ventilation anomalies (system alarms, prolonged door holds) in the case record",
+    ],
+    pitfalls: [
+      "Propping OR doors open for convenience, negating positive pressure ventilation",
+      "Failing to complete a pre-case supply check, forcing repeated door openings during surgery",
+      "Allowing students or observers to enter and exit repeatedly during implant or closure phases",
+      "Neglecting to verify ventilation function after facility maintenance or HVAC work",
+      "Underestimating the contamination burden from a single held-open door during a critical phase",
+    ],
+    expertInsight:
+      "Every unnecessary door opening is a ventilation breach — in a 2-hour implant procedure, ten avoidable door openings represent ten preventable contamination events that no amount of antibiotic prophylaxis can fully compensate for.",
+    evidence: [
+      {
+        citation:
+          "Memarzadeh F, Manning AP. Thermal comfort, uniformity, and ventilation effectiveness in patient rooms: performance assessment using ventilation indices. HVAC&R Research. 2000;6(1):49-68.",
+      },
+      {
+        citation:
+          "AORN Guidelines for Perioperative Practice: Design and Maintenance of the Surgical Suite. Denver: AORN; 2023.",
+      },
+      {
+        citation:
+          "Mangram AJ, et al. Guideline for Prevention of Surgical Site Infection, 1999. Infect Control Hosp Epidemiol. 1999;20(4):250-278.",
+        doi: "10.1086/501620",
+      },
+    ],
+    relatedProtocols: [
+      "or-environment-setup",
+      "or-traffic-control",
+      "or-behavior-rules",
+      "contamination-sensitive-phases",
+      "sterile-field-maintenance",
+    ],
+    relatedVideos: [],
+  },
+
+  {
+    slug: "contamination-sensitive-phases",
+    title: "Contamination-Sensitive Phases",
+    phase: "preoperative",
+    pathways: ["or-environment", "surgical-team"],
+    roles: ["surgeon", "scrub-technician", "anesthetist", "prep-technician"],
+    clinicalObjective:
+      "Identify and enforce heightened discipline controls during the four highest-risk contamination phases of the perioperative period: after final skin antisepsis, during draping, during implant opening, and during wound closure. These phases share common features — open sterile fields, maximal contamination impact of any breach, and frequent lapse in discipline due to workflow momentum. Explicit team-level awareness of these phases reduces breach frequency.",
+    whyThisMatters:
+      "Most surgical contamination events occur during predictable, high-activity transitions rather than uniformly throughout the procedure. Targeting team behavior at these specific phases — rather than attempting uniform maximum vigilance throughout — is both more effective and more sustainable as a practice standard.",
+    criticalControlPoints: [
+      "Final antisepsis and drying period: no contact, minimal movement near patient",
+      "Draping phase: OR doors closed, circulator not touching sterile components, no traffic",
+      "Implant opening phase: announce start to team, minimize personnel in OR, no door openings",
+      "Wound closure phase: same quiet discipline as implant opening — this is the last opportunity to introduce contamination",
+    ],
+    steps: [
+      "Brief the team before the case on which phases require heightened discipline — name them explicitly",
+      "Designate a phase announcement system: surgeon or scrub tech calls out 'Draping now' or 'Opening implant' to signal discipline mode",
+      "Enforce OR door closure for the duration of each sensitive phase",
+      "Pause non-essential communication (teaching, personal conversation) during sensitive phases",
+      "Circulating staff complete all anticipated tasks before each sensitive phase begins to avoid entry/exit during it",
+      "Document any breach (door opening, personnel entry) during a sensitive phase in the case record",
+      "Debrief after the case if a breach occurred — identify root cause and corrective action",
+    ],
+    pitfalls: [
+      "Failing to announce phase transitions, so team members remain unaware heightened discipline is required",
+      "Allowing a door to be opened for a 'quick question' during implant handling",
+      "Scrub tech reaching for unlisted supplies during draping, forcing the circulator to leave and re-enter",
+      "Relaxing discipline during closure because 'the hard part is over' — closure is a high-risk phase",
+      "Not debriefing after a breach, missing the opportunity to prevent recurrence",
+    ],
+    expertInsight:
+      "Calling out phase transitions out loud — 'We are draping now, doors closed' — is a simple, zero-cost intervention that consistently reduces team breaches more than any policy document.",
+    evidence: [
+      {
+        citation:
+          "Gillespie BM, et al. Reducing the risk of surgical site infection using a multidisciplinary approach. Int J Nurs Stud. 2014;51(3):375-383.",
+        doi: "10.1016/j.ijnurstu.2013.06.002",
+      },
+      {
+        citation:
+          "AORN Guidelines for Perioperative Practice: Sterile Technique. Denver: AORN; 2023.",
+      },
+      {
+        citation:
+          "Mangram AJ, et al. Guideline for Prevention of Surgical Site Infection, 1999. Infect Control Hosp Epidemiol. 1999;20(4):250-278.",
+        doi: "10.1086/501620",
+      },
+    ],
+    relatedProtocols: [
+      "or-traffic-control",
+      "or-behavior-rules",
+      "or-ventilation-environment",
+      "sterile-field-maintenance",
+      "draping-technique",
+    ],
+    relatedVideos: [],
+    middleBlock: {
+      type: "screening-table",
+      sectionTitle: "Contamination-Sensitive Phase Controls",
+      intro:
+        "Each phase below requires specific team discipline. Confirm controls are in place before and during each phase.",
+      domains: [
+        {
+          domain: "After Final Skin Antisepsis",
+          rows: [
+            { finding: "OR doors open", action: "modify", actionLabel: "Close immediately" },
+            { finding: "Staff touching patient near surgical site", action: "defer", actionLabel: "Hold — no contact" },
+            { finding: "Antiseptic fully dry and ready", action: "proceed", actionLabel: "Proceed to draping" },
+            { finding: "Antiseptic not fully dry", action: "defer", actionLabel: "Wait — allow full dry time" },
+          ],
+        },
+        {
+          domain: "During Draping",
+          rows: [
+            { finding: "Circulator positioned and ready with supplies", action: "proceed" },
+            { finding: "Unanticipated supply needed — requires door opening", action: "modify", actionLabel: "Pause draping until resolved" },
+            { finding: "Personnel entering OR during draping", action: "defer", actionLabel: "Hold entry until draping complete" },
+            { finding: "Drape integrity confirmed after application", action: "proceed" },
+          ],
+        },
+        {
+          domain: "During Implant Opening",
+          rows: [
+            { finding: "Implant announced to team — phase called out", action: "proceed" },
+            { finding: "Door opened during implant opening", action: "modify", actionLabel: "Document breach; assess sterile field" },
+            { finding: "Implant dropped or touched non-sterile surface", action: "defer", actionLabel: "Do not use — retrieve replacement" },
+            { finding: "Implant packaging intact and expiration confirmed", action: "proceed" },
+          ],
+        },
+        {
+          domain: "During Wound Closure",
+          rows: [
+            { finding: "OR discipline maintained equivalent to opening phase", action: "proceed" },
+            { finding: "Non-essential personnel present in OR", action: "modify", actionLabel: "Request exit before closure begins" },
+            { finding: "Glove change performed if indicated before closure", action: "proceed" },
+            { finding: "Door held open during final suture layers", action: "modify", actionLabel: "Close door; document event" },
+          ],
+        },
+      ],
+      dayOfTitle: "Phase Readiness Confirmation",
+      dayOfItems: [
+        { label: "Team briefed on all four sensitive phases before case start" },
+        { label: "Phase announcement system agreed upon (who calls it, what words)" },
+        { label: "Circulating staff supply check completed before first sensitive phase" },
+        { label: "Case record ready to document any breach event" },
+      ],
+    },
+  },
+
+  {
+    slug: "patient-positioning-isolation",
+    title: "Patient Positioning & Limb Isolation",
+    phase: "preoperative",
+    pathways: ["patient", "surgical-team"],
+    roles: ["prep-technician", "anesthetist", "surgeon"],
+    clinicalObjective:
+      "Position the surgical patient on the OR table to optimize access, support physiologic stability, and isolate the distal limb or extremity from the main sterile field using stockinette or equivalent techniques. Proper positioning prevents contact between the prepared site and unprepared regions and allows the scrub technician to maintain sterile field integrity throughout the procedure. Errors in positioning require repositioning that may compromise the sterile field or cause patient injury.",
+    whyThisMatters:
+      "Limb isolation is often treated as a cosmetic step, but its primary function is contamination prevention — separating the contamination-loaded distal extremity (paw, hoof) from the proximal surgical site. Inadequate isolation is a leading cause of intraoperative field contamination in orthopaedic cases.",
+    criticalControlPoints: [
+      "Confirm final surgical position before draping begins — repositioning after draping contaminates the field",
+      "Apply stockinette aseptically to isolate the distal limb before gowning and draping",
+      "Pad all pressure points and secure the extremity to prevent intraoperative movement",
+      "Ensure the distal limb suspension system (IV stand, tie-out) does not contact the sterile field",
+      "Verify field of view and surgeon ergonomics before the case is locked in",
+    ],
+    steps: [
+      {
+        title: "Finalize positioning on the OR table",
+        details: [
+          "Place patient in the required position (dorsal, lateral, sternal) using approved positioning aids",
+          "Confirm surgical site is accessible and surgeon ergonomics are acceptable",
+          "Pad bony prominences and vulnerable nerve paths before securing",
+        ],
+      },
+      {
+        title: "Hang and secure the distal limb",
+        details: [
+          "Suspend the affected limb using an IV stand, orthopedic limb holder, or ceiling-mounted support",
+          "Tie-out at the level of the paw or hoof using a clean bandage or stockinette clip — not directly at the surgical site",
+          "Confirm the limb is at appropriate height and tension for the planned procedure",
+        ],
+      },
+      {
+        title: "Apply stockinette aseptically",
+        details: [
+          "Open sterile stockinette and have scrub tech apply while maintaining sterility",
+          "Extend stockinette from the most distal point (paw) proximally past the planned incision site",
+          "Secure the proximal end so it does not slip during manipulation",
+        ],
+      },
+      {
+        title: "Confirm isolation before draping",
+        details: [
+          "The distal limb suspension system must be non-sterile, handled by the circulator only",
+          "The stockinette-covered limb is then handed off to the scrub tech and incorporated into the sterile drape",
+          "Verify no gap exists between stockinette and the field drape at handoff",
+        ],
+      },
+      "Complete final antiseptic application to any exposed skin within the draping plan before gowning",
+      "Lock all positioning aids and confirm patient will not shift during procedure before draping begins",
+    ],
+    pitfalls: [
+      "Repositioning after draping is complete, breaking sterile field integrity",
+      "Stockinette applied by an ungloved or non-sterile team member, contaminating its surface",
+      "Insufficient proximal extension of stockinette, leaving a gap at the surgical site boundary",
+      "IV stand or tie-out contacting the sterile drape during limb manipulation",
+      "Padding omitted on bony prominences in long cases, causing positioning-related injury",
+    ],
+    expertInsight:
+      "A well-isolated and hung limb makes the scrub tech's job significantly easier throughout the case — it is not a luxury step, it is the foundation of field control for all orthopaedic procedures.",
+    evidence: [
+      {
+        citation:
+          "AORN Guidelines for Perioperative Practice: Positioning the Patient. Denver: AORN; 2023.",
+      },
+      {
+        citation:
+          "Denny HR, Butterworth SJ. A Guide to Canine and Feline Orthopaedic Surgery. 4th ed. Oxford: Blackwell Science; 2000.",
+      },
+      {
+        citation:
+          "Tobias KM, Johnston SA. Veterinary Surgery: Small Animal. 2nd ed. St. Louis: Elsevier; 2018.",
+      },
+    ],
+    relatedProtocols: [
+      "draping-technique",
+      "incisional-drape-policy",
+      "sterile-field-maintenance",
+      "transfer-after-clipping",
+      "sterility-readiness-check",
+    ],
+    relatedVideos: [],
+    middleBlock: {
+      type: "planning-checklist",
+      sectionTitle: "Positioning & Limb Isolation Checklist",
+      intro:
+        "Complete all steps before gowning and draping. Confirm with the surgeon that positioning is finalized before proceeding.",
+      groups: [
+        {
+          header: "Table & Patient Positioning",
+          items: [
+            { label: "Patient placed in correct position (dorsal/lateral/sternal) per surgical plan" },
+            { label: "All bony prominences padded", note: "Especially elbows, hocks, and spine in lateral/dorsal recumbency" },
+            { label: "Surgeon confirms ergonomic access before positioning locked in" },
+            { label: "Monitoring leads and anesthesia circuit positioned without interfering with field" },
+          ],
+        },
+        {
+          header: "Limb Suspension",
+          items: [
+            { label: "Limb suspended using IV stand, holder, or ceiling support" },
+            { label: "Tie-out placed at paw level — not at surgical site" },
+            { label: "Limb height and tension confirmed for planned procedure" },
+            { label: "Suspension system does not contact sterile drape area" },
+          ],
+        },
+        {
+          header: "Stockinette Application",
+          items: [
+            { label: "Sterile stockinette applied by scrub tech or surgeon using aseptic technique" },
+            { label: "Extends from distal paw/hoof to proximal past planned incision" },
+            { label: "Proximal end secured to prevent slipping during manipulation" },
+            { label: "No gap between stockinette edge and drape at handoff" },
+          ],
+        },
+      ],
+      parametersTitle: "Positioning Record",
+      parameters: [
+        { label: "Patient Position Used", placeholder: "e.g., Dorsal recumbency" },
+        { label: "Limb Affected", placeholder: "e.g., Right pelvic limb" },
+        { label: "Stockinette Size Used", placeholder: "e.g., 3-inch roll" },
+        { label: "Positioning Aids Applied", placeholder: "e.g., Foam wedge, sandbag" },
+        { label: "Time Positioning Confirmed by Surgeon", placeholder: "e.g., 09:05" },
+      ],
+    },
+  },
+
+  {
+    slug: "incisional-drape-policy",
+    title: "Incisional Drape Policy",
+    phase: "preoperative",
+    pathways: ["surgical-team", "patient"],
+    roles: ["surgeon", "scrub-technician"],
+    clinicalObjective:
+      "Define institutional policy for the use of incisional adhesive drapes — whether applied routinely, selectively, or not at all — and establish rules for correct application, inspection, and management if drape lift occurs. Incisional drapes are not a substitute for thorough antiseptic skin preparation and must be applied to dry skin to prevent premature lift. Drape lift exposes the incision to edge contamination and must be managed according to a defined protocol.",
+    whyThisMatters:
+      "The evidence base for incisional drapes in preventing SSI is mixed: antimicrobial-impregnated drapes may reduce surface organism counts, but plain plastic drapes that lift can concentrate organisms at the wound edge. Understanding when and how to use these drapes — and what to do when they fail — is more important than a blanket policy of routine use.",
+    criticalControlPoints: [
+      "Apply only to thoroughly dry antiseptic-prepared skin — wet skin causes immediate lift",
+      "Smooth from center outward to eliminate air pockets and edge gaps",
+      "Inspect drape edges at regular intervals during the case",
+      "Define in advance what action to take if drape lift is detected",
+      "Do not use incisional drapes as a substitute for thorough skin antisepsis",
+    ],
+    steps: [
+      "Confirm institutional policy on incisional drape use (routine, selective, or not used) before each case",
+      "If used: verify skin is completely dry after final antiseptic application before drape placement",
+      "Apply drape smoothly from the intended incision line outward, eliminating all air pockets",
+      "Press drape edges firmly to skin for 30 seconds — all edges, not just corners",
+      "Make the incision through the drape using a scalpel in a single, deliberate pass",
+      "Inspect drape edges every 20-30 minutes during prolonged procedures",
+      "If drape lift occurs: notify surgeon immediately, do not pull drape back down over the wound, and manage per the no-go protocol",
+    ],
+    pitfalls: [
+      "Applying the drape before the antiseptic is fully dry, causing immediate or early lift",
+      "Using an incisional drape as justification for less rigorous skin antisepsis",
+      "Failing to inspect drape edges during long procedures until significant lift has already occurred",
+      "Attempting to re-adhere a lifted drape edge over an open wound",
+      "Selecting plain plastic drapes in a setting where antimicrobial-impregnated versions are indicated and available",
+    ],
+    expertInsight:
+      "A lifted incisional drape is worse than no drape at all — it concentrates organisms at the wound edge under anaerobic conditions while giving a false visual impression of sterile coverage.",
+    evidence: [
+      {
+        citation:
+          "Webster J, Alghamdi A. Use of plastic adhesive drapes during surgery for preventing surgical site infection. Cochrane Database Syst Rev. 2015;(4):CD006353.",
+        doi: "10.1002/14651858.CD006353.pub4",
+      },
+      {
+        citation:
+          "AORN Guidelines for Perioperative Practice: Surgical Drapes. Denver: AORN; 2023.",
+      },
+      {
+        citation:
+          "Mangram AJ, et al. Guideline for Prevention of Surgical Site Infection, 1999. Infect Control Hosp Epidemiol. 1999;20(4):250-278.",
+        doi: "10.1086/501620",
+      },
+    ],
+    relatedProtocols: [
+      "draping-technique",
+      "sterile-field-maintenance",
+      "surgical-site-antisepsis",
+      "patient-positioning-isolation",
+      "contamination-event-response",
+    ],
+    relatedVideos: [],
+    middleBlock: {
+      type: "gonogo",
+      sectionTitle: "Incisional Drape Use Decision",
+      intro:
+        "Evaluate all conditions before deciding to use or proceed with an incisional drape. 'No-Go' conditions must be resolved or the drape must be omitted.",
+      groups: [
+        {
+          header: "Go — Conditions Favorable for Drape Use",
+          items: [
+            { label: "Skin is completely dry after antiseptic application", note: "Touch-dry to gloved finger — no residual moisture" },
+            { label: "Antimicrobial-impregnated drape selected for implant or prolonged case", note: "Per institutional formulary" },
+            { label: "Incision line marked or planned and located centrally on drape", note: "Do not incise through drape edge" },
+            { label: "Surgeon experienced with drape-through incision technique", note: "Single-pass scalpel required" },
+          ],
+        },
+        {
+          header: "No-Go — Omit or Delay Drape Use",
+          items: [
+            { label: "Skin not fully dry after antiseptic preparation", note: "Wait — applying to wet skin guarantees lift" },
+            { label: "Drape edges lifting immediately on application", note: "Remove drape and reassess skin preparation" },
+            { label: "Drape is plain (non-antimicrobial) plastic on a high-risk implant case", note: "Consider upgrading or omitting" },
+            { label: "Drape lift detected during an open-wound phase", note: "Do not re-adhere — follow contamination event protocol" },
+          ],
+        },
+        {
+          header: "Drape Lift Management",
+          items: [
+            { label: "Drape lift detected at wound edge — incision not yet made", note: "Remove drape, re-prep if needed, apply new drape" },
+            { label: "Drape lift detected during open procedure", note: "Notify surgeon immediately — do not re-adhere; document event" },
+            { label: "Significant lift over implant handling zone", note: "Treat as contamination event — see contamination-event-response protocol" },
+          ],
+        },
+      ],
+      warning: {
+        label: "Never Re-Adhere a Lifted Drape Over an Open Wound",
+        text: "Pressing a lifted drape back down over an open surgical site drives surface organisms directly into the wound. Remove and replace with a new drape or proceed without.",
+      },
+    },
+  },
+
+  {
+    slug: "sterile-instrument-setup",
+    title: "Sterile Instrument Setup",
+    phase: "preoperative",
+    pathways: ["instruments-implants", "surgical-team"],
+    roles: ["scrub-technician", "surgeon"],
+    clinicalObjective:
+      "Establish the sterile instrument back table and mayo stand in a manner that minimizes contamination risk during setup, organizes instruments by planned procedural sequence, and segregates implant-handling surfaces from general instrument tables when indicated. A disciplined, systematic setup reduces the probability of reaching across the sterile field, reduces hand-off errors, and maintains the sterile envelope from pack opening through case completion.",
+    whyThisMatters:
+      "Instrument setup is a high-disturbance phase — packs are opened, air currents are generated, and multiple people are near the field. A disorganized setup leads to unnecessary reaching, contamination of glove tips on table edges, and delayed instrument hand-off that forces the surgeon to pause at critical moments. Systematic setup is a patient safety intervention.",
+    criticalControlPoints: [
+      "Open packs at table height with minimal vigorous shaking or aerosol-generating motion",
+      "Arrange instruments before the surgeon enters — setup should not occur simultaneously with draping",
+      "Sequence instruments on the mayo stand in planned order of use",
+      "Maintain a separate implant table if implants are to be used — no commingling with general instruments",
+      "Do not reach over or across the sterile field — reposition yourself or the table instead",
+    ],
+    steps: [
+      {
+        title: "Open packs with minimal air disturbance",
+        details: [
+          "Open peel-pouches by peeling (not tearing) to avoid particulate generation",
+          "Present wrapped packs to scrub tech — do not toss or drop instruments onto the table",
+          "Open one pack at a time; do not stack open packs waiting to be arranged",
+        ],
+      },
+      {
+        title: "Establish the back table",
+        details: [
+          "Open back table drape first — cover the entire table surface before placing any instruments",
+          "Arrange instruments in logical zones: soft tissue, retraction, implant-specific, closure",
+          "Place larger instruments at the rear, smaller instruments and hand-off items at the front",
+        ],
+      },
+      {
+        title: "Set up the mayo stand",
+        details: [
+          "Load mayo stand in planned sequence of use: tissue handling first, followed by implant tools, then closure",
+          "Keep the mayo stand uncluttered — only instruments for the immediate operative step",
+          "Rotate instruments forward as the case progresses",
+        ],
+      },
+      {
+        title: "Establish the implant table if indicated",
+        details: [
+          "Use a separate, dedicated draped surface for implant handling in orthopaedic and implant cases",
+          "Do not place general instruments on the implant table",
+          "Open implants to the implant table only — announce 'Opening implant' to the team",
+        ],
+      },
+      "Perform a pre-case instrument count with the circulator before the patient is positioned and draped",
+      "Conduct a final visual survey of the setup before surgeon entry — confirm nothing is reaching beyond the table edge or at risk of falling",
+    ],
+    pitfalls: [
+      "Vigorous shaking of packs to release instruments, generating particulate contamination",
+      "Setting up while draping is occurring, creating crowding and cross-contamination risk near the field",
+      "Placing implants on the general instrument table and losing track of implant-sterility status",
+      "Mayo stand so crowded that instruments are at risk of falling or being inadvertently touched by non-sterile personnel",
+      "Skipping the instrument count, making later discrepancy resolution impossible",
+    ],
+    expertInsight:
+      "A well-set-up back table is a quiet table — instruments are where the scrub tech expects them, and the surgeon never has to wait or ask twice. That predictability is itself a contamination-prevention tool.",
+    evidence: [
+      {
+        citation:
+          "AORN Guidelines for Perioperative Practice: Sterile Technique. Denver: AORN; 2023.",
+      },
+      {
+        citation:
+          "AORN Guidelines for Perioperative Practice: Counts of Surgical Items. Denver: AORN; 2023.",
+      },
+      {
+        citation:
+          "Chobin N. Surgical instrument management. Surg Technol Int. 2014;24:57-65.",
+      },
+    ],
+    relatedProtocols: [
+      "instrument-sterility",
+      "implant-handling",
+      "sterile-field-maintenance",
+      "draping-technique",
+      "sterility-readiness-check",
+    ],
+    relatedVideos: [],
+    middleBlock: {
+      type: "planning-checklist",
+      sectionTitle: "Sterile Instrument Setup Checklist",
+      intro:
+        "Complete all steps before the surgeon enters and before draping is finalized. Setup must be complete before patient positioning is locked in.",
+      groups: [
+        {
+          header: "Pack Opening",
+          items: [
+            { label: "All packs checked for integrity, sterility indicator, and expiration before opening" },
+            { label: "Packs opened by peeling, not tearing", note: "Minimizes particulate generation" },
+            { label: "Instruments presented — not tossed — onto the sterile field" },
+            { label: "Each pack opened one at a time and arranged before opening the next" },
+          ],
+        },
+        {
+          header: "Back Table Organization",
+          items: [
+            { label: "Back table drape applied to entire surface before any instruments placed" },
+            { label: "Instruments arranged in functional zones (soft tissue / retraction / closure)" },
+            { label: "No instrument extending beyond the table edge" },
+          ],
+        },
+        {
+          header: "Mayo Stand & Implant Table",
+          items: [
+            { label: "Mayo stand loaded in planned order of use for first operative steps" },
+            { label: "Separate implant table established and draped for implant cases" },
+            { label: "General instruments not placed on the implant table" },
+            { label: "Instrument count completed with circulator and documented" },
+          ],
+        },
+      ],
+      parametersTitle: "Setup Notes",
+      parameters: [
+        { label: "Procedure Name", placeholder: "e.g., TPLO Right Stifle" },
+        { label: "Scrub Tech Name", placeholder: "Initials or name" },
+        { label: "Setup Start Time", placeholder: "e.g., 08:45" },
+        { label: "Setup Complete Time (pre-surgeon entry)", placeholder: "e.g., 09:10" },
+        { label: "Implant Table Used? (Y/N)", placeholder: "Y / N" },
+        { label: "Instrument Count Confirmed", placeholder: "Initials of scrub tech and circulator" },
+      ],
+    },
+  },
+
+  {
+    slug: "recovery-room-hygiene",
+    title: "Recovery Room Contamination Prevention",
+    phase: "postoperative",
+    pathways: ["patient", "or-environment"],
+    roles: ["recovery-team", "anesthetist"],
+    clinicalObjective:
+      "Protect the surgical incision from contamination during the immediate postoperative recovery period by ensuring the patient does not contact dirty surfaces, the incision is not unnecessarily manipulated, and appropriate wound coverage is maintained until the patient is transferred to a clean ward space. Recovery is a high-risk period for incision contamination due to reduced patient awareness, involuntary movement, and proximity to monitoring equipment and personnel.",
+    whyThisMatters:
+      "Organisms introduced to an incision within the first hours after surgery can colonize the wound before host defenses have recovered from anesthetic and surgical stress. Recovery room hygiene is often deprioritized relative to anesthetic monitoring, but the wound is at its most vulnerable during this period.",
+    criticalControlPoints: [
+      "Recovery surface must be clean and disinfected before patient placement",
+      "Incision must not contact the recovery surface directly — use positioning to protect the wound",
+      "Avoid unnecessary touching or checking of the incision in the first 30 minutes unless clinically indicated",
+      "Apply e-collar or wound protection device before the patient regains the ability to self-traumatize",
+      "Hands must be clean or gloved before any incision assessment",
+    ],
+    steps: [
+      "Confirm recovery surface (table, run, kennel floor) has been cleaned and disinfected before patient arrival",
+      "Position patient so the incision does not rest on the table surface — lateral positioning with wound uppermost when feasible",
+      "Apply e-collar and/or wound dressing before patient regains full consciousness and motor control",
+      "Limit incision checks to scheduled intervals; do not palpate the wound unnecessarily in the immediate period",
+      "Wear clean gloves before any incision assessment or wound care",
+      "Monitor for self-trauma and reapply protective devices immediately if removed",
+      "Document recovery surface cleaning, wound status on arrival to recovery, and protective device application in the patient record",
+    ],
+    pitfalls: [
+      "Placing the patient on an unclean or damp recovery surface in the rush of emergence",
+      "Incision contacting recovery surface directly due to inadequate positioning",
+      "Delaying e-collar application until the patient is already attempting to lick or chew the wound",
+      "Multiple staff members touching the incision without gloves during the first assessment",
+      "Failing to document wound status in recovery, missing the opportunity to detect early complications",
+    ],
+    expertInsight:
+      "The incision is at its most vulnerable in the first six hours — tissue planes have not sealed, inflammatory infiltrate is just beginning, and the patient cannot participate in its own protection. Recovery room discipline is the last line of defense before ward management takes over.",
+    evidence: [
+      {
+        citation:
+          "Mangram AJ, et al. Guideline for Prevention of Surgical Site Infection, 1999. Infect Control Hosp Epidemiol. 1999;20(4):250-278.",
+        doi: "10.1086/501620",
+      },
+      {
+        citation:
+          "Gallagher AD, Mertens WD. Implant removal rate from infection after stifle joint surgery for cranial cruciate ligament rupture in dogs. Vet Surg. 2012;41(8):1024-1028.",
+        doi: "10.1111/j.1532-950X.2012.01049.x",
+      },
+      {
+        citation:
+          "Tobias KM, Johnston SA. Veterinary Surgery: Small Animal. 2nd ed. St. Louis: Elsevier; 2018.",
+      },
+    ],
+    relatedProtocols: [
+      "wound-management",
+      "incision-monitoring",
+      "patient-self-trauma-prevention",
+      "cage-ward-hygiene",
+      "owner-discharge-instructions",
+    ],
+    relatedVideos: [],
+    middleBlock: {
+      type: "planning-checklist",
+      sectionTitle: "Recovery Room Hygiene Checklist",
+      intro:
+        "Complete before patient arrives in recovery and again at 30-minute intervals during the acute recovery period.",
+      groups: [
+        {
+          header: "Pre-Arrival Surface Preparation",
+          items: [
+            { label: "Recovery surface cleaned and disinfected since last patient" },
+            { label: "Clean, dry bedding placed on recovery surface" },
+            { label: "Recovery space free of soiled materials from prior patient" },
+          ],
+        },
+        {
+          header: "Patient Arrival & Positioning",
+          items: [
+            { label: "Patient positioned with incision uppermost when lateral recumbency used", note: "Prevent direct wound-surface contact" },
+            { label: "E-collar applied before patient has the ability to self-traumatize" },
+            { label: "Wound dressing or light bandage applied if incision is in a contact-vulnerable location" },
+          ],
+        },
+        {
+          header: "Incision Monitoring in Recovery",
+          items: [
+            { label: "Initial wound assessment documented on recovery sheet" },
+            { label: "Clean gloves worn for all incision assessments", note: "No bare-hand contact with wound" },
+            { label: "Wound checks scheduled at 30-minute intervals during acute recovery" },
+            { label: "Self-trauma attempt documented if it occurs; protective measures reinforced" },
+          ],
+        },
+      ],
+      parametersTitle: "Recovery Documentation",
+      parameters: [
+        { label: "Patient ID / Case", placeholder: "e.g., Canine #2024-0510" },
+        { label: "Recovery Surface Cleaned By (Initials)", placeholder: "e.g., MT" },
+        { label: "Time Patient Arrived in Recovery", placeholder: "e.g., 13:45" },
+        { label: "E-Collar Applied At (Time)", placeholder: "e.g., 13:47" },
+        { label: "Wound Status on Arrival", placeholder: "e.g., Dry, intact, no discharge" },
+      ],
+    },
+  },
+
+  {
+    slug: "cage-ward-hygiene",
+    title: "Cage & Ward Hygiene",
+    phase: "postoperative",
+    pathways: ["patient", "or-environment"],
+    roles: ["recovery-team"],
+    clinicalObjective:
+      "Maintain a clean cage and ward environment for the postoperative patient throughout hospitalization, ensuring the incision does not rest in contaminated material, bedding is changed on a defined schedule, and staff perform hand hygiene before incision assessment. Ward-level contamination — fecal matter, urine, exudate on bedding — is a direct contamination pathway to the surgical site and is entirely preventable with consistent hygiene practice.",
+    whyThisMatters:
+      "Surgical incisions that rest in soiled bedding or contact a contaminated cage floor are exposed to a massive organism burden that overwhelms local wound defenses. In veterinary practice, where patients are often recumbent and cannot be relied upon to stay clean, ward hygiene is not a comfort measure — it is an infection prevention intervention.",
+    criticalControlPoints: [
+      "Change bedding immediately if soiled with urine, feces, blood, or wound exudate",
+      "Incision must not rest directly on cage floor or on soiled material",
+      "Staff perform hand hygiene before every incision check",
+      "Cage disinfected between patients and after discharge of each surgical patient",
+      "Drainage or exudate managed with absorbent materials that are changed frequently",
+    ],
+    steps: [
+      "Assign the postoperative patient to a cleaned and disinfected cage before arrival from recovery",
+      "Place adequate absorbent bedding (minimum double-layer) to prevent incision from contacting the cage floor",
+      "Establish a bedding change schedule: every 4-6 hours, or immediately when soiled",
+      "Perform hand hygiene (soap and water or alcohol-based rub) before every incision assessment",
+      "Assess incision at every bedding change — do not delay assessment to a separate scheduled time",
+      "Document bedding changes, wound status, and any drainage in the patient's hospitalization record",
+      "Disinfect the cage after patient discharge using an appropriate broad-spectrum disinfectant before the next patient",
+    ],
+    pitfalls: [
+      "Leaving soiled bedding in place because 'it will be changed at the next scheduled time'",
+      "Incision contacting the bare cage floor after bedding shifts during patient movement",
+      "Staff checking the incision immediately after handling other patients without hand hygiene",
+      "Inadequate drainage management, leading to wound maceration from persistent moisture",
+      "Cage not disinfected between surgical patients due to scheduling pressure",
+    ],
+    expertInsight:
+      "A clean cage is not a housekeeping issue — it is a clinical decision. Soiled bedding against a fresh incision creates the same contamination risk as a breach in sterile technique in the OR.",
+    evidence: [
+      {
+        citation:
+          "Weese JS. A review of post-operative infections in veterinary orthopaedic surgery. Vet Comp Orthop Traumatol. 2008;21(2):99-105.",
+        doi: "10.3415/VCOT-07-02-0017",
+      },
+      {
+        citation:
+          "WHO Guidelines on Hand Hygiene in Health Care. Geneva: World Health Organization; 2009.",
+      },
+      {
+        citation:
+          "Mangram AJ, et al. Guideline for Prevention of Surgical Site Infection, 1999. Infect Control Hosp Epidemiol. 1999;20(4):250-278.",
+        doi: "10.1086/501620",
+      },
+    ],
+    relatedProtocols: [
+      "recovery-room-hygiene",
+      "wound-management",
+      "incision-monitoring",
+      "patient-self-trauma-prevention",
+      "hand-hygiene",
+    ],
+    relatedVideos: [],
+    middleBlock: {
+      type: "planning-checklist",
+      sectionTitle: "Cage & Ward Hygiene Checklist",
+      intro:
+        "Complete at cage assignment, at each bedding change, and at patient discharge. Document all entries.",
+      groups: [
+        {
+          header: "Cage Assignment & Setup",
+          items: [
+            { label: "Cage cleaned and disinfected since last patient occupancy" },
+            { label: "Double-layer absorbent bedding placed before patient arrival" },
+            { label: "Cage floor not visible beneath bedding — full coverage confirmed" },
+          ],
+        },
+        {
+          header: "Ongoing Ward Hygiene",
+          items: [
+            { label: "Bedding change schedule established (every 4-6 hours minimum)" },
+            { label: "Immediate bedding change performed whenever soiled", note: "Urine, feces, blood, exudate" },
+            { label: "Hand hygiene performed before every incision check", note: "Soap/water or alcohol-based rub" },
+            { label: "Wound assessed at every bedding change and result documented" },
+          ],
+        },
+        {
+          header: "Discharge & Turnover",
+          items: [
+            { label: "All bedding removed and disposed of after patient discharge" },
+            { label: "Cage cleaned and disinfected with broad-spectrum disinfectant after discharge" },
+            { label: "Contact time followed per product label before next patient placement" },
+          ],
+        },
+      ],
+      parametersTitle: "Ward Hygiene Log",
+      parameters: [
+        { label: "Patient ID", placeholder: "e.g., Feline #2024-0521" },
+        { label: "Cage Number / Location", placeholder: "e.g., Ward B, Cage 4" },
+        { label: "Bedding Change Times Today", placeholder: "e.g., 08:00, 13:00, 18:00" },
+        { label: "Wound Status at Last Check", placeholder: "e.g., Dry, intact, no swelling" },
+        { label: "Cage Disinfected on Discharge (Y/N, Time)", placeholder: "e.g., Y, 15:30" },
+      ],
+    },
+  },
+
+  {
+    slug: "follow-up-schedule",
+    title: "Postoperative Follow-Up Schedule",
+    phase: "postoperative",
+    pathways: ["patient"],
+    roles: ["surgeon", "recovery-team"],
+    clinicalObjective:
+      "Establish a defined postoperative follow-up schedule for each surgical patient that includes the first wound check, suture or staple removal, and procedure-specific rechecks for implant cases. Consistent follow-up scheduling ensures early SSI detection, timely suture removal to prevent track infection, and appropriate long-term surveillance for implant complications. The schedule must be communicated to the owner at discharge and documented in the medical record.",
+    whyThisMatters:
+      "SSIs are most commonly detected at postoperative rechecks — not by owners at home. A well-structured recheck schedule creates defined opportunities to detect early infection before it becomes deep-tissue or implant-associated disease. Missed rechecks are a leading cause of delayed SSI diagnosis.",
+    criticalControlPoints: [
+      "First wound check within 3-5 days of discharge for all surgical patients",
+      "Suture or staple removal scheduled at 10-14 days post-surgery (procedure-specific)",
+      "Implant cases require a minimum 30-day wound check and longer surveillance per implant type",
+      "Owner receives written follow-up schedule at discharge — verbal instructions alone are insufficient",
+      "Missed rechecks must be tracked and owners contacted proactively",
+    ],
+    steps: [
+      "Before discharge, establish the full follow-up schedule in consultation with the surgeon",
+      "Minimum: First check at 3-5 days, suture removal at 10-14 days, and procedure-specific long-term rechecks",
+      "For implant procedures: schedule 30-day wound check, imaging recheck per procedure protocol, and define signs that should trigger an unscheduled visit",
+      "Enter all follow-up appointments in the practice management system before the patient leaves",
+      "Provide the owner with a written discharge sheet listing all scheduled dates, what will be assessed at each visit, and an emergency contact number",
+      "Document scheduled appointments in the medical record",
+      "If a recheck is missed: contact owner within 24 hours and document contact attempt and outcome",
+    ],
+    pitfalls: [
+      "Discharging without booking the first appointment, relying on the owner to call",
+      "Scheduling suture removal at 7 days for procedures requiring 14-day tissue healing time",
+      "Failing to schedule long-term implant rechecks — these are often not requested by owners without prompting",
+      "Not documenting missed rechecks or failure to reach the owner in the medical record",
+      "Verbal-only discharge instructions — owners frequently misremember timing",
+    ],
+    expertInsight:
+      "The follow-up schedule is a clinical order, not an administrative suggestion — failing to book and track rechecks is the equivalent of discharging a patient without prescribing their medication.",
+    evidence: [
+      {
+        citation:
+          "Horan TC, et al. CDC definitions of nosocomial surgical site infections, 1992. Infect Control Hosp Epidemiol. 1992;13(10):606-608.",
+        doi: "10.1086/646955",
+      },
+      {
+        citation:
+          "Eugster S, et al. A prospective study of postoperative surgical site infections in dogs and cats. Vet Surg. 2004;33(5):542-550.",
+        doi: "10.1111/j.1532-950X.2004.04076.x",
+      },
+      {
+        citation:
+          "Tobias KM, Johnston SA. Veterinary Surgery: Small Animal. 2nd ed. St. Louis: Elsevier; 2018.",
+      },
+    ],
+    relatedProtocols: [
+      "incision-monitoring",
+      "owner-discharge-instructions",
+      "wound-management",
+      "ssi-surveillance",
+      "postoperative-antibiotic-decisions",
+    ],
+    relatedVideos: [],
+    middleBlock: {
+      type: "planning-checklist",
+      sectionTitle: "Follow-Up Schedule Planning Checklist",
+      intro:
+        "Complete before patient discharge. All appointments must be booked in the system and written on the discharge sheet.",
+      groups: [
+        {
+          header: "Standard Follow-Up (All Surgical Patients)",
+          items: [
+            { label: "First wound check scheduled within 3-5 days of discharge", note: "Book before patient leaves" },
+            { label: "Suture/staple removal scheduled at appropriate interval", note: "Typically 10-14 days; surgeon to specify" },
+            { label: "Owner informed of what will be assessed at each visit" },
+          ],
+        },
+        {
+          header: "Implant-Specific Follow-Up",
+          items: [
+            { label: "30-day wound and implant check scheduled", note: "All implant cases" },
+            { label: "Imaging recheck scheduled per procedure protocol", note: "e.g., 6-week, 12-week radiographs for TPLO" },
+            { label: "Owner given list of signs warranting an unscheduled visit", note: "Swelling, discharge, lameness, fever" },
+            { label: "Long-term surveillance plan documented in medical record" },
+          ],
+        },
+        {
+          header: "Discharge Communication",
+          items: [
+            { label: "Written discharge sheet provided with all appointment dates" },
+            { label: "Emergency contact number included on discharge sheet" },
+            { label: "Missed recheck tracking process explained to client (we will contact you)" },
+          ],
+        },
+      ],
+      parametersTitle: "Scheduled Follow-Up Dates",
+      parametersIntro: "Record all follow-up dates at the time of discharge.",
+      parameters: [
+        { label: "First Wound Check Date", placeholder: "e.g., 2024-05-17 (Day 4 post-op)" },
+        { label: "Suture/Staple Removal Date", placeholder: "e.g., 2024-05-27 (Day 14)" },
+        { label: "30-Day Implant Check Date (if applicable)", placeholder: "e.g., 2024-06-10" },
+        { label: "Imaging Recheck Date (if applicable)", placeholder: "e.g., 2024-06-24 (6-week radiographs)" },
+        { label: "Surgeon / Clinician Responsible for Rechecks", placeholder: "Name or initials" },
+      ],
+    },
+  },
+
+  {
+    slug: "protocol-deviations-escalation",
+    title: "Protocol Deviations & Escalation Pathway",
+    phase: "postoperative",
+    pathways: ["surgical-team", "patient"],
+    roles: ["surgeon", "scrub-technician", "anesthetist", "prep-technician", "recovery-team"],
+    clinicalObjective:
+      "Provide explicit, pre-defined response pathways for the most common and highest-risk intraoperative and perioperative protocol deviations, so that every team member knows the correct immediate action, notification requirement, and case-proceed decision without needing to improvise under pressure. A deviation response pathway transforms an error into a managed event with traceable outcome.",
+    whyThisMatters:
+      "Errors and breaches occur in every surgical setting. The difference between an acceptable outcome and an SSI is often not whether the breach occurred, but how quickly and correctly it was identified and managed. Teams that have rehearsed deviation responses act faster, communicate more clearly, and make better case-proceed decisions than those responding ad hoc.",
+    criticalControlPoints: [
+      "Any deviation must be named aloud to the team — silent management of a breach is not acceptable",
+      "Surgeon must be notified of all sterility breaches regardless of perceived severity",
+      "Deviation events must be documented in the operative record with time, nature of event, and response taken",
+      "Case-proceed decisions must be made by the surgeon with full information — never withheld from them",
+      "All deviation events feed into case review regardless of outcome",
+    ],
+    steps: [
+      "Brief the team before each case: 'If you see a breach or problem, say it out loud immediately — we manage it together'",
+      "Use the deviation table below to guide immediate response for each event type",
+      "Notify the surgeon of all deviations — do not filter or minimize before reporting",
+      "Document the deviation in the operative record: time, event description, immediate response, and surgeon decision",
+      "After the case, ensure the deviation is entered into the case review log regardless of outcome",
+      "Debrief the team at the end of the case when a deviation occurred — identify root cause and corrective action",
+      "Escalate to a formal case review if the deviation was significant, repeated, or resulted in clinical concern",
+    ],
+    pitfalls: [
+      "Team member identifies a breach but does not verbalize it, hoping it 'will be fine'",
+      "Surgeon not informed of a glove contamination during implant handling because 'it seemed minor'",
+      "Deviation documented incompletely — time and response not recorded, only the event",
+      "No debrief after a significant breach, missing the learning and prevention opportunity",
+      "Deviation response improvised differently each time because no standard pathway exists",
+    ],
+    expertInsight:
+      "The team member who says 'I think I just contaminated my glove' is not making an error — they are preventing an SSI. A culture where deviations are named is safer than a culture where they are concealed.",
+    evidence: [
+      {
+        citation:
+          "Reason J. Human error: models and management. BMJ. 2000;320(7237):768-770.",
+        doi: "10.1136/bmj.320.7237.768",
+      },
+      {
+        citation:
+          "AORN Guidelines for Perioperative Practice: Event Reporting and Near-Miss Documentation. Denver: AORN; 2023.",
+      },
+      {
+        citation:
+          "Gawande AA, et al. Analysis of errors reported by surgeons at three teaching hospitals. Surgery. 2003;133(6):614-621.",
+        doi: "10.1067/msy.2003.169",
+      },
+    ],
+    relatedProtocols: [
+      "contamination-event-response",
+      "glove-change-protocol",
+      "implant-handling",
+      "sterile-field-maintenance",
+      "case-review-triggers",
+    ],
+    relatedVideos: [],
+    middleBlock: {
+      type: "screening-table",
+      sectionTitle: "Deviation Response Table",
+      intro:
+        "For each deviation event, identify the immediate action, notification requirement, and case-proceed decision. All events must be documented.",
+      domains: [
+        {
+          domain: "Antibiotic Administration",
+          rows: [
+            { finding: "Antibiotic given within 0-60 min before incision — on time", action: "proceed" },
+            { finding: "Antibiotic given 60-120 min before incision — marginally late", action: "modify", actionLabel: "Notify surgeon; document timing; consider redosing per protocol" },
+            { finding: "Antibiotic not given before incision — missed entirely", action: "defer", actionLabel: "Give immediately; notify surgeon; document; reassess case-proceed" },
+            { finding: "Wrong antibiotic given", action: "defer", actionLabel: "Stop case if not started; notify surgeon and prescribing clinician; document" },
+          ],
+        },
+        {
+          domain: "Drape & Field Integrity",
+          rows: [
+            { finding: "Drape lift detected before incision — wound not open", action: "modify", actionLabel: "Remove drape; re-prep if needed; replace drape" },
+            { finding: "Drape lift over open wound during case", action: "modify", actionLabel: "Notify surgeon immediately; do not re-adhere; manage per contamination-event-response" },
+            { finding: "Non-sterile item contacts sterile field", action: "defer", actionLabel: "Call it out immediately; remove contaminated item; replace if possible; notify surgeon" },
+          ],
+        },
+        {
+          domain: "Glove & Gown Contamination",
+          rows: [
+            { finding: "Glove suspected contaminated — no visible break", action: "modify", actionLabel: "Change gloves immediately; notify surgeon" },
+            { finding: "Glove visibly torn or punctured", action: "defer", actionLabel: "Stop current task; change gloves; inspect hands; notify surgeon; document" },
+            { finding: "Glove contaminated during implant handling", action: "defer", actionLabel: "Stop implant placement; change gloves; evaluate implant sterility; notify surgeon" },
+            { finding: "Gown sleeve contaminated by non-sterile surface", action: "defer", actionLabel: "Re-gown if possible; if not, isolate contaminated area; notify surgeon" },
+          ],
+        },
+        {
+          domain: "Implant Events",
+          rows: [
+            { finding: "Implant dropped on floor or non-sterile surface", action: "defer", actionLabel: "Do not use; retrieve replacement; document; notify surgeon" },
+            { finding: "Implant packaging integrity questionable", action: "defer", actionLabel: "Do not open; retrieve replacement pack; quarantine and report to supplier" },
+            { finding: "Implant touched by non-sterile team member", action: "defer", actionLabel: "Discard implant; retrieve replacement; notify surgeon; document" },
+          ],
+        },
+        {
+          domain: "Environment & Traffic",
+          rows: [
+            { finding: "OR door opened during sensitive phase (draping, implant, closure)", action: "modify", actionLabel: "Close door immediately; document event; notify surgeon" },
+            { finding: "Unauthorized personnel enter OR during case", action: "modify", actionLabel: "Request exit; document; notify surgeon if during critical phase" },
+            { finding: "Ventilation alarm or positive-pressure loss noted", action: "modify", actionLabel: "Notify surgeon and facility management; document; assess case continuation risk" },
+          ],
+        },
+        {
+          domain: "Postoperative Concern",
+          rows: [
+            { finding: "Wound showing early signs of infection (days 3-7): swelling, warmth, discharge", action: "modify", actionLabel: "Notify surgeon immediately; do not start antibiotics without assessment; document" },
+            { finding: "Owner reports wound looks 'different' — no exam yet", action: "modify", actionLabel: "Schedule urgent recheck within 24 hours; document call" },
+            { finding: "Confirmed SSI — meets CDC criteria", action: "defer", actionLabel: "Initiate treatment; file SSI report; trigger case review; notify clinical lead" },
+          ],
+        },
+      ],
+      dayOfTitle: "Pre-Case Deviation Briefing",
+      dayOfItems: [
+        { label: "Team briefed: 'Name any breach out loud immediately'" },
+        { label: "Case record ready for real-time deviation documentation" },
+        { label: "Surgeon confirmed as decision-maker for all case-proceed questions" },
+        { label: "Replacement supplies (gloves, drapes, implants) confirmed available before case start" },
+      ],
+    },
+  },
+
+  {
+    slug: "compliance-metrics",
+    title: "Compliance Metrics",
+    phase: "postoperative",
+    pathways: ["surgical-team"],
+    roles: ["surgeon", "scrub-technician", "anesthetist", "prep-technician", "recovery-team"],
+    clinicalObjective:
+      "Define measurable compliance indicators for the key SSI prevention protocol steps, establish a collection and reporting process, and use compliance data to identify gaps in practice before they manifest as SSIs. Compliance metrics transform protocol adherence from an assumed behavior into a measurable quality indicator with actionable feedback loops.",
+    whyThisMatters:
+      "A protocol that exists on paper but is not reliably followed does not protect patients. Compliance tracking reveals the difference between what teams believe they do and what they actually do — and that gap is where SSIs originate. Regular metric review enables targeted re-education before infection events occur.",
+    criticalControlPoints: [
+      "Antimicrobial timing compliance: percentage of cases with antibiotic given within 60 minutes of incision",
+      "Glove change compliance: percentage of implant cases with documented glove change before implant handling",
+      "Draping checklist compliance: percentage of cases with completed draping verification",
+      "E-collar application compliance: percentage of discharged patients with e-collar applied and documented",
+      "Wound check documentation compliance: percentage of cases with first recheck note completed within 5 days",
+    ],
+    steps: [
+      "Define the compliance indicators relevant to your practice and case mix — use the five examples above as a starting point",
+      "Assign responsibility for data collection to a designated team member (e.g., practice manager, senior technician)",
+      "Collect data prospectively at the case level — retrospective chart review is less reliable",
+      "Aggregate and review compliance data monthly at a minimum; present at team meetings",
+      "Set a minimum compliance target for each indicator (e.g., ≥95% for antibiotic timing)",
+      "When compliance falls below target: identify the specific cases, interview involved staff, and implement corrective action",
+      "Report compliance trends alongside SSI surveillance data so correlations can be identified",
+    ],
+    pitfalls: [
+      "Collecting compliance data but not reporting it to the team — data with no feedback changes nothing",
+      "Using retrospective chart review as the only data source — documentation gaps create false-positive compliance",
+      "Setting no compliance targets, making it impossible to determine when performance is unacceptable",
+      "Treating compliance metrics as punitive rather than as a quality improvement tool",
+      "Tracking too many metrics and losing focus — start with three to five high-yield indicators",
+    ],
+    expertInsight:
+      "Compliance data is only useful when it is acted upon — a monthly report that shows 70% antibiotic timing compliance and results in no conversation is not quality improvement, it is data collection theater.",
+    evidence: [
+      {
+        citation:
+          "Pronovost P, et al. An intervention to decrease catheter-related bloodstream infections in the ICU. N Engl J Med. 2006;355(26):2725-2732.",
+        doi: "10.1056/NEJMoa061115",
+      },
+      {
+        citation:
+          "WHO Guidelines on Safe Surgery: Safe Surgery Saves Lives. Geneva: World Health Organization; 2009.",
+      },
+      {
+        citation:
+          "AORN Guidelines for Perioperative Practice: Quality and Performance Improvement. Denver: AORN; 2023.",
+      },
+    ],
+    relatedProtocols: [
+      "ssi-surveillance",
+      "case-review-triggers",
+      "antimicrobial-prophylaxis",
+      "glove-change-protocol",
+      "protocol-deviations-escalation",
+    ],
+    relatedVideos: [],
+    middleBlock: {
+      type: "planning-checklist",
+      sectionTitle: "Compliance Metrics Setup Checklist",
+      intro:
+        "Use this checklist to establish your compliance monitoring program. Review collected data monthly and at case review meetings.",
+      groups: [
+        {
+          header: "Indicator Selection & Ownership",
+          items: [
+            { label: "Antimicrobial timing compliance indicator defined and activated" },
+            { label: "Glove-change-before-implant compliance indicator defined" },
+            { label: "Draping checklist completion indicator defined" },
+            { label: "E-collar application on discharge indicator defined" },
+            { label: "Wound check documentation within 5 days indicator defined" },
+            { label: "Data collection owner assigned by name", note: "e.g., Practice manager or senior technician" },
+          ],
+        },
+        {
+          header: "Data Collection Process",
+          items: [
+            { label: "Prospective case-level data collection method established", note: "Checklist, EMR field, or paper log" },
+            { label: "Compliance target set for each indicator", note: "e.g., ≥95% for antibiotic timing" },
+            { label: "Monthly reporting schedule confirmed" },
+            { label: "Reporting format agreed upon (table, dashboard, or meeting summary)" },
+          ],
+        },
+        {
+          header: "Feedback & Action",
+          items: [
+            { label: "Compliance results presented at monthly team meeting" },
+            { label: "Cases below target reviewed for root cause within 2 weeks" },
+            { label: "Corrective actions documented and tracked" },
+            { label: "Compliance trends correlated with SSI surveillance data quarterly" },
+          ],
+        },
+      ],
+      parametersTitle: "Compliance Monitoring Record",
+      parametersIntro: "Record the most recent compliance rate for each indicator at each monthly review.",
+      parameters: [
+        { label: "Reporting Period", placeholder: "e.g., May 2024" },
+        { label: "Antimicrobial Timing Compliance (%)", placeholder: "e.g., 94%" },
+        { label: "Glove-Change-Before-Implant Compliance (%)", placeholder: "e.g., 100%" },
+        { label: "Draping Checklist Compliance (%)", placeholder: "e.g., 87%" },
+        { label: "E-Collar Discharge Compliance (%)", placeholder: "e.g., 98%" },
+        { label: "Wound Check Documentation Compliance (%)", placeholder: "e.g., 91%" },
+      ],
+    },
+  },
+
+  {
+    slug: "ssi-surveillance",
+    title: "SSI Surveillance",
+    phase: "postoperative",
+    pathways: ["patient", "surgical-team"],
+    roles: ["surgeon", "recovery-team"],
+    clinicalObjective:
+      "Conduct systematic postoperative surveillance for surgical site infection using standardized definitions, defined monitoring windows, and a case review mechanism that captures infections occurring at or after the first recheck. Non-implant cases require a minimum 30-day surveillance window; implant cases require surveillance of one year or longer per CDC criteria. Surveillance data drives protocol evaluation and SSI rate benchmarking.",
+    whyThisMatters:
+      "SSI rates are meaningless without systematic surveillance. Infections detected opportunistically (owner calls because wound is open) represent only a fraction of true SSI burden. Surveillance that includes active follow-up at defined intervals captures the full incidence and enables accurate trend analysis, protocol evaluation, and regulatory reporting where required.",
+    criticalControlPoints: [
+      "Standardized SSI definition applied consistently — use CDC NHSN criteria adapted for veterinary practice",
+      "All surgical cases entered into the surveillance denominator at the time of surgery",
+      "Surveillance window: 30 days for non-implant; up to 1 year for implant cases",
+      "Active follow-up: do not rely solely on owner-reported events — schedule rechecks",
+      "SSI confirmed cases trigger a case review within 30 days of identification",
+    ],
+    steps: [
+      "Enter all surgical cases into the surveillance denominator log at the time of surgery, recording procedure type, implant use, risk classification, and antibiotic prophylaxis received",
+      "Apply the standard SSI surveillance window: 30 days for non-implant procedures, 90 days for implant procedures without residency, 1 year for implant procedures with residency (e.g., joint replacements)",
+      "Schedule active surveillance contacts at defined intervals: first recheck at day 3-5, suture removal at day 10-14, and implant rechecks per schedule",
+      "At each surveillance contact, apply the standardized SSI assessment: wound appearance, discharge, swelling, fever, pain — document findings against case record",
+      "Classify any suspected infection using the adapted CDC criteria: superficial incisional, deep incisional, or organ/space SSI",
+      "Enter confirmed SSIs into the surveillance database with date of detection, classification, organism if cultured, and treatment initiated",
+      "Review monthly SSI rate data and report to clinical team quarterly; trigger case review for all confirmed SSIs",
+    ],
+    pitfalls: [
+      "Failing to define the denominator — without knowing how many cases were performed, an SSI count is uninterpretable",
+      "Using inconsistent SSI definitions, making trend data unreliable and comparisons impossible",
+      "Surveillance window cut off at suture removal — implant infections commonly present after 30 days",
+      "Relying on owner-reported infections only — passive surveillance dramatically underestimates true SSI rate",
+      "Confirmed SSIs not triggering a formal case review, missing the learning opportunity",
+    ],
+    expertInsight:
+      "An SSI rate of zero is almost always a surveillance failure, not a performance achievement — if you are not systematically looking for infections with follow-up, you are not finding them.",
+    evidence: [
+      {
+        citation:
+          "Horan TC, et al. CDC definitions of nosocomial surgical site infections, 1992. Infect Control Hosp Epidemiol. 1992;13(10):606-608.",
+        doi: "10.1086/646955",
+      },
+      {
+        citation:
+          "Eugster S, et al. A prospective study of postoperative surgical site infections in dogs and cats. Vet Surg. 2004;33(5):542-550.",
+        doi: "10.1111/j.1532-950X.2004.04076.x",
+      },
+      {
+        citation:
+          "Weese JS. A review of post-operative infections in veterinary orthopaedic surgery. Vet Comp Orthop Traumatol. 2008;21(2):99-105.",
+        doi: "10.3415/VCOT-07-02-0017",
+      },
+    ],
+    relatedProtocols: [
+      "incision-monitoring",
+      "follow-up-schedule",
+      "case-review-triggers",
+      "compliance-metrics",
+      "postoperative-antibiotic-decisions",
+    ],
+    relatedVideos: [],
+    middleBlock: {
+      type: "planning-checklist",
+      sectionTitle: "SSI Surveillance Program Checklist",
+      intro:
+        "Use this checklist to establish and maintain your SSI surveillance program. All surgical cases must be entered into the denominator at the time of surgery.",
+      groups: [
+        {
+          header: "Denominator & Case Entry",
+          items: [
+            { label: "All surgical cases logged in surveillance denominator at time of surgery" },
+            { label: "Each case record includes: procedure type, implant use (Y/N), ASA/risk class, antimicrobial given (Y/N/timing)" },
+            { label: "Surveillance window assigned at case entry: 30-day (non-implant) or 90-day/1-year (implant)" },
+          ],
+        },
+        {
+          header: "Active Surveillance Contacts",
+          items: [
+            { label: "Recheck schedule entered in practice management system at discharge" },
+            { label: "Day 3-5 wound assessment completed and documented" },
+            { label: "Suture removal visit (day 10-14) includes formal wound assessment" },
+            { label: "Implant cases: 30-day and 90-day active assessments scheduled and completed" },
+          ],
+        },
+        {
+          header: "SSI Classification & Reporting",
+          items: [
+            { label: "Standardized SSI definition applied to all suspected cases", note: "CDC NHSN criteria adapted for veterinary use" },
+            { label: "Confirmed SSIs classified: superficial / deep / organ-space" },
+            { label: "Confirmed SSIs entered in surveillance database with date, classification, culture result, treatment" },
+            { label: "Monthly SSI rate calculated and reported to clinical team" },
+            { label: "All confirmed SSIs trigger case review per case-review-triggers protocol" },
+          ],
+        },
+      ],
+      parametersTitle: "Surveillance Database Entry (Per Case)",
+      parameters: [
+        { label: "Patient ID & Case Number", placeholder: "e.g., Canine #2024-0612" },
+        { label: "Procedure Type", placeholder: "e.g., TPLO, routine spay, fracture repair" },
+        { label: "Implant Used (Y/N — specify type)", placeholder: "e.g., Y — locking plate" },
+        { label: "Risk Classification", placeholder: "e.g., Clean, Clean-contaminated" },
+        { label: "Antimicrobial Timing", placeholder: "e.g., Given 35 min pre-incision" },
+        { label: "Surveillance Window End Date", placeholder: "e.g., 30-day: 2024-07-12" },
+        { label: "SSI Detected (Y/N — date and classification)", placeholder: "e.g., Y — Day 18, superficial incisional" },
+      ],
+    },
+  },
+
+  {
+    slug: "case-review-triggers",
+    title: "Case Review Triggers",
+    phase: "postoperative",
+    pathways: ["surgical-team"],
+    roles: ["surgeon", "anesthetist", "scrub-technician", "prep-technician", "recovery-team"],
+    clinicalObjective:
+      "Define the specific events and thresholds that automatically trigger a formal case review, ensuring that all SSIs, all significant contamination events, all unplanned instrument sterilization cycles, and repeated noncompliance trends are systematically reviewed by the clinical team. A well-defined trigger list prevents selective review of only the worst outcomes and ensures learning happens from near-misses as well as adverse events.",
+    whyThisMatters:
+      "Without explicit triggers, case review defaults to the discretion of whoever is managing the schedule — which means reviews happen when someone has time and motivation, not when the system needs learning. Mandatory triggers remove that discretion and ensure consistent organizational learning.",
+    criticalControlPoints: [
+      "All confirmed SSIs trigger a case review without exception",
+      "All significant intraoperative contamination events trigger a review regardless of outcome",
+      "All unplanned IUSS (immediate-use steam sterilization) cycles trigger a review",
+      "Repeated noncompliance with any tracked metric triggers a systemic review, not just individual counseling",
+      "Reviews must be completed within 30 days of the triggering event",
+    ],
+    steps: [
+      "Maintain a case review trigger log — any triggering event is entered on the day it is identified",
+      "Notify the clinical lead or designated reviewer within 24 hours of a triggering event",
+      "Complete a structured case review within 30 days: review the operative record, compliance data, and involved staff accounts",
+      "Identify the contributing factors using a structured root-cause approach: patient factors, team factors, equipment/process factors, environmental factors",
+      "Document the review findings and corrective actions in the case review record",
+      "Present case review findings to the full team — anonymized where appropriate — at the next team meeting",
+      "Track whether corrective actions have been implemented and whether the triggering issue recurs",
+    ],
+    pitfalls: [
+      "Triggering a case review only for SSIs with bad clinical outcomes — near-misses provide equally important learning",
+      "Review completed by only one person without team input, missing perspective from other roles involved",
+      "Corrective actions identified but not documented or tracked, leading to recurrence",
+      "Review delayed beyond 30 days, reducing the ability to reconstruct the contributing factors",
+      "IUSS events not tracked or reviewed because 'the instrument was sterile in the end'",
+    ],
+    expertInsight:
+      "The value of a case review is not to assign blame — it is to find the system failure that made the error possible, so that the next team in that situation does not have to be heroic to prevent the same outcome.",
+    evidence: [
+      {
+        citation:
+          "Reason J. Human error: models and management. BMJ. 2000;320(7237):768-770.",
+        doi: "10.1136/bmj.320.7237.768",
+      },
+      {
+        citation:
+          "AORN Guidelines for Perioperative Practice: Quality and Performance Improvement. Denver: AORN; 2023.",
+      },
+      {
+        citation:
+          "Gawande AA, et al. Analysis of errors reported by surgeons at three teaching hospitals. Surgery. 2003;133(6):614-621.",
+        doi: "10.1067/msy.2003.169",
+      },
+    ],
+    relatedProtocols: [
+      "ssi-surveillance",
+      "compliance-metrics",
+      "protocol-deviations-escalation",
+      "contamination-event-response",
+      "instrument-sterility",
+    ],
+    relatedVideos: [],
+    middleBlock: {
+      type: "gonogo",
+      sectionTitle: "Case Review Trigger Assessment",
+      intro:
+        "Evaluate the current event against the trigger criteria below. Any 'Trigger' condition requires a formal case review to be initiated within 24 hours.",
+      groups: [
+        {
+          header: "Mandatory Triggers — Initiate Case Review",
+          items: [
+            { label: "Confirmed SSI — any classification", note: "Superficial, deep incisional, or organ/space — all require review" },
+            { label: "Significant intraoperative contamination event", note: "Implant dropped, glove torn during implant handling, drape lift over open wound" },
+            { label: "Unplanned IUSS (immediate-use steam sterilization) performed", note: "Even if instrument was subsequently used without incident" },
+            { label: "Wrong antibiotic given or antibiotic entirely missed", note: "Regardless of whether SSI occurred" },
+            { label: "Patient self-trauma resulting in incision opening or suspected contamination", note: "E-collar failure, inadequate wound protection" },
+          ],
+        },
+        {
+          header: "Trend-Based Triggers — Initiate Systemic Review",
+          items: [
+            { label: "Any tracked compliance metric falls below target for two consecutive months", note: "e.g., Antibiotic timing <95% for two months" },
+            { label: "Two or more SSIs of similar type or procedure within a 90-day period", note: "Possible systemic or environmental cause" },
+            { label: "Repeated noncompliance by the same team member documented across multiple cases", note: "Escalate to individual and systemic review" },
+            { label: "Multiple IUSS events in a single month", note: "Indicates systemic sterility readiness failure" },
+          ],
+        },
+        {
+          header: "No Trigger — Document and Monitor",
+          items: [
+            { label: "Single minor deviation managed per protocol with no patient harm", note: "Document in case record; review at next monthly meeting" },
+            { label: "Owner-reported concern that resolves on recheck without SSI confirmed", note: "Document; add to surveillance denominator follow-up" },
+            { label: "Near-miss identified and corrected without breach reaching the patient", note: "Document; consider voluntary case discussion at team meeting" },
+          ],
+        },
+      ],
+      warning: {
+        label: "When in Doubt, Trigger a Review",
+        text: "If there is uncertainty about whether an event meets trigger criteria, default to initiating the review. The cost of an unnecessary review is low; the cost of missing a systemic issue is an SSI that was preventable.",
+      },
+    },
+  },
 ];
 
 export function getProtocolBySlug(slug: string): Protocol | undefined {
