@@ -8,7 +8,7 @@ import { pathways } from "@/data/pathways";
 import { getFeaturedContributor } from "@/data/contributors";
 
 export const metadata: Metadata = {
-  title: "VETSSI — Veterinary Surgical Site Infection Prevention",
+  title: { absolute: "VETSSI — Veterinary Surgical Site Infection Prevention" },
   description:
     "The complete perioperative SSI prevention resource for veterinary teams. Evidence-based protocols covering pre-case planning, patient preparation, surgical team standards, and postoperative care.",
   alternates: { canonical: "https://vetssi.com" },
