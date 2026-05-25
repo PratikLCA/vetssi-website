@@ -3,9 +3,11 @@ export type Publication = {
   authors: string;
   title: string;
   journal: string;
-  year: number;
-  doi: string;
-  featured?: boolean;
+  year?: number;
+  doi?: string;
+  kind?: "consensus" | "review";
+  url?: string;
+  pdfUrl?: string;
   abstract?: string;
 };
 
@@ -27,16 +29,26 @@ export type DownloadableTool = {
 
 export const publications: Publication[] = [
   {
-    id: "vezzoni-review-2023",
-    authors: "Vezzoni A, et al.",
+    id: "vezzoni-mosaic-in-prep",
+    authors: "Vezzoni A",
     title:
-      "Surgical Site Infection Prevention in Companion Animal Surgery: A Systematic Review and Clinical Framework",
-    journal: "Veterinary Surgery",
-    year: 2023,
-    doi: "10.1111/vsu.XXXXXX",
-    featured: true,
+      "The Mosaic of Surgical Site Infection Prevention in Veterinary Orthopedic Surgery",
+    journal: "In Preparation",
+    kind: "review",
+  },
+  {
+    id: "verwilghen-consensus-2026",
+    authors: "Verwilghen DR, Pelosi A, Abbas M, et al.",
+    title:
+      "Surgical site infection definitions consensus: a first step toward improving prevention in veterinary medicine",
+    journal: "American Journal of Veterinary Research",
+    year: 2026,
+    doi: "10.2460/ajvr.25.03.0099",
+    kind: "consensus",
+    url: "https://avmajournals.avma.org/view/journals/ajvr/87/3/ajvr.25.03.0099.xml",
+    pdfUrl: "https://avmajournals.avma.org/downloadpdf/view/journals/ajvr/87/3/ajvr.25.03.0099.pdf",
     abstract:
-      "A comprehensive systematic review of evidence-based interventions for SSI prevention in small animal surgery, proposing a multi-domain clinical framework for implementation in practice. The review synthesizes data from 87 clinical studies and provides a graded evidence hierarchy for each intervention category.",
+      "An international Delphi consensus that establishes the first standardized terminology for surgical site infections in veterinary medicine. A multidisciplinary panel of 32 expert specialists agreed 18 definitions spanning superficial, deep, organ/space, and implant-associated SSIs, surgical wound classification, surgical procedure types, surveillance terms, and antimicrobial periods. The foundational reference for the VETSSI SSI Definitions Framework. Open Access (CC BY-NC).",
   },
   {
     id: "eugster-2004",
@@ -45,7 +57,6 @@ export const publications: Publication[] = [
     journal: "Veterinary Surgery",
     year: 2004,
     doi: "10.1111/j.1532-950X.2004.04076.x",
-    featured: false,
   },
   {
     id: "turk-2015",
@@ -55,7 +66,6 @@ export const publications: Publication[] = [
     journal: "Veterinary Surgery",
     year: 2015,
     doi: "10.1111/vsu.12375",
-    featured: false,
   },
   {
     id: "nelson-2011",
@@ -64,7 +74,6 @@ export const publications: Publication[] = [
     journal: "Veterinary Clinics of North America: Small Animal Practice",
     year: 2011,
     doi: "10.1016/j.cvsm.2011.05.010",
-    featured: false,
   },
 ];
 
@@ -119,6 +128,10 @@ export const downloadableTools: DownloadableTool[] = [
   },
 ];
 
-export function getFeaturedPublication(): Publication | undefined {
-  return publications.find((p) => p.featured);
+export function getFoundationalPublications(): Publication[] {
+  return publications.filter((p) => p.kind === "consensus" || p.kind === "review");
+}
+
+export function getOtherPublications(): Publication[] {
+  return publications.filter((p) => p.kind !== "consensus" && p.kind !== "review");
 }

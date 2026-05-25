@@ -1,5 +1,11 @@
 import PageHeader from "@/components/PageHeader";
-import { publications, guidelines, downloadableTools, getFeaturedPublication } from "@/data/resources";
+import {
+  guidelines,
+  downloadableTools,
+  getFoundationalPublications,
+  getOtherPublications,
+  type Publication,
+} from "@/data/resources";
 import { ExternalLink, Download, BookOpen, FileText } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -11,9 +17,69 @@ export const metadata: Metadata = {
   openGraph: { title: "Resource Hub | VETSSI", url: "https://vetssi.com/resources" },
 };
 
+const kindLabel: Record<NonNullable<Publication["kind"]>, string> = {
+  consensus: "Expert Consensus",
+  review: "Systematic Review",
+};
+
+function FoundationalCard({ pub }: { pub: Publication }) {
+  const accessHref = pub.url ?? (pub.doi ? `https://doi.org/${pub.doi}` : undefined);
+  const label = pub.kind ? kindLabel[pub.kind] : "Publication";
+
+  return (
+    <article className="bg-navy text-white border border-navy p-8 flex flex-col h-full">
+      <div className="w-14 h-14 bg-white/10 border border-white/20 flex items-center justify-center mb-6">
+        <BookOpen size={24} className="text-white/70" />
+      </div>
+      <p className="nav-link text-steel-light mb-2">{label}</p>
+      <h3 className="font-serif text-xl md:text-2xl font-medium mb-2 leading-snug">
+        {pub.title}
+      </h3>
+      <p className="text-white/60 text-sm mb-1">
+        {pub.authors} — <em>{pub.journal}</em>
+        {pub.year !== undefined && <>, {pub.year}</>}
+      </p>
+      {pub.doi && (
+        <p className="text-white/60 text-xs mb-5">DOI: {pub.doi}</p>
+      )}
+      {pub.abstract && (
+        <p className="text-white/70 text-sm leading-relaxed mb-6">{pub.abstract}</p>
+      )}
+      <div className="mt-auto">
+        {accessHref ? (
+          <a
+            href={accessHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-steel hover:bg-steel-light text-white px-6 py-3 text-sm font-medium transition-colors"
+          >
+            Access Paper
+            <ExternalLink size={13} />
+          </a>
+        ) : (
+          <p className="text-white/50 text-xs italic">Citation pending publication</p>
+        )}
+        {pub.pdfUrl && (
+          <div className="mt-3">
+            <a
+              href={pub.pdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-steel-light text-xs hover:text-white transition-colors"
+            >
+              <Download size={11} />
+              Download PDF
+            </a>
+          </div>
+        )}
+      </div>
+    </article>
+  );
+}
+
 export default function ResourcesPage() {
-  const featuredPub = getFeaturedPublication();
-  const otherPubs = publications.filter((p) => !p.featured);
+  const foundational = getFoundationalPublications();
+  const otherPubs = getOtherPublications();
 
   return (
     <>
@@ -23,42 +89,14 @@ export default function ResourcesPage() {
       />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
-        {/* Featured — Vezzoni Review */}
-        {featuredPub && (
+        {/* Foundational Publications — side-by-side, equal weight */}
+        {foundational.length > 0 && (
           <div className="mb-16">
-            <p className="nav-link text-steel mb-4">Featured Publication</p>
-            <div className="card bg-navy text-white border border-navy p-8 md:p-10">
-              <div className="flex flex-col md:flex-row gap-8">
-                <div className="flex-shrink-0">
-                  <div className="w-16 h-16 bg-white/10 border border-white/20 flex items-center justify-center">
-                    <BookOpen size={28} className="text-white/70" />
-                  </div>
-                </div>
-                <div>
-                  <p className="nav-link text-steel-light mb-2">Systematic Review</p>
-                  <h2 className="font-serif text-2xl md:text-3xl font-medium mb-2 leading-snug">
-                    {featuredPub.title}
-                  </h2>
-                  <p className="text-white/60 text-sm mb-1">
-                    {featuredPub.authors} — <em>{featuredPub.journal}</em>, {featuredPub.year}
-                  </p>
-                  <p className="text-white/60 text-xs mb-5">DOI: {featuredPub.doi}</p>
-                  {featuredPub.abstract && (
-                    <p className="text-white/70 text-sm leading-relaxed mb-6 max-w-2xl">
-                      {featuredPub.abstract}
-                    </p>
-                  )}
-                  <a
-                    href={`https://doi.org/${featuredPub.doi}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-steel hover:bg-steel-light text-white px-6 py-3 text-sm font-medium transition-colors"
-                  >
-                    Access Paper
-                    <ExternalLink size={13} />
-                  </a>
-                </div>
-              </div>
+            <p className="nav-link text-steel mb-4">Foundational Publications</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {foundational.map((pub) => (
+                <FoundationalCard key={pub.id} pub={pub} />
+              ))}
             </div>
           </div>
         )}
