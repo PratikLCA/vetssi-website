@@ -1,5 +1,3 @@
-import ContributorCard from "@/components/ContributorCard";
-import { getFeaturedContributor } from "@/data/contributors";
 import { Mail } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -12,8 +10,6 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  const vezzoni = getFeaturedContributor();
-
   return (
     <div className="bg-cream">
       {/* Page header */}
@@ -89,16 +85,6 @@ export default function AboutPage() {
             of its recommendations — clarity about uncertainty is as important as clinical guidance.
           </p>
         </section>
-
-        <hr className="border-warm-gray" />
-
-        {/* Lead Expert */}
-        {vezzoni && (
-          <section>
-            <p className="nav-link text-steel mb-4">Lead Expert</p>
-            <ContributorCard contributor={vezzoni} featured />
-          </section>
-        )}
 
         <hr className="border-warm-gray" />
 

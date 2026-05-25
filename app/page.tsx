@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Shield, Brain, Users, ArrowRight } from "lucide-react";
 import ProtocolCard from "@/components/ProtocolCard";
-import ContributorCard from "@/components/ContributorCard";
 import { protocols } from "@/data/protocols";
 import { pathways } from "@/data/pathways";
-import { getFeaturedContributor } from "@/data/contributors";
+import { getAllRoles } from "@/data/roles";
+import { coreDefinitions } from "@/data/ssi-definitions";
 
 export const metadata: Metadata = {
   title: { absolute: "VETSSI — Veterinary Surgical Site Infection Prevention" },
@@ -28,7 +28,7 @@ export default function HomePage() {
     protocols.find((p) => p.phase === "postoperative")!,
   ];
 
-  const featuredContributor = getFeaturedContributor();
+  const roles = getAllRoles();
 
   return (
     <>
@@ -179,39 +179,123 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── Featured Contributor ─── */}
-      {featuredContributor && (
-        <section className="bg-white border-b border-warm-gray">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
-            <div className="flex items-end justify-between mb-10">
-              <div>
-                <p className="nav-link text-steel mb-2">Expert Network</p>
-                <h2 className="font-serif text-3xl md:text-4xl font-medium text-navy">
-                  Expert Contributors
-                </h2>
-              </div>
-              <Link
-                href="/contributors"
-                className="hidden md:inline-flex items-center gap-1.5 text-steel text-sm font-medium hover:text-navy transition-colors"
-              >
-                View All Contributors
-                <ArrowRight size={14} />
-              </Link>
+      {/* ─── Roles Teaser ─── */}
+      <section className="bg-white border-b border-warm-gray">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+          <div className="max-w-3xl">
+            <p className="nav-link text-steel mb-4">Team Responsibilities</p>
+            <h2 className="font-serif text-3xl md:text-4xl font-medium text-navy mb-5 leading-tight">
+              SSI Prevention Is a Team Sport
+            </h2>
+            <p className="text-text-primary font-light leading-relaxed mb-8 text-base">
+              Prevention is distributed across the surgical team — surgeon, anesthetist, prep
+              technician, scrub technician, recovery team, and owner. Each role owns its own
+              control points, critical moments, and characteristic failure modes.
+            </p>
+
+            {/* Role pills */}
+            <div className="flex flex-wrap gap-3 mb-10">
+              {roles.map((r) => (
+                <Link
+                  key={r.slug}
+                  href={`/roles#${r.slug}`}
+                  className="px-4 py-2 border border-warm-gray text-sm text-steel bg-white hover:bg-cream hover:border-steel transition-colors"
+                >
+                  {r.title.split(" / ")[0]}
+                </Link>
+              ))}
             </div>
 
-            <ContributorCard contributor={featuredContributor} featured />
-
-            <div className="mt-8 md:hidden">
-              <Link
-                href="/contributors"
-                className="inline-flex items-center gap-1.5 text-steel text-sm font-medium hover:text-navy transition-colors"
-              >
-                View All Contributors <ArrowRight size={14} />
-              </Link>
-            </div>
+            <Link
+              href="/roles"
+              className="inline-flex items-center gap-2 text-steel hover:text-navy text-sm font-medium nav-link transition-colors"
+            >
+              Explore Roles &amp; Responsibilities
+              <ArrowRight size={14} />
+            </Link>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
+
+      {/* ─── SSI Definitions Teaser ─── */}
+      <section className="bg-cream border-b border-warm-gray">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+          <div className="max-w-3xl">
+            <p className="nav-link text-steel mb-4">A Shared Clinical Language</p>
+            <h2 className="font-serif text-3xl md:text-4xl font-medium text-navy mb-5 leading-tight">
+              SSI Definitions Framework
+            </h2>
+            <p className="text-text-primary font-light leading-relaxed mb-8 text-base">
+              Five tissue-layer SSI definitions, surgical wound classification, and a 30-day
+              surveillance framework — derived from the 2026 AJVR expert consensus and wired into
+              every protocol, pathway, and role on this site.
+            </p>
+
+            {/* Core definition pills */}
+            <div className="flex flex-wrap gap-3 mb-6">
+              {coreDefinitions.map((d) => (
+                <Link
+                  key={d.slug}
+                  href={`/ssi-definitions/core/${d.slug}`}
+                  className="px-4 py-2 border border-warm-gray text-sm text-steel bg-white hover:bg-warm-gray hover:border-steel transition-colors"
+                >
+                  {d.short}
+                </Link>
+              ))}
+            </div>
+
+            {/* Secondary section links */}
+            <div className="flex flex-wrap gap-x-5 gap-y-2 mb-10 text-sm">
+              <Link
+                href="/ssi-definitions/wound-classification"
+                className="inline-flex items-center gap-1.5 text-steel hover:text-navy transition-colors"
+              >
+                Wound Classification
+                <ArrowRight size={12} />
+              </Link>
+              <Link
+                href="/ssi-definitions/surveillance"
+                className="inline-flex items-center gap-1.5 text-steel hover:text-navy transition-colors"
+              >
+                Surveillance Framework
+                <ArrowRight size={12} />
+              </Link>
+            </div>
+
+            <Link
+              href="/ssi-definitions"
+              className="inline-flex items-center gap-2 text-steel hover:text-navy text-sm font-medium nav-link transition-colors"
+            >
+              Explore SSI Definitions
+              <ArrowRight size={14} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Expert Contributors CTA ─── */}
+      <section className="bg-white border-b border-warm-gray">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+          <div className="max-w-3xl">
+            <p className="nav-link text-steel mb-4">Expert Network</p>
+            <h2 className="font-serif text-3xl md:text-4xl font-medium text-navy mb-5 leading-tight">
+              Expert Contributors
+            </h2>
+            <p className="text-text-primary font-light leading-relaxed mb-8 text-base">
+              VETSSI is built and reviewed by veterinary surgeons and infection-control specialists
+              whose clinical and research work underpins the protocols, definitions, and surveillance
+              framework on this site.
+            </p>
+            <Link
+              href="/contributors"
+              className="inline-flex items-center gap-2 bg-navy text-white px-7 py-3.5 text-sm font-medium hover:bg-navy-mid transition-colors"
+            >
+              View All Contributors
+              <ArrowRight size={14} />
+            </Link>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

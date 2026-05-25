@@ -1,6 +1,6 @@
 import PageHeader from "@/components/PageHeader";
 import ContributorCard from "@/components/ContributorCard";
-import { getFeaturedContributor, getSupportingContributors } from "@/data/contributors";
+import { getFoundingContributors, getContributingExperts } from "@/data/contributors";
 import { Mail } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 };
 
 export default function ContributorsPage() {
-  const featured = getFeaturedContributor();
-  const supporting = getSupportingContributors();
+  const founding = getFoundingContributors();
+  const contributing = getContributingExperts();
 
   return (
     <>
@@ -24,19 +24,23 @@ export default function ContributorsPage() {
       />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
-        {/* Featured contributor */}
-        {featured && (
+        {/* Founding contributors — stacked, each rendered with the featured card treatment */}
+        {founding.length > 0 && (
           <div className="mb-12">
-            <p className="nav-link text-steel mb-4">Lead Expert</p>
-            <ContributorCard contributor={featured} featured />
+            <p className="nav-link text-steel mb-4">Founding Contributors</p>
+            <div className="space-y-6">
+              {founding.map((contributor) => (
+                <ContributorCard key={contributor.id} contributor={contributor} featured />
+              ))}
+            </div>
           </div>
         )}
 
-        {/* Supporting contributors */}
+        {/* Contributing experts */}
         <div className="mb-16">
           <p className="nav-link text-steel mb-4">Contributing Experts</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {supporting.map((contributor) => (
+            {contributing.map((contributor) => (
               <ContributorCard key={contributor.id} contributor={contributor} />
             ))}
           </div>
