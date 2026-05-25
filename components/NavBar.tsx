@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
+  { href: "/ssi-definitions", label: "Definitions", longLabel: "SSI Definitions" },
   { href: "/contamination-pathways", label: "Pathways", longLabel: "Contamination Pathways" },
   { href: "/protocols", label: "Protocols" },
   { href: "/roles", label: "Roles", longLabel: "Roles & Responsibilities" },

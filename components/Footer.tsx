@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 const footerLinks = [
+  { href: "/ssi-definitions", label: "SSI Definitions" },
   { href: "/contamination-pathways", label: "Contamination Pathways" },
   { href: "/protocols", label: "Protocols" },
   { href: "/roles", label: "Roles & Responsibilities" },
